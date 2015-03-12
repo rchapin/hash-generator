@@ -96,7 +96,11 @@ public class HashGeneratorTest {
    }
    
    // 1256987432 = 1001010111011000001101100101000
-   
    // 9223372036854775807L = 0x7FFFFFFFFFFFFFFF
+   
+   @Test
+   public void testTestGen() {
+      TestDataGenerator.writeLongData(9223372036854775807L);
+   }
    
 }
