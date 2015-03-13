@@ -2,6 +2,7 @@ package com.ryanchapin.util.hashgenerator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +13,10 @@ import java.security.NoSuchAlgorithmException;
  * <p>
  * It supports any of the hash algorithms that are supported by the
  * {@link java.security.MessageDigest} class.
+ * <p>
+ * NOTE: that the unit tests in this project DO NOT test the usage of the
+ * <code>MD2</code> digest algorithm as it has not been included in the openssl
+ * since openssl-0.9.8m (2010-02-25).
  * <p>
  * The class is thread safe <b>depending on how it is instantiated and/or
  * called</b>.  Used in the following manner it is thread safe:
@@ -117,6 +122,35 @@ public class HashGenerator {
       }
       return bytesToHex(computeHashBytes(inByteArray, hashAlgorithm));
    }
+   
+   
+   public static String createHash(long input, String hashAlgorithm) {
+      // Generate a byte array from the long
+      // Extract the byte value of the long
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(bos);
+
+        try {
+            dos.writeLong(input);
+        } catch (IOException e) {
+           e.printStackTrace();
+        }
+        try {
+            dos.flush();
+        } catch (IOException e) {
+           e.printStackTrace();
+        }
+
+        byte[] byteArray = bos.toByteArray();
+        
+        try {
+           dos.close();
+        } catch (IOException e) {
+           
+        }
+        return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+   }
+   
    
    /**
     * Computes the hashed bytes for the byte array representation of the input
