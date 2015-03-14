@@ -49,3 +49,8 @@ The pom specifies _Java 1.7_.
 
 TBD
 
+### Modifying or Adding Additional Test Data
+
+All of the test data is generated via a script, src/test/resources/gen_hashes.sh
+
+
