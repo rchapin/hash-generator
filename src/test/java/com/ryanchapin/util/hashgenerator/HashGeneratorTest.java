@@ -2,10 +2,9 @@ package com.ryanchapin.util.hashgenerator;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,115 +19,8 @@ public class HashGeneratorTest {
    @Rule
    public TestName testName = new TestName();
    
-   /** Map of all of the currently supported hash algorithms */
-   private static Map<String, String> HASH_ALGOS_MAP;
    
-   static {
-      HASH_ALGOS_MAP.put("md5",    "MD5");
-      HASH_ALGOS_MAP.put("sha1",   "SHA-1");
-      HASH_ALGOS_MAP.put("sha256", "SHA-256");
-      HASH_ALGOS_MAP.put("sha384", "SHA-384");
-      HASH_ALGOS_MAP.put("sha512", "SHA-512");
-   }
    
-   /** Maps to contain test data for each data type */
-   public static Map<Integer, Byte>      BYTES_MAP;
-   public static Map<Integer, Character> CHARS_MAP;
-   public static Map<Integer, Short>     SHORTS_MAP;
-   public static Map<Integer, Integer>   INTEGERS_MAP;
-   public static Map<Integer, Long>      LONGS_MAP;
-   public static Map<Integer, Float>     FLOATS_MAP;
-   public static Map<Integer, Double>    DOUBLES_MAP;
-   public static Map<Integer, String>    STRINGS_MAP;
-   
-   public static Object[][] testData;
-   
-   public static String[] testDataStrings;
-   
-   static {
-      BYTES_MAP = new HashMap<Integer, Byte>(5);
-      BYTES_MAP.put(1, Byte.MIN_VALUE);
-      BYTES_MAP.put(2, (byte)-23);
-      BYTES_MAP.put(3, (byte)0);
-      BYTES_MAP.put(4, (byte)87);
-      BYTES_MAP.put(5, Byte.MAX_VALUE);
-      
-      CHARS_MAP = new HashMap<Integer, Character>(5);
-      CHARS_MAP.put(1, 'a');
-      CHARS_MAP.put(2, 'B');
-      CHARS_MAP.put(3, 'F');
-      CHARS_MAP.put(4, '#');
-      CHARS_MAP.put(5, '~');
-      
-      SHORTS_MAP = new HashMap<Integer, Short>(5);
-      SHORTS_MAP.put(1, Short.MIN_VALUE);
-      SHORTS_MAP.put(1, (short)-647);
-      SHORTS_MAP.put(1, (short)0);
-      SHORTS_MAP.put(1, (short)6487);
-      SHORTS_MAP.put(1, Short.MAX_VALUE);
-      
-      INTEGERS_MAP = new HashMap<Integer, Integer>(5);
-      INTEGERS_MAP.put(1, Integer.MIN_VALUE);
-      INTEGERS_MAP.put(1, -256);
-      INTEGERS_MAP.put(1, 0);
-      INTEGERS_MAP.put(1, 191867248);
-      INTEGERS_MAP.put(1, Integer.MAX_VALUE);
-      
-      LONGS_MAP = new HashMap<Integer, Long>(5);
-      LONGS_MAP.put(1, Long.MAX_VALUE);
-      LONGS_MAP.put(2, -36028797018963968L);
-      LONGS_MAP.put(3, 0L);
-      LONGS_MAP.put(4, 2305843009213693952L);
-      LONGS_MAP.put(5, Long.MAX_VALUE);
-
-      FLOATS_MAP = new HashMap<Integer, Float>(5);
-      FLOATS_MAP.put(1, Float.MAX_VALUE);
-      FLOATS_MAP.put(2, -234.7234621F);
-      FLOATS_MAP.put(3, 0F);
-      FLOATS_MAP.put(4, 232864343.23468F);
-      FLOATS_MAP.put(5, Float.MAX_VALUE);
-      
-      DOUBLES_MAP = new HashMap<Integer, Double>(5);
-      DOUBLES_MAP.put(1, Double.MIN_VALUE);
-      DOUBLES_MAP.put(2, -9082741083.082348D);
-      DOUBLES_MAP.put(3, 0D);
-      DOUBLES_MAP.put(4, 2340823.9875672394D);
-      DOUBLES_MAP.put(5, Double.MAX_VALUE);
-      
-      STRINGS_MAP = new HashMap<Integer, String>(5);
-      STRINGS_MAP.put(1, "Here is a String that is human readable.  It is a lot easier to read than the random Strings that comprise the rest of this map, no?");
-      STRINGS_MAP.put(1, "8EOTMO,9<R*.s[e3s;n.I/ipJsAkedF>i82]ezG$BzJ9/c`kQw\"07ByH#zR\"~xo3x#7&iEdQ\"Lf>C#YHqM\\G.@$J7GHlb3.2J(bT@N4fLq?pqkCz`uDsWW;,FBo#_1a&");
-      STRINGS_MAP.put(1, "L`%xA9CT|Wj|HpER|~rv]wc`qI#z*i&{'14GP4Yr*IE>#8ipXhH>Z|_1@FyKawbHcaIkI0#JHkzb*&[`vDJl`[_r$H1$T_?@\"(GR@(,I^U9+A0_]w*PqD5:,Is1'@u#z");
-      STRINGS_MAP.put(1, "et83qQS&T{Ask{'!3$/RnLzn<DH\\GtBmQRq?Uf~j)9]1JbRJd/.|55BY{8o0c/u&?q>5<BosYlT/sk8x#(:$u5c!Vlsw\"^_`G`7]]b`3N+q$OV..6]HSpA3srw*jq]`(");
-      STRINGS_MAP.put(1, "g3&ElAY%T(JQEH|k{D~zDXoxPqA\"R<y5oE>w#IOc4%%xD'x|y9@OM;_F/gi1<_}]#7%\"Y'P8wyjARsn2+E.~7lAf{>o(Z|?EbP&rF^>>Q3wiyP,}sas1\"OSi^2W(J)t$");
-
-      
-      testDataStrings = new String[]{
-         "Here is a String that is human readable.  It is a lot easier to read than the random Strings that comprise the rest of this map, no?",
-         "8EOTMO,9<R*.s[e3s;n.I/ipJsAkedF>i82]ezG$BzJ9/c`kQw\"07ByH#zR\"~xo3x#7&iEdQ\"Lf>C#YHqM\\G.@$J7GHlb3.2J(bT@N4fLq?pqkCz`uDsWW;,FBo#_1a&",
-         "L`%xA9CT|Wj|HpER|~rv]wc`qI#z*i&{'14GP4Yr*IE>#8ipXhH>Z|_1@FyKawbHcaIkI0#JHkzb*&[`vDJl`[_r$H1$T_?@\"(GR@(,I^U9+A0_]w*PqD5:,Is1'@u#z",
-         "et83qQS&T{Ask{'!3$/RnLzn<DH\\GtBmQRq?Uf~j)9]1JbRJd/.|55BY{8o0c/u&?q>5<BosYlT/sk8x#(:$u5c!Vlsw\"^_`G`7]]b`3N+q$OV..6]HSpA3srw*jq]`(",
-         "g3&ElAY%T(JQEH|k{D~zDXoxPqA\"R<y5oE>w#IOc4%%xD'x|y9@OM;_F/gi1<_}]#7%\"Y'P8wyjARsn2+E.~7lAf{>o(Z|?EbP&rF^>>Q3wiyP,}sas1\"OSi^2W(J)t$"
-      };
-
-      testData = new Object[1][];
-      testData[0] = testDataStrings;
-      
-      Map<String, List<HashTestData<? extends Object>>> foo = new HashMap<String, List<HashTestData<? extends Object>>>();
-      List<HashTestData<? extends Object>> stringList = new ArrayList<HashTestData<? extends Object>>();
-      
-      HashTestData<? extends Object> htdString1 = new HashTestData<String>(
-            "data",
-            "hash",
-            HashAlgo.MD5);
-      
-      stringList.add(htdString1);
-      foo.put("String", stringList);
-      
-      
-      
-      HashTestData<String> htdStringA = new HashTestData<String>("some data", "asljdflsdfj", HashAlgo.MD5);
-   }
    
    @Test
    public void shouldCorrectlyConvertBytesToHex() {
@@ -181,23 +73,63 @@ public class HashGeneratorTest {
    public void shouldCorrectlyHashStringInputUTF8() {
       LOGGER.info("Running test: {}", testName.getMethodName());
       
-      String hashUTF8 = HashGenerator.createHash(STRINGS_MAP.get(1), "UTF-8", "MD5");
-      LOGGER.debug("hashUTF8    = {}", hashUTF8);
+//      String hashUTF8 = HashGenerator.createHash(STRINGS_MAP.get(1), "UTF-8", "MD5");
+//      LOGGER.debug("hashUTF8    = {}", hashUTF8);
+//      
+//      String hashUSASCII = HashGenerator.createHash(STRINGS_MAP.get(1), "US-ASCII", "MD5");
+//      LOGGER.debug("hashUSASCII = {}", hashUSASCII);
+//      
+//      String hashUTF16LE = HashGenerator.createHash(STRINGS_MAP.get(1), "UTF-16LE", "MD5");
+//      LOGGER.debug("hashUTF16LE = {}", hashUTF16LE);
       
-      String hashUSASCII = HashGenerator.createHash(STRINGS_MAP.get(1), "US-ASCII", "MD5");
-      LOGGER.debug("hashUSASCII = {}", hashUSASCII);
+   }
+   
+   
+   @Test(expected = IllegalArgumentException.class)
+   public void shouldThrowIllegalStateExceptionHashLongStaticNullAlgo() {
+      LOGGER.info("Running test: {}", testName.getMethodName());
       
-      String hashUTF16LE = HashGenerator.createHash(STRINGS_MAP.get(1), "UTF-16LE", "MD5");
-      LOGGER.debug("hashUTF16LE = {}", hashUTF16LE);
+      List<HashTestData<? extends Object>> longList = HashGeneratorTestData.testDataMap.get(TestDataType.LONG);
+      
+      HashTestData<? extends Object> htd = longList.get(0);
       
    }
    
    @Test
-   public void shouldCorrectlyHashLong() {
+   public void shouldCorrectlyHashLongStatic()
+      throws IllegalStateException, NoSuchAlgorithmException, IOException
+   {
       LOGGER.info("Running test: {}", testName.getMethodName());
       
-      String long01Hash = HashGenerator.createHash(9223372036854775807L, "MD5" );
-      LOGGER.debug("long01Hash  = {}", long01Hash);
+      List<HashTestData<? extends Object>> longList = HashGeneratorTestData.testDataMap.get(TestDataType.LONG);
+      for (HashTestData<? extends Object> htd : longList) {
+         Long testData       = (Long) htd.getData();
+         String expectedHash = htd.getHash();
+         HashAlgo algo       = htd.getAlgo();
+         
+         String hash = HashGenerator.createHash(testData, algo.getAlgo());
+         assertEquals("Returned hash does not match expected", expectedHash, hash);
+      }
+   }
+   
+   @Test
+   public void shouldCorrectlyHashLong()
+      throws IllegalStateException, NoSuchAlgorithmException, IOException
+   {
+      LOGGER.info("Running test: {}", testName.getMethodName());
+      
+      HashGenerator hg = new HashGenerator();
+      
+      List<HashTestData<? extends Object>> longList = HashGeneratorTestData.testDataMap.get(TestDataType.LONG);
+      for (HashTestData<? extends Object> htd : longList) {
+         Long testData       = (Long) htd.getData();
+         String expectedHash = htd.getHash();
+         HashAlgo algo       = htd.getAlgo();
+      
+         hg.setHashAlgo(algo.getAlgo());
+         String hash = hg.createHash(testData);
+         assertEquals("Returned hash does not match expected", expectedHash, hash);
+      }
    }
    
    /**
@@ -232,11 +164,11 @@ public class HashGeneratorTest {
    }
    
    public static enum HashAlgo {
-      MD5("MD5"),
-      SHA1("SHA-1"),
-      SHA256("SHA-256"),
-      SHA384("SHA-384"),
-      SHA512("SHA-512");
+      MD5SUM("MD5"),
+      SHA1SUM("SHA-1"),
+      SHA256SUM("SHA-256"),
+      SHA384SUM("SHA-384"),
+      SHA512SUM("SHA-512");
       
       private String algo;
       
@@ -247,5 +179,22 @@ public class HashGeneratorTest {
       private HashAlgo(String algo) {
          this.algo = algo;
       }
+   }
+   
+   /**
+    * Used as keys for the {@link HashGeneratorTest.testDataMap}.
+    * 
+    * @author Ryan Chapin
+    * @since  2015-03-13
+    */
+   public static enum TestDataType {
+      BYTE,
+      CHARACTER,
+      SHORT,
+      INTEGER,
+      LONG,
+      FLOAT,
+      DOUBLE,
+      STRING
    }
 }

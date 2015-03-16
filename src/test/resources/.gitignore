@@ -1,3 +1,4 @@
 TestDataGenerator.class
 *.bin
 *.txt
+generated_test_data.java

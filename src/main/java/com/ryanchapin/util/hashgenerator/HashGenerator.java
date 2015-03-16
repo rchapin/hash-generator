@@ -4,8 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The <code>Hash-Generator</code> is a class used for generating hashes for
@@ -40,16 +43,49 @@ public class HashGenerator {
     */
    private String hashAlgo;
    
-   private ByteArrayOutputStream bos;
+//   private ByteArrayOutputStream bos;
+//   
+//   private DataOutputStream dos;
    
-   private DataOutputStream dos;
+   private ByteBuffer byteBuffer;
    
    private MessageDigest md;
+   
+   /**
+    * Map of byte arrays of various fixed sizes that will be re-used during
+    * the life of the HashGenerator instance
+    */
+   private Map<Integer, byte[]> inputByteMap;
+   
+   private static final int LONG_BYTES_SIZE = Long.SIZE/8;
    
    // -------------------------------------------------------------------------
    // Accessor/Mutators:
    //
-   
+
+   /**
+    * Get the currently configured hash algorithm setting.
+    * 
+    * @return the currently configured hash algorithm.
+    */
+   public String getHashAlgo() {
+      return hashAlgo;
+   }
+
+   /**
+    * Sets the hash algorithm to be used for the next invocation the overloaded
+    * createHash methods.
+    * 
+    * @param hashAlgo new hash algorithm to be set
+    */
+   public void setHashAlgo(String hashAlgo) {
+      this.hashAlgo = hashAlgo;
+      
+      // When we update the hashAlgo we must null the existing reference to the
+      // MessageDigest instance such that we can regenerate a new instance with
+      // the updated algorithm.
+      md = null;
+   }
    
    // -------------------------------------------------------------------------
    // Constructor:
@@ -74,12 +110,28 @@ public class HashGenerator {
     */
    public HashGenerator(String hashAlgo) {
       this.hashAlgo = hashAlgo;
+      inputByteMap = new HashMap<Integer, byte[]>();
    }
    
+   /**
+    * 
+    */
+   public HashGenerator() {
+      this(null);
+   }
    
    // -------------------------------------------------------------------------
    // Member Methods:
    //
+   
+
+
+
+   public void cleanup() throws IOException {
+//      if (null != dos) {
+//         dos.close();
+//      }
+   }
    
    private void checkHashAlgoField() throws IllegalStateException {
       if (null == this.hashAlgo || this.hashAlgo.isEmpty()) {
@@ -87,71 +139,103 @@ public class HashGenerator {
       }  
    }
    
-   private static void checkHashAlgoField(String hashAlgo) throws IllegalArgumentException {
+   private static void checkHashAlgoInput(String hashAlgo) throws IllegalArgumentException {
       if (null == hashAlgo || hashAlgo.isEmpty()) {
          throw new IllegalStateException("No hashing algorithm was provided.");
       }
    }
    
-   private static void checkStringEncoding(String encoding) {
-      
-   }
-   
-   public String createHash(String input, String encoding) {
+   public String createHash(String input, String encoding)
+      throws UnsupportedEncodingException, IllegalStateException, NoSuchAlgorithmException
+   {
       checkHashAlgoField();
       
       // Generate a byte array from the input String.
-      byte[] inByteArray = null;
-      try {
-         inByteArray = input.getBytes(encoding);
-      } catch (UnsupportedEncodingException e) {
-         e.printStackTrace();
-      }
+      byte[] inByteArray = input.getBytes(encoding);
       return bytesToHex(computeHashBytes(inByteArray));
    }
    
-   public static String createHash(String input, String encoding, String hashAlgorithm) {
-      checkHashAlgoField(hashAlgorithm);
+   public static String createHash(String input, String encoding, String hashAlgorithm)
+      throws UnsupportedEncodingException, IllegalStateException, NoSuchAlgorithmException
+   {
+      checkHashAlgoInput(hashAlgorithm);
       
       // Generate a byte array from the input String.
-      byte[] inByteArray = null;
-      try {
-         inByteArray = input.getBytes(encoding);
-      } catch (UnsupportedEncodingException e) {
-         e.printStackTrace();
-      }
+      byte[] inByteArray = input.getBytes(encoding);
       return bytesToHex(computeHashBytes(inByteArray, hashAlgorithm));
    }
    
-   
-   public static String createHash(long input, String hashAlgorithm) {
-      // Generate a byte array from the long
-      // Extract the byte value of the long
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(bos);
+   public static String createHash(long input, String hashAlgorithm)
+      throws IOException, IllegalStateException, NoSuchAlgorithmException
+   {
+      checkHashAlgoInput(hashAlgorithm);
+      
+      // Extract the byte array of the long
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+      DataOutputStream dos = new DataOutputStream(bos);
 
-        try {
-            dos.writeLong(input);
-        } catch (IOException e) {
-           e.printStackTrace();
-        }
-        try {
-            dos.flush();
-        } catch (IOException e) {
-           e.printStackTrace();
-        }
+      dos.writeLong(input);
+      dos.flush();
+      byte[] byteArray = bos.toByteArray();
+      dos.close();
 
-        byte[] byteArray = bos.toByteArray();
-        
-        try {
-           dos.close();
-        } catch (IOException e) {
-           
-        }
-        return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
    }
    
+   public String createHash(long input)
+      throws IOException, IllegalStateException, NoSuchAlgorithmException
+   {
+      checkHashAlgoField();
    
+      // This can only be used for 8 byte values
+      // FIXME: create a ByteBuffer specifically for processing longs
+      if (null == byteBuffer) {
+         byteBuffer = ByteBuffer.allocate(LONG_BYTES_SIZE);
+      }
+      
+      byteBuffer.clear();
+      byteBuffer.putLong(input);
+      byteBuffer.rewind();
+      
+      // FIXME:  This might as well be an array that we only
+      // allocate once, anyway, since we are going to push the synchronization
+      // burden onto the client
+      
+      byte[] inputByteArr = null;
+      if (! inputByteMap.containsKey(LONG_BYTES_SIZE)) {
+         inputByteArr = new byte[LONG_BYTES_SIZE];
+         inputByteMap.put(LONG_BYTES_SIZE, inputByteArr);
+      } else {
+         inputByteArr = inputByteMap.get(LONG_BYTES_SIZE);
+      }
+      clearByteArray(inputByteArr);
+      byteBuffer.get(inputByteArr);
+      return bytesToHex(computeHashBytes(inputByteArr));
+      
+      
+//      byte[] inputByteArr = new byte[LONG_BYTES_SIZE];
+//      byteBuffer.get(inputByteArr);
+//      return bytesToHex(computeHashBytes(inputByteArr));
+      
+      // This works correctly, but forces allocation of a new buffer each time
+//      ByteBuffer buff = ByteBuffer.allocate(8);
+//      buff.putLong(input);
+//      buff.rewind();
+//      
+//      byte[] arr = new byte[8];
+//      buff.get(arr);
+//      return bytesToHex(computeHashBytes(arr));
+//      
+      
+      
+//      dos.writeLong(input);
+//      dos.flush();
+//      byte[] byteArray = bos.toByteArray();
+//      bos.close();
+//      dos.close();
+//
+//      return bytesToHex(computeHashBytes(byteArray));
+   }
    /**
     * Computes the hashed bytes for the byte array representation of the input
     * data.  To be used when thread safety is handled by the client code.
@@ -161,13 +245,9 @@ public class HashGenerator {
     *        
     * @return the array of bytes representing the hashed data.
     */
-   public byte[] computeHashBytes(byte[] inputBytes) {
+   public byte[] computeHashBytes(byte[] inputBytes) throws NoSuchAlgorithmException {
       if (null == md) {
-         try {
-            md = MessageDigest.getInstance(hashAlgo);
-         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-         }
+         md = MessageDigest.getInstance(hashAlgo);
       }
       md.reset();
       md.update(inputBytes);
@@ -180,15 +260,12 @@ public class HashGenerator {
     * @param hashAlgorithm
     * @return
     */
-   public static byte[] computeHashBytes(byte[] inputBytes, String hashAlgorithm) {
+   public static byte[] computeHashBytes(byte[] inputBytes, String hashAlgorithm)
+      throws NoSuchAlgorithmException
+   {
       // Instantiate a MessageDigest instance configured with the desired
       // algorithm.
-      MessageDigest msgDigest = null;
-      try {
-         msgDigest = MessageDigest.getInstance(hashAlgorithm);
-      } catch(NoSuchAlgorithmException e) {
-         e.printStackTrace();
-      }
+      MessageDigest msgDigest = MessageDigest.getInstance(hashAlgorithm);
       return msgDigest.digest(inputBytes);
    }
    
@@ -216,6 +293,12 @@ public class HashGenerator {
          retVal.append(hexValue);
       }
       return retVal.toString();
+   }
+   
+   public static void clearByteArray(byte[] arr) {
+      for (int i = 0; i < arr.length; i++) {
+         arr[i] = 0x00;
+      }
    }
    
    /*

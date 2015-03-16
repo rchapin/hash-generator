@@ -64,6 +64,7 @@ then
    exit
 fi
 
+
 # Now generate hashes for each of the bin files
 
 if [ -e "$CODE_OUTFILE" ];
@@ -71,52 +72,66 @@ then
    rm $CODE_OUTFILE
 fi
 
-# Counter used to increment the variable names generated
-VAR_COUNTER=0
+# Counter for each HashTestData instance
+INSTANCE_COUNTER=0
 
 for FILE in `ls *${BIN_FILE_EXT}`
 do
    for HASH_ALGO in $HASH_ALGOS
    do
       echo "Hashing file '$FILE' with '$HASH_ALGO' algo"
-      VAR_COUNTER=$(($VAR_COUNTER+1))
-      echo "VAR_COUNTER = $VAR_COUNTER"
 
       # The output of this command will be similar to:
-      # f1d3ff8443297732862df21dc4e57262 *java.lang.Integer.0.bin
+      # f1d3ff8443297732862df21dc4e57262 *double_5.bin
       HASH_OUTPUT=`$HASH_ALGO -b $FILE`
+
+      echo "HASH_OUTPUT = $HASH_OUTPUT"
 
       # Split the output with the default IFS as the delimiter into the hashed
       # value and the class name with the identifier for the data
-      read -r HASH TYPE_VALUE <<< "$HASH_OUTPUT"
+      read -r HASH TYPE_AND_ID <<< "$HASH_OUTPUT"
 
-      # Get the 3rd and 2nd to the last tokens in the string, delimited by '.'
-      TYPE_ID=$(echo "$TYPE_VALUE" | awk -F\. '{
-         type_element=NF - 2
-         id_element=NF - 1
-         print $type_element " " $id_element
-      }')
 
-      read -r TYPE ID <<< "$TYPE_ID"
+      # Trim the '*' from the front and the '.bin' from the end of the TYPE_VALUE String
+      TYPE_AND_ID=$(echo "$TYPE_AND_ID" | cut -c 2- | sed 's/....$//g')
+      echo "HASH = $HASH, TYPE_AND_ID = $TYPE_AND_ID"
+
+
+      # Split the TYPE_AND_ID with the '_' delimiter to glean the type by itself
+      OIFS="$IFS"
+      IFS="_"
+      read -r TYPE ID <<< "$TYPE_AND_ID"
+      IFS="$OIFS"
+
       echo "TYPE = $TYPE"
       echo "ID = $ID"
 
-      LIST_NAME=$(PREFIX=$(echo "$TYPE" | tr [:upper:] [:lower:]); echo "${PREFIX}List")
+      TYPE_LC=$(echo "$TYPE" | tr [:upper:] [:lower:] )
+
+      LIST_NAME="${TYPE_LC}List"
       echo "LIST_NAME = $LIST_NAME"
 
-      HTD_NAME="htd${TYPE}${VAR_COUNTER}"
+      HTD_NAME="htd_${TYPE}_${INSTANCE_COUNTER}"
       echo "HTD_NAME = $HTD_NAME" 
 
       HASH_ALGO_ENUM=$(echo "$HASH_ALGO" | tr [:lower:] [:upper:])
+      echo "HASH_ALGO_ENUM = $HASH_ALGO_ENUM"
+
+      # Extract the ASCII value of the data
+      ASCII_FILE=${TYPE_AND_ID}${TXT_FILE_EXT}
+      ASCII_VALUE=$(cat $ASCII_FILE)
 
       cat <<EOF >> $CODE_OUTFILE
 
-HashTestData<? extends Object> htdString1 = new HashTestData<String>(
-   $ID,
-   $HASH,
+HashTestData<? extends Object> $HTD_NAME = new HashTestData<$TYPE>(
+   new ${TYPE}(${ASCII_VALUE}),
+   "$HASH",
    HashAlgo.${HASH_ALGO_ENUM});
-
+${LIST_NAME}.add($HTD_NAME);
 EOF
+
+      # Increment the counter
+      INSTANCE_COUNTER=$(($INSTANCE_COUNTER+1))
 
    done
    
