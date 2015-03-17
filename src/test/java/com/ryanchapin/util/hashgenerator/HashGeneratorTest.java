@@ -86,22 +86,26 @@ public class HashGeneratorTest {
    
    
    @Test(expected = IllegalArgumentException.class)
-   public void shouldThrowIllegalStateExceptionHashLongStaticNullAlgo() {
+   public void shouldThrowIllegalStateExceptionHashLongStaticNullAlgo()
+         throws IllegalStateException, NoSuchAlgorithmException, IOException
+   {
       LOGGER.info("Running test: {}", testName.getMethodName());
       
-      List<HashTestData<? extends Object>> longList = HashGeneratorTestData.testDataMap.get(TestDataType.LONG);
-      
+      List<HashTestData<? extends Object>> longList =
+            HashGeneratorTestData.testDataMap.get(HashGenerator.DataType.LONG);
       HashTestData<? extends Object> htd = longList.get(0);
       
+      HashGenerator.createHash((Long)htd.getData(), "");
    }
    
    @Test
    public void shouldCorrectlyHashLongStatic()
-      throws IllegalStateException, NoSuchAlgorithmException, IOException
+         throws IllegalStateException, NoSuchAlgorithmException, IOException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
       
-      List<HashTestData<? extends Object>> longList = HashGeneratorTestData.testDataMap.get(TestDataType.LONG);
+      List<HashTestData<? extends Object>> longList = 
+            HashGeneratorTestData.testDataMap.get(HashGenerator.DataType.LONG);
       for (HashTestData<? extends Object> htd : longList) {
          Long testData       = (Long) htd.getData();
          String expectedHash = htd.getHash();
@@ -120,7 +124,8 @@ public class HashGeneratorTest {
       
       HashGenerator hg = new HashGenerator();
       
-      List<HashTestData<? extends Object>> longList = HashGeneratorTestData.testDataMap.get(TestDataType.LONG);
+      List<HashTestData<? extends Object>> longList = 
+            HashGeneratorTestData.testDataMap.get(HashGenerator.DataType.LONG);
       for (HashTestData<? extends Object> htd : longList) {
          Long testData       = (Long) htd.getData();
          String expectedHash = htd.getHash();
@@ -179,22 +184,5 @@ public class HashGeneratorTest {
       private HashAlgo(String algo) {
          this.algo = algo;
       }
-   }
-   
-   /**
-    * Used as keys for the {@link HashGeneratorTest.testDataMap}.
-    * 
-    * @author Ryan Chapin
-    * @since  2015-03-13
-    */
-   public static enum TestDataType {
-      BYTE,
-      CHARACTER,
-      SHORT,
-      INTEGER,
-      LONG,
-      FLOAT,
-      DOUBLE,
-      STRING
    }
 }

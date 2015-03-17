@@ -28,9 +28,6 @@ import java.util.Map;
  *    String sha1Hash = hashGenerator.createHash("This is a test", "SHA-1"); 
  * </pre></blockquote>
  * 
- * 
-  
- * 
  * @author Ryan Chapin
  * @since  2015-03-01
  *
@@ -42,22 +39,26 @@ public class HashGenerator {
     * any of the overloaded <code>createHash</code> methods. 
     */
    private String hashAlgo;
-   
-//   private ByteArrayOutputStream bos;
-//   
-//   private DataOutputStream dos;
-   
-   private ByteBuffer byteBuffer;
-   
+      
+   /**
+    * {@link java.security.MessageDigest} instance instantiated when a
+    * <code>HashGenerator</code> instance is used in lieu of the
+    * <code>HashGenerator</code> static methods.
+    */
    private MessageDigest md;
    
-   /**
-    * Map of byte arrays of various fixed sizes that will be re-used during
-    * the life of the HashGenerator instance
-    */
-   private Map<Integer, byte[]> inputByteMap;
+   private static final int CHAR_BYTES_SIZE    = Character.SIZE/8;
+   private static final int SHORT_BYTES_SIZE   = Short.SIZE/8;
+   private static final int INTEGER_BYTES_SIZE = Integer.SIZE/8;
+   private static final int LONG_BYTES_SIZE    = Long.SIZE/8;
+   private static final int FLOAT_BYTES_SIZE   = Float.SIZE/8;
+   private static final int DOUBLE_BYTES_SIZE  = Double.SIZE/8;
    
-   private static final int LONG_BYTES_SIZE = Long.SIZE/8;
+   /**
+    * Map of ByteBuffer instances that will be re-used during the life cycle
+    * of the HashGenerator instance.
+    */
+   private Map<DataType, ByteBuffer> byteBufferMap;
    
    // -------------------------------------------------------------------------
    // Accessor/Mutators:
@@ -110,7 +111,7 @@ public class HashGenerator {
     */
    public HashGenerator(String hashAlgo) {
       this.hashAlgo = hashAlgo;
-      inputByteMap = new HashMap<Integer, byte[]>();
+      byteBufferMap = new HashMap<DataType, ByteBuffer>();
    }
    
    /**
@@ -124,15 +125,6 @@ public class HashGenerator {
    // Member Methods:
    //
    
-
-
-
-   public void cleanup() throws IOException {
-//      if (null != dos) {
-//         dos.close();
-//      }
-   }
-   
    private void checkHashAlgoField() throws IllegalStateException {
       if (null == this.hashAlgo || this.hashAlgo.isEmpty()) {
          throw new IllegalStateException("No hashing algorithm was set for this HashGenerator instance.");
@@ -141,7 +133,7 @@ public class HashGenerator {
    
    private static void checkHashAlgoInput(String hashAlgo) throws IllegalArgumentException {
       if (null == hashAlgo || hashAlgo.isEmpty()) {
-         throw new IllegalStateException("No hashing algorithm was provided.");
+         throw new IllegalArgumentException("No hashing algorithm was provided.");
       }
    }
    
@@ -171,14 +163,12 @@ public class HashGenerator {
       checkHashAlgoInput(hashAlgorithm);
       
       // Extract the byte array of the long
-      ByteArrayOutputStream bos = new ByteArrayOutputStream();
-      DataOutputStream dos = new DataOutputStream(bos);
-
-      dos.writeLong(input);
-      dos.flush();
-      byte[] byteArray = bos.toByteArray();
-      dos.close();
-
+      ByteBuffer byteBuffer = ByteBuffer.allocate(LONG_BYTES_SIZE);
+      byteBuffer.putLong(input);
+      byteBuffer.rewind();
+      
+      byte[] byteArray = new byte[LONG_BYTES_SIZE];
+      byteBuffer.get(byteArray);
       return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
    }
    
@@ -186,79 +176,69 @@ public class HashGenerator {
       throws IOException, IllegalStateException, NoSuchAlgorithmException
    {
       checkHashAlgoField();
-   
-      // This can only be used for 8 byte values
-      // FIXME: create a ByteBuffer specifically for processing longs
-      if (null == byteBuffer) {
-         byteBuffer = ByteBuffer.allocate(LONG_BYTES_SIZE);
-      }
-      
-      byteBuffer.clear();
+      ByteBuffer byteBuffer = getByteBuffer(DataType.LONG, LONG_BYTES_SIZE);
       byteBuffer.putLong(input);
       byteBuffer.rewind();
       
-      // FIXME:  This might as well be an array that we only
-      // allocate once, anyway, since we are going to push the synchronization
-      // burden onto the client
-      
-      byte[] inputByteArr = null;
-      if (! inputByteMap.containsKey(LONG_BYTES_SIZE)) {
-         inputByteArr = new byte[LONG_BYTES_SIZE];
-         inputByteMap.put(LONG_BYTES_SIZE, inputByteArr);
-      } else {
-         inputByteArr = inputByteMap.get(LONG_BYTES_SIZE);
-      }
-      clearByteArray(inputByteArr);
-      byteBuffer.get(inputByteArr);
-      return bytesToHex(computeHashBytes(inputByteArr));
-      
-      
-//      byte[] inputByteArr = new byte[LONG_BYTES_SIZE];
-//      byteBuffer.get(inputByteArr);
-//      return bytesToHex(computeHashBytes(inputByteArr));
-      
-      // This works correctly, but forces allocation of a new buffer each time
-//      ByteBuffer buff = ByteBuffer.allocate(8);
-//      buff.putLong(input);
-//      buff.rewind();
-//      
-//      byte[] arr = new byte[8];
-//      buff.get(arr);
-//      return bytesToHex(computeHashBytes(arr));
-//      
-      
-      
-//      dos.writeLong(input);
-//      dos.flush();
-//      byte[] byteArray = bos.toByteArray();
-//      bos.close();
-//      dos.close();
-//
-//      return bytesToHex(computeHashBytes(byteArray));
+      byte[] byteArray = new byte[LONG_BYTES_SIZE];  
+      byteBuffer.get(byteArray);
+      return bytesToHex(computeHashBytes(byteArray));
    }
+   
+   /**
+    * Returns a reference to a ByteBuffer instance stored in the
+    * {@link #byteBufferMap}.  If the instance does not exist, it instantiates
+    * it, adding it to the map.  If it already exists it clears the map
+    * making it ready for the next iteration of usage.
+    * 
+    * @param  type
+    *         the key in the {@link #byteBufferMap}.
+    * @param  size
+    *         number of bytes to allocate for a new ByteBuffer if required.
+    * @return reference to a ByteBuffer instance
+    */
+   private ByteBuffer getByteBuffer(DataType type, int size) {
+      ByteBuffer buffer = null;
+      if (!byteBufferMap.containsKey(type)) {
+         buffer = ByteBuffer.allocate(size);
+         byteBufferMap.put(type, buffer);
+      } else {
+         buffer = byteBufferMap.get(type);
+         buffer.clear();
+      }
+      return buffer;
+   }
+      
    /**
     * Computes the hashed bytes for the byte array representation of the input
-    * data.  To be used when thread safety is handled by the client code.
+    * data.  Enables the usage of an existing instance of a
+    * {@link java.security.MessageDigest} instance.  To be used when thread
+    * safety is handled by the client code.
     * 
     * @param inputBytes
-    *        byte array representing the data to be hashed.
+    *        byte array of the data to be hashed.
     *        
     * @return the array of bytes representing the hashed data.
     */
    public byte[] computeHashBytes(byte[] inputBytes) throws NoSuchAlgorithmException {
       if (null == md) {
          md = MessageDigest.getInstance(hashAlgo);
+      } else {
+         md.reset();
       }
-      md.reset();
       md.update(inputBytes);
       return md.digest();
    }
    
    /**
+    * Computers the hashed bytes for the byte array representation of the input
+    * data.
     * 
-    * @param inputBytes
-    * @param hashAlgorithm
-    * @return
+    * @param  inputBytes
+    *         byte array of the data to be hashed.
+    * @param  hashAlgorithm
+    *         algorithm to be used to calculate the hash.
+    * @return the array of bytes representing the hashed data.
     */
    public static byte[] computeHashBytes(byte[] inputBytes, String hashAlgorithm)
       throws NoSuchAlgorithmException
@@ -295,54 +275,20 @@ public class HashGenerator {
       return retVal.toString();
    }
    
-   public static void clearByteArray(byte[] arr) {
-      for (int i = 0; i < arr.length; i++) {
-         arr[i] = 0x00;
-      }
+   /**
+    * Data types supported by the HashGenerator.
+    * 
+    * @author Ryan Chapin
+    * @since  2015-03-16
+    */
+   public static enum DataType {
+      BYTE,
+      CHARACTER,
+      SHORT,
+      INTEGER,
+      LONG,
+      FLOAT,
+      DOUBLE,
+      STRING
    }
-   
-   /*
-   public String createHash(long input, String hashAlgorithm) {
-      // Generate a byte array from the long
-      // Extract the byte value of the long
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(bos);
-
-        try {
-            dos.writeLong(input);
-        } catch (IOException e) {
-           e.printStackTrace();
-        }
-        try {
-            dos.flush();
-        } catch (IOException e) {
-           e.printStackTrace();
-        }
-
-        byte[] byteArray = bos.toByteArray();
-        return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
-   }
-   
-
-   
-   private static byte[] computeHashBytes(byte[] inputBytes, String hashAlgorithm) {
-      // Instantiate a MessageDigest instance configured with the desired
-      // algorithm.
-      MessageDigest md = null;
-      try {
-         md = MessageDigest.getInstance(hashAlgorithm);
-      } catch(NoSuchAlgorithmException e) {
-         e.printStackTrace();
-      }
-      
-      // This isn't necessary in this context, but should this
-      // be refactored to use the MessageDigest as a member this
-      // enables the reuse of the same MessageDigest instance.
-      md.reset();
-      md.update(inputBytes);
-      return md.digest();
-   }
-   
-   
-   */
 }

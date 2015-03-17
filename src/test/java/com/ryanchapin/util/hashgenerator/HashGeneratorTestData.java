@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.ryanchapin.util.hashgenerator.HashGeneratorTest.HashAlgo;
 import com.ryanchapin.util.hashgenerator.HashGeneratorTest.HashTestData;
-import com.ryanchapin.util.hashgenerator.HashGeneratorTest.TestDataType;
 
 /**
  * Auto-generated test data
@@ -18,10 +17,10 @@ import com.ryanchapin.util.hashgenerator.HashGeneratorTest.TestDataType;
 public class HashGeneratorTestData {
    
    /** Map to contain the List {@link HashTestData} instances for each data type. */
-   public static  Map<TestDataType, List<HashTestData<? extends Object>>> testDataMap;
+   public static  Map<HashGenerator.DataType, List<HashTestData<? extends Object>>> testDataMap;
    
    static {
-      testDataMap = new HashMap<TestDataType, List<HashTestData<? extends Object>>>();
+      testDataMap = new HashMap<HashGenerator.DataType, List<HashTestData<? extends Object>>>();
 
       // Each of the following lists contains a HashTestData instance with
       // the source value, it's hash, and the algorithm used to generate that
@@ -35,14 +34,14 @@ public class HashGeneratorTestData {
       List<HashTestData<? extends Object>> doubleList    = new ArrayList<HashTestData<? extends Object>>();
       List<HashTestData<? extends Object>> stringList    = new ArrayList<HashTestData<? extends Object>>();
 
-      testDataMap.put(TestDataType.BYTE,      byteList);
-      testDataMap.put(TestDataType.SHORT,     shortList);
-      testDataMap.put(TestDataType.CHARACTER, characterList);
-      testDataMap.put(TestDataType.INTEGER,   integerList);
-      testDataMap.put(TestDataType.LONG,      longList);
-      testDataMap.put(TestDataType.FLOAT,     floatList);
-      testDataMap.put(TestDataType.DOUBLE,    doubleList);
-      testDataMap.put(TestDataType.STRING,    stringList);
+      testDataMap.put(HashGenerator.DataType.BYTE,      byteList);
+      testDataMap.put(HashGenerator.DataType.SHORT,     shortList);
+      testDataMap.put(HashGenerator.DataType.CHARACTER, characterList);
+      testDataMap.put(HashGenerator.DataType.INTEGER,   integerList);
+      testDataMap.put(HashGenerator.DataType.LONG,      longList);
+      testDataMap.put(HashGenerator.DataType.FLOAT,     floatList);
+      testDataMap.put(HashGenerator.DataType.DOUBLE,    doubleList);
+      testDataMap.put(HashGenerator.DataType.STRING,    stringList);
             
       // ----------------------------------------------------------------------
       // All of the code for each of the following HashDataTest instances are
