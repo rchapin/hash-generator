@@ -3,6 +3,9 @@ package com.ryanchapin.util.hashgenerator;
 import static org.junit.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
@@ -95,6 +98,54 @@ public class HashGeneratorTest {
       LOGGER.debug("hexVal01 = {}", hexVal01);
       assertEquals("hexVal01 was not the correct hex value",
             expectedOutput01, hexVal01);
+   }
+   
+   @Test
+   public void shouldClearByteArray()
+         throws IllegalStateException, NoSuchAlgorithmException,
+         NoSuchFieldException, SecurityException,
+         IllegalArgumentException, IllegalAccessException
+   {
+      HashGenerator hg = new HashGenerator(HashAlgorithm.SHA1SUM);
+      HashTestData<? extends Object> htd =
+            getSingleHashTestDataObject(DataType.DOUBLE);
+      @SuppressWarnings("unused")
+      String hash = hg.createHash((Double) htd.getData());
+   
+      // Use reflection to get access to the private byteArrayMap
+      Class<HashGenerator> hashGeneratorClazz = HashGenerator.class;
+      Field byteArrayMapField = hashGeneratorClazz.getDeclaredField("byteArrayMap");
+      byteArrayMapField.setAccessible(true);
+      @SuppressWarnings("unchecked")
+      Map<DataType, byte[]> byteArrayMap = (Map<DataType, byte[]>) byteArrayMapField.get(hg);
+   
+      byte[] arr = byteArrayMap.get(DataType.DOUBLE);
+      for (int i = 0; i < arr.length; i++) {
+         assertEquals("Byte in array to be cleared was NOT set to 0x00",
+               0x00, arr[i]);
+      }
+   }
+   
+   @Test
+   public void shouldClearByteArrayStatic()
+         throws NoSuchMethodException, SecurityException,
+         IllegalAccessException, IllegalArgumentException,
+         InvocationTargetException
+   {
+      byte[] arr = new byte[] {-128, 72, 64, 0, 15 -6};
+      
+      // Use reflection to access and invoke the private static method
+      Class<HashGenerator> hashGeneratorClazz = HashGenerator.class;
+
+      Method clearByteArrayMethod = 
+            hashGeneratorClazz.getDeclaredMethod("clearByteArray", new Class[]{byte[].class});
+      clearByteArrayMethod.setAccessible(true);
+      clearByteArrayMethod.invoke(null, new Object[]{arr});
+        
+      for (int i = 0; i < arr.length; i++) {
+         assertEquals("Byte in array to be cleared was NOT set to 0x00",
+               0x00, arr[i]);
+      }
    }
    
    /** -- Byte Tests ------------------------------------------------------- */
@@ -943,6 +994,30 @@ public class HashGeneratorTest {
       }
 
       public HashTestData(T data, String hash, HashAlgorithm algo) {
+         this.data = data;
+         this.hash = hash;
+         this.algo = algo;
+      }
+   }
+   
+   public static class HashTestDataList<T> {
+      private List<T> data;
+      private String hash;
+      private HashAlgorithm algo;
+      
+      public List<T> getData() {
+         return data;
+      }
+      
+      public String getHash() {
+         return hash;
+      }
+      
+      public HashAlgorithm getAlgo() {
+         return algo;
+      }
+      
+      public HashTestDataList(List<T> data, String hash, HashAlgorithm algo) {
          this.data = data;
          this.hash = hash;
          this.algo = algo;

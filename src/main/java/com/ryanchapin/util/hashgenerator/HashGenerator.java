@@ -132,6 +132,8 @@ public class HashGenerator {
       md = null;
    }
    
+   
+   
    // -------------------------------------------------------------------------
    // Constructor:
    //
@@ -221,7 +223,10 @@ public class HashGenerator {
    {
       checkHashAlgoInput(hashAlgorithm);
       byte[] byteArray = new byte[] {input};
-      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
+      return retVal;
    }
    
    /**
@@ -239,7 +244,10 @@ public class HashGenerator {
       checkHashAlgoField();
       byte[] byteArray = getByteArray(DataType.BYTE, 1);
       byteArray[0] = input;
-      return bytesToHex(computeHashBytes(byteArray));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(DataType.BYTE);
+      return retVal;
    }
    
    /** -- Characters ------------------------------------------------------- */
@@ -267,7 +275,10 @@ public class HashGenerator {
       
       byte[] byteArray = new byte[CHAR_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
+      return retVal;
    }
    
    /**
@@ -289,7 +300,10 @@ public class HashGenerator {
       
       byte[] byteArray = getByteArray(DataType.CHARACTER, CHAR_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(DataType.CHARACTER);
+      return retVal;
    }
 
    /** -- Shorts ----------------------------------------------------------- */
@@ -317,7 +331,10 @@ public class HashGenerator {
       
       byte[] byteArray = new byte[SHORT_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
+      return retVal;
    }
    
    /**
@@ -339,7 +356,10 @@ public class HashGenerator {
       
       byte[] byteArray = getByteArray(DataType.SHORT, SHORT_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(DataType.SHORT);
+      return retVal;
    }
    
    /** -- Integers --------------------------------------------------------- */
@@ -367,7 +387,10 @@ public class HashGenerator {
       
       byte[] byteArray = new byte[INTEGER_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
+      return retVal;
    }
    
    /**
@@ -389,7 +412,10 @@ public class HashGenerator {
       
       byte[] byteArray = getByteArray(DataType.INTEGER, INTEGER_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(DataType.INTEGER);
+      return retVal;
    }
    
    /** -- Longs ------------------------------------------------------------ */
@@ -417,7 +443,10 @@ public class HashGenerator {
       
       byte[] byteArray = new byte[LONG_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
+      return retVal;
    }
    
    /**
@@ -439,7 +468,10 @@ public class HashGenerator {
       
       byte[] byteArray = getByteArray(DataType.LONG, LONG_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(DataType.LONG);
+      return retVal;
    }
 
    /** -- Floats ----------------------------------------------------------- */
@@ -467,7 +499,10 @@ public class HashGenerator {
       
       byte[] byteArray = new byte[FLOAT_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
+      return retVal;
    }
    
    /**
@@ -489,7 +524,10 @@ public class HashGenerator {
       
       byte[] byteArray = getByteArray(DataType.FLOAT, FLOAT_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(DataType.FLOAT);
+      return retVal;
    }
    
    /** -- Doubles ---------------------------------------------------------- */
@@ -517,7 +555,10 @@ public class HashGenerator {
       
       byte[] byteArray = new byte[DOUBLE_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
+      return retVal;
    }
    
    /**
@@ -539,7 +580,10 @@ public class HashGenerator {
       
       byte[] byteArray = getByteArray(DataType.DOUBLE, DOUBLE_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      return bytesToHex(computeHashBytes(byteArray));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(DataType.DOUBLE);
+      return retVal;
    }
    
    /** -- Strings ---------------------------------------------------------- */
@@ -569,7 +613,10 @@ public class HashGenerator {
 
       // Generate a byte array from the input String.
       byte[] byteArray = input.getBytes(encoding);
-      return bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
+      return retVal;
    }
 
    /**
@@ -597,7 +644,10 @@ public class HashGenerator {
 
       // Generate a byte array from the input String.
       byte[] byteArray = input.getBytes(encoding);
-      return bytesToHex(computeHashBytes(byteArray));
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(byteArray);
+      return retVal;
    }
    
    /** -- Utility Methods -------------------------------------------------- */
@@ -670,7 +720,7 @@ public class HashGenerator {
     *        
     * @return the array of bytes representing the hashed data.
     */
-   public byte[] computeHashBytes(byte[] inputBytes) throws NoSuchAlgorithmException {
+   private byte[] computeHashBytes(byte[] inputBytes) throws NoSuchAlgorithmException {
       if (null == md) {
          md = MessageDigest.getInstance(hashAlgo.getAlgo());
       } else {
@@ -690,7 +740,7 @@ public class HashGenerator {
     *         algorithm to be used to calculate the hash.
     * @return the array of bytes representing the hashed data.
     */
-   public static byte[] computeHashBytes(byte[] inputBytes, HashAlgorithm hashAlgorithm)
+   private static byte[] computeHashBytes(byte[] inputBytes, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException
    {
       // Instantiate a MessageDigest instance configured with the desired
@@ -723,6 +773,33 @@ public class HashGenerator {
          retVal.append(hexValue);
       }
       return retVal.toString();
+   }
+   
+   /**
+    * Will set all of the bytes in the given byte array to 0x00.
+    * 
+    * @param  arr
+    *         byte array to 'reset'.
+    */
+   private static void clearByteArray(byte[] arr) {
+      for (int i = 0; i < arr.length; i++) {
+         arr[i] = 0x00;
+      }
+   }
+   
+   /**
+    * Will set all of the bytes in the byte array that is in the
+    * internal byte array map, keyed by the DataType value passed in,
+    * to 0x00.
+    * 
+    * @param  type
+    *         value of the array in the byte array map to be 'reset'.
+    */
+   private void clearByteArray(DataType type) {
+      byte[] arr = byteArrayMap.get(type);
+      for (int i = 0; i < arr.length; i++) {
+         arr[i] = 0x00;
+      }
    }
    
    /**
