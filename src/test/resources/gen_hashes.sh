@@ -79,6 +79,7 @@ for FILE in `ls *${BIN_FILE_EXT}`
 do
    for HASH_ALGO in $HASH_ALGOS
    do
+      echo "-------------------------------------------"
       echo "Hashing file '$FILE' with '$HASH_ALGO' algo"
 
       # The output of this command will be similar to:
@@ -89,39 +90,48 @@ do
 
       # Split the output with the default IFS as the delimiter into the hashed
       # value and the class name with the identifier for the data
-      read -r HASH TYPE_AND_ID <<< "$HASH_OUTPUT"
+      read -r HASH TYPE_VAR_TYPE_ID <<< "$HASH_OUTPUT"
 
 
       # Trim the '*' from the front and the '.bin' from the end of the TYPE_VALUE String
-      TYPE_AND_ID=$(echo "$TYPE_AND_ID" | cut -c 2- | sed 's/....$//g')
-      echo "HASH = $HASH, TYPE_AND_ID = $TYPE_AND_ID"
+      TYPE_VAR_TYPE_ID=$(echo "$TYPE_VAR_TYPE_ID" | cut -c 2- | sed 's/....$//g')
+      echo "HASH = $HASH, TYPE_VAR_TYPE_ID = $TYPE_VAR_TYPE_ID"
 
 
-      # Split the TYPE_AND_ID with the '_' delimiter to glean the type by itself
+      # Split the TYPE_VAR_TYPE_ID with the '_' delimiter to glean the data type,
+      # the var_type, and the id of the file
       OIFS="$IFS"
       IFS="_"
-      read -r TYPE ID <<< "$TYPE_AND_ID"
+      read -r TYPE VAR_TYPE ID <<< "$TYPE_VAR_TYPE_ID"
       IFS="$OIFS"
 
-      echo "TYPE = $TYPE"
-      echo "ID = $ID"
+      echo "TYPE     = $TYPE"
+      echo "VAR_TYPE = $VAR_TYPE"
+      echo "ID       = $ID"
 
       TYPE_LC=$(echo "$TYPE" | tr [:upper:] [:lower:] )
 
-      LIST_NAME="${TYPE_LC}List"
+      LIST_NAME="${TYPE_LC}${VAR_TYPE}List"
       echo "LIST_NAME = $LIST_NAME"
 
-      HTD_NAME="htd_${TYPE}_${INSTANCE_COUNTER}"
+      HTD_NAME="htd${TYPE}${VAR_TYPE}${INSTANCE_COUNTER}"
       echo "HTD_NAME = $HTD_NAME" 
 
       HASH_ALGO_ENUM=$(echo "$HASH_ALGO" | tr [:lower:] [:upper:])
       echo "HASH_ALGO_ENUM = $HASH_ALGO_ENUM"
 
       # Extract the ASCII value of the data
-      ASCII_FILE=${TYPE_AND_ID}${TXT_FILE_EXT}
+      ASCII_FILE=${TYPE_VAR_TYPE_ID}${TXT_FILE_EXT}
       ASCII_VALUE=$(cat $ASCII_FILE)
+      echo "ASCII_VALUE = $ASCII_VALUE" 
 
-      cat <<EOF >> $CODE_OUTFILE
+      #
+      # Write out the Java code to instantiate this test data object
+      #
+      case $VAR_TYPE in
+
+      "Scalar")
+         cat <<EOF >> $CODE_OUTFILE
 
 HashTestData<? extends Object> $HTD_NAME = new HashTestData<$TYPE>(
    new ${TYPE}(${ASCII_VALUE}),
@@ -129,6 +139,19 @@ HashTestData<? extends Object> $HTD_NAME = new HashTestData<$TYPE>(
    HashAlgorithm.${HASH_ALGO_ENUM});
 ${LIST_NAME}.add($HTD_NAME);
 EOF
+         ;;
+
+      "Array")
+         cat <<EOF >> $CODE_OUTFILE
+
+HashTestDataList<? extends Object> $HTD_NAME = new HashTestDataList<$TYPE>(
+   ${ASCII_VALUE},
+   "$HASH",
+   HashAlgorithm.${HASH_ALGO_ENUM});
+${LIST_NAME}.add($HTD_NAME);
+EOF
+         ;;
+      esac
 
       # Increment the counter
       INSTANCE_COUNTER=$(($INSTANCE_COUNTER+1))

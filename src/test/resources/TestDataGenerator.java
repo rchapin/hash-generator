@@ -38,6 +38,18 @@ public class TestDataGenerator {
    private static final String FILE_BIN_SUFFIX    = ".bin";
    private static final String FILE_ASCII_SUFFIX  = ".txt";
    
+   /**
+    * String to add to the output file to indicate that the data is for a
+    * single scalar variable.
+    */
+   private static final String SCALAR = "Scalar";
+ 
+   /**
+    * String to add to the output file to indicate that the data is an
+    * array (List) of values.
+    */
+   private static final String ARRAY = "Array";
+   
    public TestDataGenerator() {}
    
    /**
@@ -52,7 +64,7 @@ public class TestDataGenerator {
       // Get the unprefixed class name
       String[] classNameArr = data.getClass().getName().split("[.]");
       String className = classNameArr[((classNameArr.length)-1)];
-      String dataId = className + "_" + outputCounter;
+      String dataId = className + "_" + SCALAR + "_" + outputCounter;
       System.out.println("dataId = " + dataId);
       
       // Binary data
@@ -89,7 +101,7 @@ public class TestDataGenerator {
          ((DataOutputStream)out).write(byteArr);
          writer.write("\"" + data.toString() + "\"");   
       } else {
-         // NoOp as we don't know how to write out this data
+         // NoOp as we do not know how to write out this data.
       }
 
       closeOutputStream(out);      
@@ -97,7 +109,52 @@ public class TestDataGenerator {
       outputCounter++;
    }
    
+   public void writeDataArray(Object[] data) throws IOException {
+      
+      // Get the unprefixed class name,
+      String[] classNameArr = data.getClass().getName().split("[.]");
+      
+      // Get the last token, with is the unqualified class name, and remove
+      // and ';' if they exist.
+      String className = classNameArr[((classNameArr.length)-1)]
+            .replace(";", "");
+      String dataId = className + "_" + ARRAY + "_" + outputCounter;
+      System.out.println("dataId = " + dataId);
+      
+      // Binary data
+      OutputStream out = getOutputStream(dataId + FILE_BIN_SUFFIX);
+      // ASCII data
+      BufferedWriter writer = getBufferedWriter(dataId + FILE_ASCII_SUFFIX);
+
+      if (data[0] instanceof Character) {
+         int arrLen           = data.length;
+         int delimLenBoundary = arrLen - 1;
+         
+         // Write the prefix for the instantiation of the List
+         writer.write("Arrays.asList(new Character[] {");
+         
+         for (int i = 0; i < arrLen; i++) {
+            Character charData   = (Character)data[i];
+            ((DataOutputStream)out).writeChar(charData.charValue());
+            writer.write("'" + charData.toString() + "'");
+            
+            if (i < delimLenBoundary) {
+               writer.write(",");
+            }
+         }
+         // Write the suffix for the instantiation of the list
+         writer.write("})");
+      } else {
+         // NoOp as we do not know how to write out this data.
+      }
+      
+      closeOutputStream(out);      
+      closeBufferedWriter(writer);
+      outputCounter++;
+   }
+
    private OutputStream getOutputStream(String fileName) throws IOException {
+      System.out.println("fileName = " + fileName);
       OutputStream out = new DataOutputStream (
             new BufferedOutputStream(
                   new FileOutputStream(fileName)));
@@ -168,7 +225,7 @@ public class TestDataGenerator {
          "V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n",
          "UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"
       };
-
+      
       Object[][]   testData = new Object[8][];
       testData[0] = byteArr;
       testData[1] = charArr;
@@ -178,12 +235,28 @@ public class TestDataGenerator {
       testData[5] = floatArr;
       testData[6] = doubleArr;
       testData[7] = stringArr;
-         
+      
+
+      Character[][] charArrayArr = new Character[1][];
+      charArrayArr[0] = new Character[] {'t','h','i','s','a','b','a','d','p','a','s','s','w','o','r','d'};
+
+      Object[][][] testDataArray = new Object[1][][];
+      testDataArray[0] = charArrayArr;
+      
+      
       TestDataGenerator tdg = new TestDataGenerator();
       
+      // Write out the arrays of objects
       for (Object[] arr : testData) {
          for (Object obj : arr) {
             tdg.writeData(obj);
+         }
+      }
+      
+      // Write out the arrays of arrays of objects
+      for (Object[][] arr : testDataArray) {
+         for (Object[] objArr : arr) {
+            tdg.writeDataArray(objArr);
          }
       }
    }

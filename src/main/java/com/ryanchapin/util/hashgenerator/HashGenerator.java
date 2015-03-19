@@ -650,6 +650,26 @@ public class HashGenerator {
       return retVal;
    }
    
+   /** -- Character Arrays ------------------------------------------------- */
+   
+   public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
+      throws IllegalArgumentException
+   {
+      checkHashAlgoInput(hashAlgorithm);
+      
+      String retVal = null;
+      return retVal;
+   }
+   
+   public String createHash(char[] input)
+         throws IllegalStateException, NoSuchAlgorithmException
+   {
+      checkHashAlgoField();
+
+      String retVal = null;
+      return retVal;
+   }
+   
    /** -- Utility Methods -------------------------------------------------- */
    
    /**
@@ -816,7 +836,8 @@ public class HashGenerator {
       LONG,
       FLOAT,
       DOUBLE,
-      STRING
+      STRING,
+      CHARACTER_ARRAY
    }
    
    /**

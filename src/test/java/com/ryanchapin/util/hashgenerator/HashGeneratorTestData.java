@@ -1,12 +1,14 @@
 package com.ryanchapin.util.hashgenerator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.ryanchapin.util.hashgenerator.HashGenerator.HashAlgorithm;
 import com.ryanchapin.util.hashgenerator.HashGeneratorTest.HashTestData;
+import com.ryanchapin.util.hashgenerator.HashGeneratorTest.HashTestDataList;
 
 /**
  * Auto-generated test data
@@ -17,1236 +19,1293 @@ import com.ryanchapin.util.hashgenerator.HashGeneratorTest.HashTestData;
 public class HashGeneratorTestData {
    
    /** Map to contain the List {@link HashTestData} instances for each data type. */
-   public static  Map<HashGenerator.DataType, List<HashTestData<? extends Object>>> testDataMap;
+   public static Map<HashGenerator.DataType,
+         List<HashTestData<? extends Object>>> testDataMap;
+   
+   /**
+    * Map to contain the List {@link HashTestDataList} instance for each data
+    * array (or list) of data types 
+    */
+   public static Map<HashGenerator.DataType,
+         List<HashTestDataList<? extends Object>>> testDataListMap;
    
    static {
-      testDataMap = new HashMap<HashGenerator.DataType, List<HashTestData<? extends Object>>>();
+      testDataMap = new HashMap<HashGenerator.DataType,
+            List<HashTestData<? extends Object>>>();
 
       // Each of the following lists contains a HashTestData instance with
       // the source value, it's hash, and the algorithm used to generate that
       // hash.
-      List<HashTestData<? extends Object>> byteList      = new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> characterList = new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> shortList     = new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> integerList   = new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> longList      = new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> floatList     = new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> doubleList    = new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> stringList    = new ArrayList<HashTestData<? extends Object>>();
+      List<HashTestData<? extends Object>> byteScalarList      =
+            new ArrayList<HashTestData<? extends Object>>();
+      List<HashTestData<? extends Object>> characterScalarList =
+            new ArrayList<HashTestData<? extends Object>>();
+      List<HashTestData<? extends Object>> shortScalarList     =
+            new ArrayList<HashTestData<? extends Object>>();
+      List<HashTestData<? extends Object>> integerScalarList   =
+            new ArrayList<HashTestData<? extends Object>>();
+      List<HashTestData<? extends Object>> longScalarList      =
+            new ArrayList<HashTestData<? extends Object>>();
+      List<HashTestData<? extends Object>> floatScalarList     =
+            new ArrayList<HashTestData<? extends Object>>();
+      List<HashTestData<? extends Object>> doubleScalarList    =
+            new ArrayList<HashTestData<? extends Object>>();
+      List<HashTestData<? extends Object>> stringScalarList    =
+            new ArrayList<HashTestData<? extends Object>>();
 
-      testDataMap.put(HashGenerator.DataType.BYTE,      byteList);
-      testDataMap.put(HashGenerator.DataType.SHORT,     shortList);
-      testDataMap.put(HashGenerator.DataType.CHARACTER, characterList);
-      testDataMap.put(HashGenerator.DataType.INTEGER,   integerList);
-      testDataMap.put(HashGenerator.DataType.LONG,      longList);
-      testDataMap.put(HashGenerator.DataType.FLOAT,     floatList);
-      testDataMap.put(HashGenerator.DataType.DOUBLE,    doubleList);
-      testDataMap.put(HashGenerator.DataType.STRING,    stringList);
+      testDataMap.put(HashGenerator.DataType.BYTE,      byteScalarList);
+      testDataMap.put(HashGenerator.DataType.SHORT,     shortScalarList);
+      testDataMap.put(HashGenerator.DataType.CHARACTER, characterScalarList);
+      testDataMap.put(HashGenerator.DataType.INTEGER,   integerScalarList);
+      testDataMap.put(HashGenerator.DataType.LONG,      longScalarList);
+      testDataMap.put(HashGenerator.DataType.FLOAT,     floatScalarList);
+      testDataMap.put(HashGenerator.DataType.DOUBLE,    doubleScalarList);
+      testDataMap.put(HashGenerator.DataType.STRING,    stringScalarList);
             
+      
+      testDataListMap = new HashMap<HashGenerator.DataType,
+            List<HashTestDataList<? extends Object>>>();
+  
+      List<HashTestDataList<? extends Object>> characterArrayList =
+            new ArrayList<HashTestDataList<? extends Object>>();
+      
+      testDataListMap.put(HashGenerator.DataType.CHARACTER, characterArrayList);
+      
       // ----------------------------------------------------------------------
       // All of the code for each of the following HashDataTest instances are
       // dynamically generated by the gen_hashes.sh script in the
       // src/test/resources directory.  See the README.md for full details.
 
-      HashTestData<? extends Object> htd_Byte_0 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar0 = new HashTestData<Byte>(
          new Byte((byte)-128),
          "8d39dd7eef115ea6975446ef4082951f",
          HashAlgorithm.MD5SUM);
-      byteList.add(htd_Byte_0);
+      byteScalarList.add(htdByteScalar0);
       
-      HashTestData<? extends Object> htd_Byte_1 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar1 = new HashTestData<Byte>(
          new Byte((byte)-128),
          "c78ebd3c85a39a596d9f5cfd2b8d240bc1b9c125",
          HashAlgorithm.SHA1SUM);
-      byteList.add(htd_Byte_1);
+      byteScalarList.add(htdByteScalar1);
       
-      HashTestData<? extends Object> htd_Byte_2 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar2 = new HashTestData<Byte>(
          new Byte((byte)-128),
          "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71",
          HashAlgorithm.SHA256SUM);
-      byteList.add(htd_Byte_2);
+      byteScalarList.add(htdByteScalar2);
       
-      HashTestData<? extends Object> htd_Byte_3 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar3 = new HashTestData<Byte>(
          new Byte((byte)-128),
          "8db630b3036f40e29aa4c95e3c0156f55a593bf005fc425936d2134a4fc0b855bb4ab4767dd4b0b1dd261cd111598d3d",
          HashAlgorithm.SHA384SUM);
-      byteList.add(htd_Byte_3);
+      byteScalarList.add(htdByteScalar3);
       
-      HashTestData<? extends Object> htd_Byte_4 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar4 = new HashTestData<Byte>(
          new Byte((byte)-128),
          "dfe8ef54110b3324d3b889035c95cfb80c92704614bf76f17546ad4f4b08218a630e16da7df34766a975b3bb85b01df9e99a4ec0a1d0ec3de6bed7b7a40b2f10",
          HashAlgorithm.SHA512SUM);
-      byteList.add(htd_Byte_4);
+      byteScalarList.add(htdByteScalar4);
       
-      HashTestData<? extends Object> htd_Byte_5 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar5 = new HashTestData<Byte>(
          new Byte((byte)-23),
          "3406877694691ddd1dfb0aca54681407",
          HashAlgorithm.MD5SUM);
-      byteList.add(htd_Byte_5);
+      byteScalarList.add(htdByteScalar5);
       
-      HashTestData<? extends Object> htd_Byte_6 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar6 = new HashTestData<Byte>(
          new Byte((byte)-23),
          "1599e9fa41ec68c80230491902786bee889f5bcb",
          HashAlgorithm.SHA1SUM);
-      byteList.add(htd_Byte_6);
+      byteScalarList.add(htdByteScalar6);
       
-      HashTestData<? extends Object> htd_Byte_7 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar7 = new HashTestData<Byte>(
          new Byte((byte)-23),
          "de2e331d891ae267a7009cb45b4e8830f170e0c937288ea2731a1941c7a53b0d",
          HashAlgorithm.SHA256SUM);
-      byteList.add(htd_Byte_7);
+      byteScalarList.add(htdByteScalar7);
       
-      HashTestData<? extends Object> htd_Byte_8 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar8 = new HashTestData<Byte>(
          new Byte((byte)-23),
          "cf16e9b450d92416b3a86e452a5162e8d6d496a9e126dcead3d60ce8cb9242baeb94b24c73af76c71c00c11a7c0acc03",
          HashAlgorithm.SHA384SUM);
-      byteList.add(htd_Byte_8);
+      byteScalarList.add(htdByteScalar8);
       
-      HashTestData<? extends Object> htd_Byte_9 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar9 = new HashTestData<Byte>(
          new Byte((byte)-23),
          "b164716d213ddec0e2dbf8f2c7cc16d673b14c7a5ce46826e10ad36abe97fdeb9a34bb379da49edf29a46f4d2b77883c97786b63d543924dad3873c43a91a1af",
          HashAlgorithm.SHA512SUM);
-      byteList.add(htd_Byte_9);
+      byteScalarList.add(htdByteScalar9);
       
-      HashTestData<? extends Object> htd_Byte_10 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar10 = new HashTestData<Byte>(
          new Byte((byte)0),
          "93b885adfe0da089cdf634904fd59f71",
          HashAlgorithm.MD5SUM);
-      byteList.add(htd_Byte_10);
+      byteScalarList.add(htdByteScalar10);
       
-      HashTestData<? extends Object> htd_Byte_11 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar11 = new HashTestData<Byte>(
          new Byte((byte)0),
          "5ba93c9db0cff93f52b521d7420e43f6eda2784f",
          HashAlgorithm.SHA1SUM);
-      byteList.add(htd_Byte_11);
+      byteScalarList.add(htdByteScalar11);
       
-      HashTestData<? extends Object> htd_Byte_12 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar12 = new HashTestData<Byte>(
          new Byte((byte)0),
          "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
          HashAlgorithm.SHA256SUM);
-      byteList.add(htd_Byte_12);
+      byteScalarList.add(htdByteScalar12);
       
-      HashTestData<? extends Object> htd_Byte_13 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar13 = new HashTestData<Byte>(
          new Byte((byte)0),
          "bec021b4f368e3069134e012c2b4307083d3a9bdd206e24e5f0d86e13d6636655933ec2b413465966817a9c208a11717",
          HashAlgorithm.SHA384SUM);
-      byteList.add(htd_Byte_13);
+      byteScalarList.add(htdByteScalar13);
       
-      HashTestData<? extends Object> htd_Byte_14 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar14 = new HashTestData<Byte>(
          new Byte((byte)0),
          "b8244d028981d693af7b456af8efa4cad63d282e19ff14942c246e50d9351d22704a802a71c3580b6370de4ceb293c324a8423342557d4e5c38438f0e36910ee",
          HashAlgorithm.SHA512SUM);
-      byteList.add(htd_Byte_14);
+      byteScalarList.add(htdByteScalar14);
       
-      HashTestData<? extends Object> htd_Byte_15 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar15 = new HashTestData<Byte>(
          new Byte((byte)87),
          "61e9c06ea9a85a5088a499df6458d276",
          HashAlgorithm.MD5SUM);
-      byteList.add(htd_Byte_15);
+      byteScalarList.add(htdByteScalar15);
       
-      HashTestData<? extends Object> htd_Byte_16 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar16 = new HashTestData<Byte>(
          new Byte((byte)87),
          "e2415cb7f63df0c9de23362326ad3c37a9adfc96",
          HashAlgorithm.SHA1SUM);
-      byteList.add(htd_Byte_16);
+      byteScalarList.add(htdByteScalar16);
       
-      HashTestData<? extends Object> htd_Byte_17 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar17 = new HashTestData<Byte>(
          new Byte((byte)87),
          "fcb5f40df9be6bae66c1d77a6c15968866a9e6cbd7314ca432b019d17392f6f4",
          HashAlgorithm.SHA256SUM);
-      byteList.add(htd_Byte_17);
+      byteScalarList.add(htdByteScalar17);
       
-      HashTestData<? extends Object> htd_Byte_18 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar18 = new HashTestData<Byte>(
          new Byte((byte)87),
          "0b75998ad89118532ac2d0d3561fbd159ec73950df3ec5cd0e358a9a166f0e267f110d029865e736c266eb528d1729d3",
          HashAlgorithm.SHA384SUM);
-      byteList.add(htd_Byte_18);
+      byteScalarList.add(htdByteScalar18);
       
-      HashTestData<? extends Object> htd_Byte_19 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar19 = new HashTestData<Byte>(
          new Byte((byte)87),
          "61037724a2fb00a12fa8a53ada233f54ff7fc6ee02048e579b83a127ce79fc03906c35b5307beb18a3cf5021fe031ae6587448d4d60a082d73252fe2e2f4ae7f",
          HashAlgorithm.SHA512SUM);
-      byteList.add(htd_Byte_19);
+      byteScalarList.add(htdByteScalar19);
       
-      HashTestData<? extends Object> htd_Byte_20 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar20 = new HashTestData<Byte>(
          new Byte((byte)127),
          "83acb6e67e50e31db6ed341dd2de1595",
          HashAlgorithm.MD5SUM);
-      byteList.add(htd_Byte_20);
+      byteScalarList.add(htdByteScalar20);
       
-      HashTestData<? extends Object> htd_Byte_21 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar21 = new HashTestData<Byte>(
          new Byte((byte)127),
          "23833462f55515a900e016db2eb943fb474c19f6",
          HashAlgorithm.SHA1SUM);
-      byteList.add(htd_Byte_21);
+      byteScalarList.add(htdByteScalar21);
       
-      HashTestData<? extends Object> htd_Byte_22 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar22 = new HashTestData<Byte>(
          new Byte((byte)127),
          "620bfdaa346b088fb49998d92f19a7eaf6bfc2fb0aee015753966da1028cb731",
          HashAlgorithm.SHA256SUM);
-      byteList.add(htd_Byte_22);
+      byteScalarList.add(htdByteScalar22);
       
-      HashTestData<? extends Object> htd_Byte_23 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar23 = new HashTestData<Byte>(
          new Byte((byte)127),
          "23a8a9d42d150a471e8502ee2f4e822cb955e798882d698c5bd5aa01e43137cb566fefb1b06dced14b43c2e49758569d",
          HashAlgorithm.SHA384SUM);
-      byteList.add(htd_Byte_23);
+      byteScalarList.add(htdByteScalar23);
       
-      HashTestData<? extends Object> htd_Byte_24 = new HashTestData<Byte>(
+      HashTestData<? extends Object> htdByteScalar24 = new HashTestData<Byte>(
          new Byte((byte)127),
          "75eb69a43e3bbcff322ec624ae7511cf3ad99df84b90d48b2665c70dff548c4857d4446c1eb04535bf54daa96e2cf5c3d5203d1fb43bbf4d40301bab95ac7772",
          HashAlgorithm.SHA512SUM);
-      byteList.add(htd_Byte_24);
+      byteScalarList.add(htdByteScalar24);
       
-      HashTestData<? extends Object> htd_Character_25 = new HashTestData<Character>(
+      HashTestDataList<? extends Object> htdCharacterArray25 = new HashTestDataList<Character>(
+         Arrays.asList(new Character[] {'t','h','i','s','a','b','a','d','p','a','s','s','w','o','r','d'}),
+         "90ef93e813a257be100cf3e7895d28fa",
+         HashAlgorithm.MD5SUM);
+      characterArrayList.add(htdCharacterArray25);
+      
+      HashTestDataList<? extends Object> htdCharacterArray26 = new HashTestDataList<Character>(
+         Arrays.asList(new Character[] {'t','h','i','s','a','b','a','d','p','a','s','s','w','o','r','d'}),
+         "135f111df26e69e0bcda9f06cc29692c12ef26c9",
+         HashAlgorithm.SHA1SUM);
+      characterArrayList.add(htdCharacterArray26);
+      
+      HashTestDataList<? extends Object> htdCharacterArray27 = new HashTestDataList<Character>(
+         Arrays.asList(new Character[] {'t','h','i','s','a','b','a','d','p','a','s','s','w','o','r','d'}),
+         "4a2758bb5c258409c33d3857654231aebe6a387320e9df135cf9b404ae1f9d1e",
+         HashAlgorithm.SHA256SUM);
+      characterArrayList.add(htdCharacterArray27);
+      
+      HashTestDataList<? extends Object> htdCharacterArray28 = new HashTestDataList<Character>(
+         Arrays.asList(new Character[] {'t','h','i','s','a','b','a','d','p','a','s','s','w','o','r','d'}),
+         "8528ba402fa7515ffdb7a63678c60b4d033b17b30b568454f06d6201449e7e48d4b0dc20b1c3c484c4a20fdebfeed181",
+         HashAlgorithm.SHA384SUM);
+      characterArrayList.add(htdCharacterArray28);
+      
+      HashTestDataList<? extends Object> htdCharacterArray29 = new HashTestDataList<Character>(
+         Arrays.asList(new Character[] {'t','h','i','s','a','b','a','d','p','a','s','s','w','o','r','d'}),
+         "e4691084180ca542b249163b9997209cc41dc11f1d0fec75be231d13ce7fbfa1d838ab93fb486773bc869076a238c6e7dae4c6e031fa8953f257af00f07a9dad",
+         HashAlgorithm.SHA512SUM);
+      characterArrayList.add(htdCharacterArray29);
+      
+      HashTestData<? extends Object> htdCharacterScalar30 = new HashTestData<Character>(
          new Character('a'),
          "760f753576f2955b0074758acb4d5fa6",
          HashAlgorithm.MD5SUM);
-      characterList.add(htd_Character_25);
+      characterScalarList.add(htdCharacterScalar30);
       
-      HashTestData<? extends Object> htd_Character_26 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar31 = new HashTestData<Character>(
          new Character('a'),
          "3106600e0327ca77371f2526df794ed84322585c",
          HashAlgorithm.SHA1SUM);
-      characterList.add(htd_Character_26);
+      characterScalarList.add(htdCharacterScalar31);
       
-      HashTestData<? extends Object> htd_Character_27 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar32 = new HashTestData<Character>(
          new Character('a'),
          "022a6979e6dab7aa5ae4c3e5e45f7e977112a7e63593820dbec1ec738a24f93c",
          HashAlgorithm.SHA256SUM);
-      characterList.add(htd_Character_27);
+      characterScalarList.add(htdCharacterScalar32);
       
-      HashTestData<? extends Object> htd_Character_28 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar33 = new HashTestData<Character>(
          new Character('a'),
          "f5077c4b6e328b21e2f21192776daf9660ceaeaf40a1796b58bd9500b36aff2cb5acd79d2789f891541818315233ff6c",
          HashAlgorithm.SHA384SUM);
-      characterList.add(htd_Character_28);
+      characterScalarList.add(htdCharacterScalar33);
       
-      HashTestData<? extends Object> htd_Character_29 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar34 = new HashTestData<Character>(
          new Character('a'),
          "031ab9ff5962e81139a6900216945fc584ab186aeb1bf3498c661b976a7393af94b6bcc9784f7e8cb75b071de60f9fda06d44ddd561e53e3343857eea2089217",
          HashAlgorithm.SHA512SUM);
-      characterList.add(htd_Character_29);
+      characterScalarList.add(htdCharacterScalar34);
       
-      HashTestData<? extends Object> htd_Character_30 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar35 = new HashTestData<Character>(
          new Character('B'),
          "4d75a03f5a52413121b887ac25ad410f",
          HashAlgorithm.MD5SUM);
-      characterList.add(htd_Character_30);
+      characterScalarList.add(htdCharacterScalar35);
       
-      HashTestData<? extends Object> htd_Character_31 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar36 = new HashTestData<Character>(
          new Character('B'),
          "60a923c61fa5b9d9cbae3dfc1af19dbf52723cbc",
          HashAlgorithm.SHA1SUM);
-      characterList.add(htd_Character_31);
+      characterScalarList.add(htdCharacterScalar36);
       
-      HashTestData<? extends Object> htd_Character_32 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar37 = new HashTestData<Character>(
          new Character('B'),
          "87afe6086fe4571e37657e76281301f189c75ebae1d2eaafb56d578067a1d95e",
          HashAlgorithm.SHA256SUM);
-      characterList.add(htd_Character_32);
+      characterScalarList.add(htdCharacterScalar37);
       
-      HashTestData<? extends Object> htd_Character_33 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar38 = new HashTestData<Character>(
          new Character('B'),
          "a09f464cdc62a6cbf58d9fb7b689e16a3ff9609761defcdf5082059a1f8333166a9b287e545180bc138f374e604413b8",
          HashAlgorithm.SHA384SUM);
-      characterList.add(htd_Character_33);
+      characterScalarList.add(htdCharacterScalar38);
       
-      HashTestData<? extends Object> htd_Character_34 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar39 = new HashTestData<Character>(
          new Character('B'),
          "3bf8ba18e8d0bc73b73a79e69913d4d2fc165e82461d2fd4e0ac4d834cba71ff487ebc4af6e22d677172145368e2ddb1e718da6abea9802f4be8b94788555403",
          HashAlgorithm.SHA512SUM);
-      characterList.add(htd_Character_34);
+      characterScalarList.add(htdCharacterScalar39);
       
-      HashTestData<? extends Object> htd_Character_35 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar40 = new HashTestData<Character>(
          new Character('F'),
          "8e4f8cdcd7dccbc9654c9f6601c43383",
          HashAlgorithm.MD5SUM);
-      characterList.add(htd_Character_35);
+      characterScalarList.add(htdCharacterScalar40);
       
-      HashTestData<? extends Object> htd_Character_36 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar41 = new HashTestData<Character>(
          new Character('F'),
          "beb59e97091dd2f1ada25fea1abf7a70ac3ada78",
          HashAlgorithm.SHA1SUM);
-      characterList.add(htd_Character_36);
+      characterScalarList.add(htdCharacterScalar41);
       
-      HashTestData<? extends Object> htd_Character_37 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar42 = new HashTestData<Character>(
          new Character('F'),
          "c02b4bb4ab96197a9a5a4537d8b87f27c1c8f3f9572d215c505c5f3339ee4399",
          HashAlgorithm.SHA256SUM);
-      characterList.add(htd_Character_37);
+      characterScalarList.add(htdCharacterScalar42);
       
-      HashTestData<? extends Object> htd_Character_38 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar43 = new HashTestData<Character>(
          new Character('F'),
          "40d1c6bb7bed464e594804da93208967363c3f5fb1cc5998899f4de9ae847824622df0425b1c79e524df5ff75cd8fcb0",
          HashAlgorithm.SHA384SUM);
-      characterList.add(htd_Character_38);
+      characterScalarList.add(htdCharacterScalar43);
       
-      HashTestData<? extends Object> htd_Character_39 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar44 = new HashTestData<Character>(
          new Character('F'),
          "b4de823055d00bc12cd78fe1aaf74ee6062195b2629f49a25915a39c64be1900182e73be1a97cd2754ef4f2eb2ba42a8e1e952ea652d49bef5d87b363708dd9f",
          HashAlgorithm.SHA512SUM);
-      characterList.add(htd_Character_39);
+      characterScalarList.add(htdCharacterScalar44);
       
-      HashTestData<? extends Object> htd_Character_40 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar45 = new HashTestData<Character>(
          new Character('#'),
          "319ef1e811eff76cf85e5d8db0e79e55",
          HashAlgorithm.MD5SUM);
-      characterList.add(htd_Character_40);
+      characterScalarList.add(htdCharacterScalar45);
       
-      HashTestData<? extends Object> htd_Character_41 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar46 = new HashTestData<Character>(
          new Character('#'),
          "1b3ed51c2762e1a6e3630cf9017b40b880490ccb",
          HashAlgorithm.SHA1SUM);
-      characterList.add(htd_Character_41);
+      characterScalarList.add(htdCharacterScalar46);
       
-      HashTestData<? extends Object> htd_Character_42 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar47 = new HashTestData<Character>(
          new Character('#'),
          "43799a4d50e0cb19f37f6ce22b5cbcbf6954f13e9bb4604dca4104ae844374a4",
          HashAlgorithm.SHA256SUM);
-      characterList.add(htd_Character_42);
+      characterScalarList.add(htdCharacterScalar47);
       
-      HashTestData<? extends Object> htd_Character_43 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar48 = new HashTestData<Character>(
          new Character('#'),
          "a58240d9c21d9b3605fe679f379328e3bbf73ed7b8292396c189026256444ea6fc9c0993ea9beb482048ac662d22dad3",
          HashAlgorithm.SHA384SUM);
-      characterList.add(htd_Character_43);
+      characterScalarList.add(htdCharacterScalar48);
       
-      HashTestData<? extends Object> htd_Character_44 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar49 = new HashTestData<Character>(
          new Character('#'),
          "c9a6c7647397b538b487cfad8a06db1a42052652e0e9adae490e19965d786ec75b1d26fa3da2fa4c79d544b9f4c6b3759004aa99ac193e1a0a42df320d1ef71c",
          HashAlgorithm.SHA512SUM);
-      characterList.add(htd_Character_44);
+      characterScalarList.add(htdCharacterScalar49);
       
-      HashTestData<? extends Object> htd_Character_45 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar50 = new HashTestData<Character>(
          new Character('~'),
          "d9597743233abcfa9332c376f0762b29",
          HashAlgorithm.MD5SUM);
-      characterList.add(htd_Character_45);
+      characterScalarList.add(htdCharacterScalar50);
       
-      HashTestData<? extends Object> htd_Character_46 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar51 = new HashTestData<Character>(
          new Character('~'),
          "410100893e276b8bbb6c917fe8e60309d41bcf3d",
          HashAlgorithm.SHA1SUM);
-      characterList.add(htd_Character_46);
+      characterScalarList.add(htdCharacterScalar51);
       
-      HashTestData<? extends Object> htd_Character_47 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar52 = new HashTestData<Character>(
          new Character('~'),
          "0d1abbe3b9da7a48d463edb0a844f3a102dcf7fdea35f9c771d885027b31b322",
          HashAlgorithm.SHA256SUM);
-      characterList.add(htd_Character_47);
+      characterScalarList.add(htdCharacterScalar52);
       
-      HashTestData<? extends Object> htd_Character_48 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar53 = new HashTestData<Character>(
          new Character('~'),
          "2a40ba47817768e0e65b7942a3c1296180e2f6937853a5f74c0e5028aa4c9b9b1ed846cab2451b81400cc1adc2668a9a",
          HashAlgorithm.SHA384SUM);
-      characterList.add(htd_Character_48);
+      characterScalarList.add(htdCharacterScalar53);
       
-      HashTestData<? extends Object> htd_Character_49 = new HashTestData<Character>(
+      HashTestData<? extends Object> htdCharacterScalar54 = new HashTestData<Character>(
          new Character('~'),
          "f08a7590ffa50860c2c045fd005404f5909275991729542df04d9e2d674277530f498540133d7f78d0ca514206ef7a4d4060f8101a2ce173f641cdf746ddb4a2",
          HashAlgorithm.SHA512SUM);
-      characterList.add(htd_Character_49);
+      characterScalarList.add(htdCharacterScalar54);
       
-      HashTestData<? extends Object> htd_Double_50 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar55 = new HashTestData<Double>(
          new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
          "fa5ad9a8557e5a84cf23e52d3d3adf77",
          HashAlgorithm.MD5SUM);
-      doubleList.add(htd_Double_50);
+      doubleScalarList.add(htdDoubleScalar55);
       
-      HashTestData<? extends Object> htd_Double_51 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar56 = new HashTestData<Double>(
          new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
          "cb473678976f425d6ec1339838f11011007ad27d",
          HashAlgorithm.SHA1SUM);
-      doubleList.add(htd_Double_51);
+      doubleScalarList.add(htdDoubleScalar56);
       
-      HashTestData<? extends Object> htd_Double_52 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar57 = new HashTestData<Double>(
          new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
          "cd2662154e6d76b2b2b92e70c0cac3ccf534f9b74eb5b89819ec509083d00a50",
          HashAlgorithm.SHA256SUM);
-      doubleList.add(htd_Double_52);
+      doubleScalarList.add(htdDoubleScalar57);
       
-      HashTestData<? extends Object> htd_Double_53 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar58 = new HashTestData<Double>(
          new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
          "30f61d4b94e1d74e6a751248ff2007f715a16cd214365fcef3e5751664a568475eccd842d1396aa5cfa83f5b9d20c586",
          HashAlgorithm.SHA384SUM);
-      doubleList.add(htd_Double_53);
+      doubleScalarList.add(htdDoubleScalar58);
       
-      HashTestData<? extends Object> htd_Double_54 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar59 = new HashTestData<Double>(
          new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
          "df9c478c05321087b50a1d239b4aab290e9b793252758e706e24312aed21c29072285e436a20c3c6227f99b73638f0414fba5835586fee4e19231c1ec56d58ee",
          HashAlgorithm.SHA512SUM);
-      doubleList.add(htd_Double_54);
+      doubleScalarList.add(htdDoubleScalar59);
       
-      HashTestData<? extends Object> htd_Double_55 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar60 = new HashTestData<Double>(
          new Double(-9082741083.082347869873046875D),
          "dc7faa0a5bf8b674a3c4e1b5310dc1ba",
          HashAlgorithm.MD5SUM);
-      doubleList.add(htd_Double_55);
+      doubleScalarList.add(htdDoubleScalar60);
       
-      HashTestData<? extends Object> htd_Double_56 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar61 = new HashTestData<Double>(
          new Double(-9082741083.082347869873046875D),
          "c1dd4e92a9d3d7fa37e63eeefca6e860be95b267",
          HashAlgorithm.SHA1SUM);
-      doubleList.add(htd_Double_56);
+      doubleScalarList.add(htdDoubleScalar61);
       
-      HashTestData<? extends Object> htd_Double_57 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar62 = new HashTestData<Double>(
          new Double(-9082741083.082347869873046875D),
          "3df1fd4a93261d17725ac8de0bb2ebd696aff3128f5d2dd50056c668dd85602f",
          HashAlgorithm.SHA256SUM);
-      doubleList.add(htd_Double_57);
+      doubleScalarList.add(htdDoubleScalar62);
       
-      HashTestData<? extends Object> htd_Double_58 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar63 = new HashTestData<Double>(
          new Double(-9082741083.082347869873046875D),
          "53f499c6caeb86e4eee58502739f2211f548b2489f239254eccb3620f62f9df42bd75d08b948dbe3a5ca58e26d74bd8b",
          HashAlgorithm.SHA384SUM);
-      doubleList.add(htd_Double_58);
+      doubleScalarList.add(htdDoubleScalar63);
       
-      HashTestData<? extends Object> htd_Double_59 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar64 = new HashTestData<Double>(
          new Double(-9082741083.082347869873046875D),
          "cde564e5ac0d45ff2cd18b9e3cd4966055147ac515eac88f291cdfc8bcf306d0f6c2ae96986538ed2b1fc63febd82f2911504908cb291c0c8492866bda36ee94",
          HashAlgorithm.SHA512SUM);
-      doubleList.add(htd_Double_59);
+      doubleScalarList.add(htdDoubleScalar64);
       
-      HashTestData<? extends Object> htd_Double_60 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar65 = new HashTestData<Double>(
          new Double(0D),
          "7dea362b3fac8e00956a4952a3d4f474",
          HashAlgorithm.MD5SUM);
-      doubleList.add(htd_Double_60);
+      doubleScalarList.add(htdDoubleScalar65);
       
-      HashTestData<? extends Object> htd_Double_61 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar66 = new HashTestData<Double>(
          new Double(0D),
          "05fe405753166f125559e7c9ac558654f107c7e9",
          HashAlgorithm.SHA1SUM);
-      doubleList.add(htd_Double_61);
+      doubleScalarList.add(htdDoubleScalar66);
       
-      HashTestData<? extends Object> htd_Double_62 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar67 = new HashTestData<Double>(
          new Double(0D),
          "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
          HashAlgorithm.SHA256SUM);
-      doubleList.add(htd_Double_62);
+      doubleScalarList.add(htdDoubleScalar67);
       
-      HashTestData<? extends Object> htd_Double_63 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar68 = new HashTestData<Double>(
          new Double(0D),
          "7c2db09d310ece0b36d50c86e4c3e6641684948cd6fc03262b0d0ed91a6cfbc3cd5affd396c1f85fd0a109b103364b19",
          HashAlgorithm.SHA384SUM);
-      doubleList.add(htd_Double_63);
+      doubleScalarList.add(htdDoubleScalar68);
       
-      HashTestData<? extends Object> htd_Double_64 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar69 = new HashTestData<Double>(
          new Double(0D),
          "1b7409ccf0d5a34d3a77eaabfa9fe27427655be9297127ee9522aa1bf4046d4f945983678169cb1a7348edcac47ef0d9e2c924130e5bcc5f0d94937852c42f1b",
          HashAlgorithm.SHA512SUM);
-      doubleList.add(htd_Double_64);
+      doubleScalarList.add(htdDoubleScalar69);
       
-      HashTestData<? extends Object> htd_Double_65 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar70 = new HashTestData<Double>(
          new Double(2340823.987567239440977573394775390625D),
          "8ab253d62f66616e56db1aaab36dfa20",
          HashAlgorithm.MD5SUM);
-      doubleList.add(htd_Double_65);
+      doubleScalarList.add(htdDoubleScalar70);
       
-      HashTestData<? extends Object> htd_Double_66 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar71 = new HashTestData<Double>(
          new Double(2340823.987567239440977573394775390625D),
          "60946c8abe83f1c8b821ae4778d5f20d0f74af47",
          HashAlgorithm.SHA1SUM);
-      doubleList.add(htd_Double_66);
+      doubleScalarList.add(htdDoubleScalar71);
       
-      HashTestData<? extends Object> htd_Double_67 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar72 = new HashTestData<Double>(
          new Double(2340823.987567239440977573394775390625D),
          "483796405e84729b3d69c31d1f26169fcac8f879a208fe8632dc6b07bde6dec2",
          HashAlgorithm.SHA256SUM);
-      doubleList.add(htd_Double_67);
+      doubleScalarList.add(htdDoubleScalar72);
       
-      HashTestData<? extends Object> htd_Double_68 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar73 = new HashTestData<Double>(
          new Double(2340823.987567239440977573394775390625D),
          "643cb86c20dc8188440310107bd5aa00e068d95a8ad57000511e557d8eccd0ca683ea56ee367a6b5623b9750dd929040",
          HashAlgorithm.SHA384SUM);
-      doubleList.add(htd_Double_68);
+      doubleScalarList.add(htdDoubleScalar73);
       
-      HashTestData<? extends Object> htd_Double_69 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar74 = new HashTestData<Double>(
          new Double(2340823.987567239440977573394775390625D),
          "96a8470592598bccc51b87b667cf83809ab02a985484dfffa9f323220890fcb666aa8788f97e4eb3a7121482e77c97a4d6d2b231bc3505dc5111af2970321711",
          HashAlgorithm.SHA512SUM);
-      doubleList.add(htd_Double_69);
+      doubleScalarList.add(htdDoubleScalar74);
       
-      HashTestData<? extends Object> htd_Double_70 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar75 = new HashTestData<Double>(
          new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
          "5801bdc2d76b6ea9b7091a5026caf731",
          HashAlgorithm.MD5SUM);
-      doubleList.add(htd_Double_70);
+      doubleScalarList.add(htdDoubleScalar75);
       
-      HashTestData<? extends Object> htd_Double_71 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar76 = new HashTestData<Double>(
          new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
          "de1e67a299928343dd050a52fde96feb3f1f3028",
          HashAlgorithm.SHA1SUM);
-      doubleList.add(htd_Double_71);
+      doubleScalarList.add(htdDoubleScalar76);
       
-      HashTestData<? extends Object> htd_Double_72 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar77 = new HashTestData<Double>(
          new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
          "88dc7b5696598bb5bb3b0a3100300db6fa58d87cac4cee380462588cf04b9015",
          HashAlgorithm.SHA256SUM);
-      doubleList.add(htd_Double_72);
+      doubleScalarList.add(htdDoubleScalar77);
       
-      HashTestData<? extends Object> htd_Double_73 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar78 = new HashTestData<Double>(
          new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
          "0e085d3e63f1e57034cbf71da947eecba416699d4e9f706fcddf85b310523a95049053aa684c927c82fb684fdf932b86",
          HashAlgorithm.SHA384SUM);
-      doubleList.add(htd_Double_73);
+      doubleScalarList.add(htdDoubleScalar78);
       
-      HashTestData<? extends Object> htd_Double_74 = new HashTestData<Double>(
+      HashTestData<? extends Object> htdDoubleScalar79 = new HashTestData<Double>(
          new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
          "526471b4812bebe071cd31917871e6ab85f14614e70ddd8f0b3fba5b20c494bfad238df229b83fb9610e44cc316c3e7d9f681c9ec5d89e11096b329772dab8de",
          HashAlgorithm.SHA512SUM);
-      doubleList.add(htd_Double_74);
+      doubleScalarList.add(htdDoubleScalar79);
       
-      HashTestData<? extends Object> htd_Float_75 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar80 = new HashTestData<Float>(
          new Float(0.0000000000000000000000000000000000000000000014F),
          "f1450306517624a57eafbbf8ed995985",
          HashAlgorithm.MD5SUM);
-      floatList.add(htd_Float_75);
+      floatScalarList.add(htdFloatScalar80);
       
-      HashTestData<? extends Object> htd_Float_76 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar81 = new HashTestData<Float>(
          new Float(0.0000000000000000000000000000000000000000000014F),
          "479e04f3d12d112b5c04c9ee67e4b1e6e201ea4e",
          HashAlgorithm.SHA1SUM);
-      floatList.add(htd_Float_76);
+      floatScalarList.add(htdFloatScalar81);
       
-      HashTestData<? extends Object> htd_Float_77 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar82 = new HashTestData<Float>(
          new Float(0.0000000000000000000000000000000000000000000014F),
          "b40711a88c7039756fb8a73827eabe2c0fe5a0346ca7e0a104adc0fc764f528d",
          HashAlgorithm.SHA256SUM);
-      floatList.add(htd_Float_77);
+      floatScalarList.add(htdFloatScalar82);
       
-      HashTestData<? extends Object> htd_Float_78 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar83 = new HashTestData<Float>(
          new Float(0.0000000000000000000000000000000000000000000014F),
          "14d0dce7a18d3ff1fb2d2d575d0d0137a9f6a5b12eb046887bd46e94e0f615adfce9f086700c27ed4feceb5da50cc162",
          HashAlgorithm.SHA384SUM);
-      floatList.add(htd_Float_78);
+      floatScalarList.add(htdFloatScalar83);
       
-      HashTestData<? extends Object> htd_Float_79 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar84 = new HashTestData<Float>(
          new Float(0.0000000000000000000000000000000000000000000014F),
          "57c365278e08f99674dd24f08425b17c71b0511dea3b5ffa474deeb26d64cb993ebda4650583b29cba6307d7f4dbb42ca11b093de2b8ecab16ff52445401facf",
          HashAlgorithm.SHA512SUM);
-      floatList.add(htd_Float_79);
+      floatScalarList.add(htdFloatScalar84);
       
-      HashTestData<? extends Object> htd_Float_80 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar85 = new HashTestData<Float>(
          new Float(-234.72346F),
          "94937552c204754f10ebeedaf526a2c2",
          HashAlgorithm.MD5SUM);
-      floatList.add(htd_Float_80);
+      floatScalarList.add(htdFloatScalar85);
       
-      HashTestData<? extends Object> htd_Float_81 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar86 = new HashTestData<Float>(
          new Float(-234.72346F),
          "a18736c490eb0a515288b52f13f16bc95e836ce1",
          HashAlgorithm.SHA1SUM);
-      floatList.add(htd_Float_81);
+      floatScalarList.add(htdFloatScalar86);
       
-      HashTestData<? extends Object> htd_Float_82 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar87 = new HashTestData<Float>(
          new Float(-234.72346F),
          "99e6966e86d37fcc84a3c84b1a91ed9700a9322c85ea358556e9b84f5a5a1777",
          HashAlgorithm.SHA256SUM);
-      floatList.add(htd_Float_82);
+      floatScalarList.add(htdFloatScalar87);
       
-      HashTestData<? extends Object> htd_Float_83 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar88 = new HashTestData<Float>(
          new Float(-234.72346F),
          "582072ceb705186aaf1062b30ca4d06b73cedc0a60dc4bd1ae439d6c8d2e7cb5d70c63c63b92b5d9091a4dcbdb46598b",
          HashAlgorithm.SHA384SUM);
-      floatList.add(htd_Float_83);
+      floatScalarList.add(htdFloatScalar88);
       
-      HashTestData<? extends Object> htd_Float_84 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar89 = new HashTestData<Float>(
          new Float(-234.72346F),
          "5d8b5ab07a368b21d4217a8c541c3400961df4fef763702fea9445db601d3f615376da8e5862a552a650fbef92ee792ba98ba1788c5d7bf2012385314d95cf25",
          HashAlgorithm.SHA512SUM);
-      floatList.add(htd_Float_84);
+      floatScalarList.add(htdFloatScalar89);
       
-      HashTestData<? extends Object> htd_Float_85 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar90 = new HashTestData<Float>(
          new Float(0.0F),
          "f1d3ff8443297732862df21dc4e57262",
          HashAlgorithm.MD5SUM);
-      floatList.add(htd_Float_85);
+      floatScalarList.add(htdFloatScalar90);
       
-      HashTestData<? extends Object> htd_Float_86 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar91 = new HashTestData<Float>(
          new Float(0.0F),
          "9069ca78e7450a285173431b3e52c5c25299e473",
          HashAlgorithm.SHA1SUM);
-      floatList.add(htd_Float_86);
+      floatScalarList.add(htdFloatScalar91);
       
-      HashTestData<? extends Object> htd_Float_87 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar92 = new HashTestData<Float>(
          new Float(0.0F),
          "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
          HashAlgorithm.SHA256SUM);
-      floatList.add(htd_Float_87);
+      floatScalarList.add(htdFloatScalar92);
       
-      HashTestData<? extends Object> htd_Float_88 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar93 = new HashTestData<Float>(
          new Float(0.0F),
          "394341b7182cd227c5c6b07ef8000cdfd86136c4292b8e576573ad7ed9ae41019f5818b4b971c9effc60e1ad9f1289f0",
          HashAlgorithm.SHA384SUM);
-      floatList.add(htd_Float_88);
+      floatScalarList.add(htdFloatScalar93);
       
-      HashTestData<? extends Object> htd_Float_89 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar94 = new HashTestData<Float>(
          new Float(0.0F),
          "ec2d57691d9b2d40182ac565032054b7d784ba96b18bcb5be0bb4e70e3fb041eff582c8af66ee50256539f2181d7f9e53627c0189da7e75a4d5ef10ea93b20b3",
          HashAlgorithm.SHA512SUM);
-      floatList.add(htd_Float_89);
+      floatScalarList.add(htdFloatScalar94);
       
-      HashTestData<? extends Object> htd_Float_90 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar95 = new HashTestData<Float>(
          new Float(232864336F),
          "2fb5625c3ce85f4eb455922e58f6ee00",
          HashAlgorithm.MD5SUM);
-      floatList.add(htd_Float_90);
+      floatScalarList.add(htdFloatScalar95);
       
-      HashTestData<? extends Object> htd_Float_91 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar96 = new HashTestData<Float>(
          new Float(232864336F),
          "f040bce0098f185bfdf7e5d88bc8672c6221efb9",
          HashAlgorithm.SHA1SUM);
-      floatList.add(htd_Float_91);
+      floatScalarList.add(htdFloatScalar96);
       
-      HashTestData<? extends Object> htd_Float_92 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar97 = new HashTestData<Float>(
          new Float(232864336F),
          "7d1cb40ede9f14400187af650e6e893fcb6ad0f6441d0b86aa2e7e546209c2c1",
          HashAlgorithm.SHA256SUM);
-      floatList.add(htd_Float_92);
+      floatScalarList.add(htdFloatScalar97);
       
-      HashTestData<? extends Object> htd_Float_93 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar98 = new HashTestData<Float>(
          new Float(232864336F),
          "92e993e2a75940bffbb822c7b1a6b3de824c5745098d95066903f72bf09ba201f9e2dc087343bdc1b943d1f0c22ac938",
          HashAlgorithm.SHA384SUM);
-      floatList.add(htd_Float_93);
+      floatScalarList.add(htdFloatScalar98);
       
-      HashTestData<? extends Object> htd_Float_94 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar99 = new HashTestData<Float>(
          new Float(232864336F),
          "d2ff719782d4fd0c4269a18dffbff2b757092370e4f2cdad5f966b2f7bdd70cf89fe0d42255fa903927a6beeaa1d9487c1d8d462bb9f7dd58710257bf8986183",
          HashAlgorithm.SHA512SUM);
-      floatList.add(htd_Float_94);
+      floatScalarList.add(htdFloatScalar99);
       
-      HashTestData<? extends Object> htd_Float_95 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar100 = new HashTestData<Float>(
          new Float(340282350000000000000000000000000000000F),
          "8a18aeed5caff58aa370b52e36dcbc3f",
          HashAlgorithm.MD5SUM);
-      floatList.add(htd_Float_95);
+      floatScalarList.add(htdFloatScalar100);
       
-      HashTestData<? extends Object> htd_Float_96 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar101 = new HashTestData<Float>(
          new Float(340282350000000000000000000000000000000F),
          "26ae45cabd7d1bd5ea3d6511d0fdbf5f196f8ad5",
          HashAlgorithm.SHA1SUM);
-      floatList.add(htd_Float_96);
+      floatScalarList.add(htdFloatScalar101);
       
-      HashTestData<? extends Object> htd_Float_97 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar102 = new HashTestData<Float>(
          new Float(340282350000000000000000000000000000000F),
          "dde5bcff31e3b2e6085239af1da9827447d0705e8500092ab6bdf699d819c231",
          HashAlgorithm.SHA256SUM);
-      floatList.add(htd_Float_97);
+      floatScalarList.add(htdFloatScalar102);
       
-      HashTestData<? extends Object> htd_Float_98 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar103 = new HashTestData<Float>(
          new Float(340282350000000000000000000000000000000F),
          "abcb3e56775ccb74b66bea7c00e18dbffae54f4d4a3ca2bb7707694a289575b0f9c18624724c4372e4b778f56cf3824f",
          HashAlgorithm.SHA384SUM);
-      floatList.add(htd_Float_98);
+      floatScalarList.add(htdFloatScalar103);
       
-      HashTestData<? extends Object> htd_Float_99 = new HashTestData<Float>(
+      HashTestData<? extends Object> htdFloatScalar104 = new HashTestData<Float>(
          new Float(340282350000000000000000000000000000000F),
          "6a1319fcbf8e4c0150d8d12ef4a76e3aa75a14da4aa0838dbe564f64b01bf6c037f40787d2ebf837843f7489d07f1704d9f9b43c74dec3b15dfc0ccf9c77be4b",
          HashAlgorithm.SHA512SUM);
-      floatList.add(htd_Float_99);
+      floatScalarList.add(htdFloatScalar104);
       
-      HashTestData<? extends Object> htd_Integer_100 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar105 = new HashTestData<Integer>(
          new Integer(-2147483648),
          "b879f7666e5b73c7de7ebc4032b52f70",
          HashAlgorithm.MD5SUM);
-      integerList.add(htd_Integer_100);
+      integerScalarList.add(htdIntegerScalar105);
       
-      HashTestData<? extends Object> htd_Integer_101 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar106 = new HashTestData<Integer>(
          new Integer(-2147483648),
          "e1798367d1b1ed54425e99f790a986c1fe939414",
          HashAlgorithm.SHA1SUM);
-      integerList.add(htd_Integer_101);
+      integerScalarList.add(htdIntegerScalar106);
       
-      HashTestData<? extends Object> htd_Integer_102 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar107 = new HashTestData<Integer>(
          new Integer(-2147483648),
          "50c8ba3a6170f0a2fb6736ece8a603576ef6309a35e810911599bc6211b554a9",
          HashAlgorithm.SHA256SUM);
-      integerList.add(htd_Integer_102);
+      integerScalarList.add(htdIntegerScalar107);
       
-      HashTestData<? extends Object> htd_Integer_103 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar108 = new HashTestData<Integer>(
          new Integer(-2147483648),
          "f73a245ff6d0800421050e6281160c5d74919caebfc86d02e11bcdc2a60ec391fa9c3a9e688c820ec83abbd258ddafd7",
          HashAlgorithm.SHA384SUM);
-      integerList.add(htd_Integer_103);
+      integerScalarList.add(htdIntegerScalar108);
       
-      HashTestData<? extends Object> htd_Integer_104 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar109 = new HashTestData<Integer>(
          new Integer(-2147483648),
          "df45732659aad83aae5edfc59bab32796c708eb61e9be97ab94abbf7616d9b3a36fba7c84aedcfe1857b54edb41e169b1959d7d7d69d8349a38d516947172ce0",
          HashAlgorithm.SHA512SUM);
-      integerList.add(htd_Integer_104);
+      integerScalarList.add(htdIntegerScalar109);
       
-      HashTestData<? extends Object> htd_Integer_105 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar110 = new HashTestData<Integer>(
          new Integer(-256),
          "ec106a8574ce7e60014e79363c9e6a2b",
          HashAlgorithm.MD5SUM);
-      integerList.add(htd_Integer_105);
+      integerScalarList.add(htdIntegerScalar110);
       
-      HashTestData<? extends Object> htd_Integer_106 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar111 = new HashTestData<Integer>(
          new Integer(-256),
          "04336836571352041fc1a2dda7cc73d3d23c4c57",
          HashAlgorithm.SHA1SUM);
-      integerList.add(htd_Integer_106);
+      integerScalarList.add(htdIntegerScalar111);
       
-      HashTestData<? extends Object> htd_Integer_107 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar112 = new HashTestData<Integer>(
          new Integer(-256),
          "6fc6f4524161c3ae0d316812d7088e3fcd372023edaea2d7821093be40ae1060",
          HashAlgorithm.SHA256SUM);
-      integerList.add(htd_Integer_107);
+      integerScalarList.add(htdIntegerScalar112);
       
-      HashTestData<? extends Object> htd_Integer_108 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar113 = new HashTestData<Integer>(
          new Integer(-256),
          "801b6ed11c4e6a3c000c0f72626f4f90e6fcc9427cf09cc30a64b2593c052d022ff1fbfb64c17a6d6e94a1c55b80b23c",
          HashAlgorithm.SHA384SUM);
-      integerList.add(htd_Integer_108);
+      integerScalarList.add(htdIntegerScalar113);
       
-      HashTestData<? extends Object> htd_Integer_109 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar114 = new HashTestData<Integer>(
          new Integer(-256),
          "bf5b46831db754c12cb535378d5e99ffa432bccf91b22d5c071ebb4ed7601b9fb237ac18913a2443e36c8341cda59a468055163ed90a4f2e46575149388213f2",
          HashAlgorithm.SHA512SUM);
-      integerList.add(htd_Integer_109);
+      integerScalarList.add(htdIntegerScalar114);
       
-      HashTestData<? extends Object> htd_Integer_110 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar115 = new HashTestData<Integer>(
          new Integer(0),
          "f1d3ff8443297732862df21dc4e57262",
          HashAlgorithm.MD5SUM);
-      integerList.add(htd_Integer_110);
+      integerScalarList.add(htdIntegerScalar115);
       
-      HashTestData<? extends Object> htd_Integer_111 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar116 = new HashTestData<Integer>(
          new Integer(0),
          "9069ca78e7450a285173431b3e52c5c25299e473",
          HashAlgorithm.SHA1SUM);
-      integerList.add(htd_Integer_111);
+      integerScalarList.add(htdIntegerScalar116);
       
-      HashTestData<? extends Object> htd_Integer_112 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar117 = new HashTestData<Integer>(
          new Integer(0),
          "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
          HashAlgorithm.SHA256SUM);
-      integerList.add(htd_Integer_112);
+      integerScalarList.add(htdIntegerScalar117);
       
-      HashTestData<? extends Object> htd_Integer_113 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar118 = new HashTestData<Integer>(
          new Integer(0),
          "394341b7182cd227c5c6b07ef8000cdfd86136c4292b8e576573ad7ed9ae41019f5818b4b971c9effc60e1ad9f1289f0",
          HashAlgorithm.SHA384SUM);
-      integerList.add(htd_Integer_113);
+      integerScalarList.add(htdIntegerScalar118);
       
-      HashTestData<? extends Object> htd_Integer_114 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar119 = new HashTestData<Integer>(
          new Integer(0),
          "ec2d57691d9b2d40182ac565032054b7d784ba96b18bcb5be0bb4e70e3fb041eff582c8af66ee50256539f2181d7f9e53627c0189da7e75a4d5ef10ea93b20b3",
          HashAlgorithm.SHA512SUM);
-      integerList.add(htd_Integer_114);
+      integerScalarList.add(htdIntegerScalar119);
       
-      HashTestData<? extends Object> htd_Integer_115 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar120 = new HashTestData<Integer>(
          new Integer(191867248),
          "2f89c71363913e17de4f22e0e98b734b",
          HashAlgorithm.MD5SUM);
-      integerList.add(htd_Integer_115);
+      integerScalarList.add(htdIntegerScalar120);
       
-      HashTestData<? extends Object> htd_Integer_116 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar121 = new HashTestData<Integer>(
          new Integer(191867248),
          "82831ff840c298fc2b30b12c3da184a59534d72f",
          HashAlgorithm.SHA1SUM);
-      integerList.add(htd_Integer_116);
+      integerScalarList.add(htdIntegerScalar121);
       
-      HashTestData<? extends Object> htd_Integer_117 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar122 = new HashTestData<Integer>(
          new Integer(191867248),
          "adba58157aac85217c63c5474e5cf01c3945e205c0db70b0e052121cd13e321b",
          HashAlgorithm.SHA256SUM);
-      integerList.add(htd_Integer_117);
+      integerScalarList.add(htdIntegerScalar122);
       
-      HashTestData<? extends Object> htd_Integer_118 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar123 = new HashTestData<Integer>(
          new Integer(191867248),
          "8857c706444d30f5760b5e77abec54b0ce369a9cbdd150dde82d964e312771adccfaec2ae27d68f5bbbe3e7eb590491e",
          HashAlgorithm.SHA384SUM);
-      integerList.add(htd_Integer_118);
+      integerScalarList.add(htdIntegerScalar123);
       
-      HashTestData<? extends Object> htd_Integer_119 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar124 = new HashTestData<Integer>(
          new Integer(191867248),
          "a2e602e9ddf65216af4cf5d7b898fd61f223d030338a9acca316b7bfd344decf98c090ceb49c0f7663d723ccce510fc38fd3e1bba94e5466e8de729cffd41b6a",
          HashAlgorithm.SHA512SUM);
-      integerList.add(htd_Integer_119);
+      integerScalarList.add(htdIntegerScalar124);
       
-      HashTestData<? extends Object> htd_Integer_120 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar125 = new HashTestData<Integer>(
          new Integer(2147483647),
          "37497ad6a0c4f123cd1a39278afc6869",
          HashAlgorithm.MD5SUM);
-      integerList.add(htd_Integer_120);
+      integerScalarList.add(htdIntegerScalar125);
       
-      HashTestData<? extends Object> htd_Integer_121 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar126 = new HashTestData<Integer>(
          new Integer(2147483647),
          "6c28217eecdb75ac5378d20243029696f5e633a1",
          HashAlgorithm.SHA1SUM);
-      integerList.add(htd_Integer_121);
+      integerScalarList.add(htdIntegerScalar126);
       
-      HashTestData<? extends Object> htd_Integer_122 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar127 = new HashTestData<Integer>(
          new Integer(2147483647),
          "24ae0d93f1af72addc019182fae1ab44547a1e84758785745f4358373eab1960",
          HashAlgorithm.SHA256SUM);
-      integerList.add(htd_Integer_122);
+      integerScalarList.add(htdIntegerScalar127);
       
-      HashTestData<? extends Object> htd_Integer_123 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar128 = new HashTestData<Integer>(
          new Integer(2147483647),
          "75d155cd3e36b9c5c385002cf4953ae2e044e0f2012d01010be8ac8f30a092b5d893506394767cb02ff0613eb613c2e6",
          HashAlgorithm.SHA384SUM);
-      integerList.add(htd_Integer_123);
+      integerScalarList.add(htdIntegerScalar128);
       
-      HashTestData<? extends Object> htd_Integer_124 = new HashTestData<Integer>(
+      HashTestData<? extends Object> htdIntegerScalar129 = new HashTestData<Integer>(
          new Integer(2147483647),
          "645df4e5231da736306efcda918a07c530c97bcc51f7eceb297b8396214c3036a9d08f70e44637ca8558597ca61d59e89f99583004dddcc2b01854b2a0e0566e",
          HashAlgorithm.SHA512SUM);
-      integerList.add(htd_Integer_124);
+      integerScalarList.add(htdIntegerScalar129);
       
-      HashTestData<? extends Object> htd_Long_125 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar130 = new HashTestData<Long>(
          new Long(-9223372036854775808L),
          "54409ea540dc450d53a86133d867c772",
          HashAlgorithm.MD5SUM);
-      longList.add(htd_Long_125);
+      longScalarList.add(htdLongScalar130);
       
-      HashTestData<? extends Object> htd_Long_126 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar131 = new HashTestData<Long>(
          new Long(-9223372036854775808L),
          "e19f8c6041fd6c4202c739fa01baf61235724b1e",
          HashAlgorithm.SHA1SUM);
-      longList.add(htd_Long_126);
+      longScalarList.add(htdLongScalar131);
       
-      HashTestData<? extends Object> htd_Long_127 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar132 = new HashTestData<Long>(
          new Long(-9223372036854775808L),
          "b1b0bee5378188f5250138bcce25855f2617f9c55b20b9628e13d367c47404a9",
          HashAlgorithm.SHA256SUM);
-      longList.add(htd_Long_127);
+      longScalarList.add(htdLongScalar132);
       
-      HashTestData<? extends Object> htd_Long_128 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar133 = new HashTestData<Long>(
          new Long(-9223372036854775808L),
          "f10c2ce06a3ba0b7944e8bcfb4d3f3ef03ab131a5e5ca3fa2c306ab76e7f5eab3005e3e9d0ad72a26d4360fb7eb11798",
          HashAlgorithm.SHA384SUM);
-      longList.add(htd_Long_128);
+      longScalarList.add(htdLongScalar133);
       
-      HashTestData<? extends Object> htd_Long_129 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar134 = new HashTestData<Long>(
          new Long(-9223372036854775808L),
          "268c793058acb875e8eb1e613aff64ef78487ab8bb95baa2877647a3f7c1a326f8db76c51c19c05fbe428a75ff93edd077089d6f1bac26b1af2764f0f9783149",
          HashAlgorithm.SHA512SUM);
-      longList.add(htd_Long_129);
+      longScalarList.add(htdLongScalar134);
       
-      HashTestData<? extends Object> htd_Long_130 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar135 = new HashTestData<Long>(
          new Long(-36028797018963968L),
          "8c64b2b91eaedcae7dfda9b43ca4f62b",
          HashAlgorithm.MD5SUM);
-      longList.add(htd_Long_130);
+      longScalarList.add(htdLongScalar135);
       
-      HashTestData<? extends Object> htd_Long_131 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar136 = new HashTestData<Long>(
          new Long(-36028797018963968L),
          "101201ec9be0c94da1aabacf9050452d531db7b6",
          HashAlgorithm.SHA1SUM);
-      longList.add(htd_Long_131);
+      longScalarList.add(htdLongScalar136);
       
-      HashTestData<? extends Object> htd_Long_132 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar137 = new HashTestData<Long>(
          new Long(-36028797018963968L),
          "006ce6768bf58dcecb91e0b0957b7e71adbb24e2fafd6e0762fc3b51daae8c65",
          HashAlgorithm.SHA256SUM);
-      longList.add(htd_Long_132);
+      longScalarList.add(htdLongScalar137);
       
-      HashTestData<? extends Object> htd_Long_133 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar138 = new HashTestData<Long>(
          new Long(-36028797018963968L),
          "8963d18e89e6463da925a55e1508cfe020e7d1f6b38ee2331e4ad2795ce4f9a8b48a005d85c820ee3db7f150dbe869c7",
          HashAlgorithm.SHA384SUM);
-      longList.add(htd_Long_133);
+      longScalarList.add(htdLongScalar138);
       
-      HashTestData<? extends Object> htd_Long_134 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar139 = new HashTestData<Long>(
          new Long(-36028797018963968L),
          "46db6a85707d1394778a41b054941701e3cfd93ec390fe7f156565d916981ca1dfe9d3dbbe1c2f380881c96aa1b9f2bbe6b567303c6fa3633ca0431df3ba81a9",
          HashAlgorithm.SHA512SUM);
-      longList.add(htd_Long_134);
+      longScalarList.add(htdLongScalar139);
       
-      HashTestData<? extends Object> htd_Long_135 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar140 = new HashTestData<Long>(
          new Long(0L),
          "7dea362b3fac8e00956a4952a3d4f474",
          HashAlgorithm.MD5SUM);
-      longList.add(htd_Long_135);
+      longScalarList.add(htdLongScalar140);
       
-      HashTestData<? extends Object> htd_Long_136 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar141 = new HashTestData<Long>(
          new Long(0L),
          "05fe405753166f125559e7c9ac558654f107c7e9",
          HashAlgorithm.SHA1SUM);
-      longList.add(htd_Long_136);
+      longScalarList.add(htdLongScalar141);
       
-      HashTestData<? extends Object> htd_Long_137 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar142 = new HashTestData<Long>(
          new Long(0L),
          "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
          HashAlgorithm.SHA256SUM);
-      longList.add(htd_Long_137);
+      longScalarList.add(htdLongScalar142);
       
-      HashTestData<? extends Object> htd_Long_138 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar143 = new HashTestData<Long>(
          new Long(0L),
          "7c2db09d310ece0b36d50c86e4c3e6641684948cd6fc03262b0d0ed91a6cfbc3cd5affd396c1f85fd0a109b103364b19",
          HashAlgorithm.SHA384SUM);
-      longList.add(htd_Long_138);
+      longScalarList.add(htdLongScalar143);
       
-      HashTestData<? extends Object> htd_Long_139 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar144 = new HashTestData<Long>(
          new Long(0L),
          "1b7409ccf0d5a34d3a77eaabfa9fe27427655be9297127ee9522aa1bf4046d4f945983678169cb1a7348edcac47ef0d9e2c924130e5bcc5f0d94937852c42f1b",
          HashAlgorithm.SHA512SUM);
-      longList.add(htd_Long_139);
+      longScalarList.add(htdLongScalar144);
       
-      HashTestData<? extends Object> htd_Long_140 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar145 = new HashTestData<Long>(
          new Long(2305843009213693952L),
          "beb49121e6b2d95eb429c1641ae31f64",
          HashAlgorithm.MD5SUM);
-      longList.add(htd_Long_140);
+      longScalarList.add(htdLongScalar145);
       
-      HashTestData<? extends Object> htd_Long_141 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar146 = new HashTestData<Long>(
          new Long(2305843009213693952L),
          "0aa60933f90adb707f898d201ff9ec9abf6cb156",
          HashAlgorithm.SHA1SUM);
-      longList.add(htd_Long_141);
+      longScalarList.add(htdLongScalar146);
       
-      HashTestData<? extends Object> htd_Long_142 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar147 = new HashTestData<Long>(
          new Long(2305843009213693952L),
          "9d4ac218fb54041e3a70a8e14db1ea1af9f570f4842b4702ef9323f1ad8f0ec4",
          HashAlgorithm.SHA256SUM);
-      longList.add(htd_Long_142);
+      longScalarList.add(htdLongScalar147);
       
-      HashTestData<? extends Object> htd_Long_143 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar148 = new HashTestData<Long>(
          new Long(2305843009213693952L),
          "222060d2f13d5736702c122971e7aef8b1417c704014fe161a08da9a94bb563c248aeb06b35a48334c82a156997574da",
          HashAlgorithm.SHA384SUM);
-      longList.add(htd_Long_143);
+      longScalarList.add(htdLongScalar148);
       
-      HashTestData<? extends Object> htd_Long_144 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar149 = new HashTestData<Long>(
          new Long(2305843009213693952L),
          "52b0c754e4d2e495544ddfea552df85fb3127fcf6e54f7aacb57e3e6a20be5821d8e707eedb2c22b39b3222ff489d289c9ffb3a85ff8fd6f645a86c8a5a2b1ec",
          HashAlgorithm.SHA512SUM);
-      longList.add(htd_Long_144);
+      longScalarList.add(htdLongScalar149);
       
-      HashTestData<? extends Object> htd_Long_145 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar150 = new HashTestData<Long>(
          new Long(9223372036854775807L),
          "bd5f6598b2d2cd7f130ba3e152116ff7",
          HashAlgorithm.MD5SUM);
-      longList.add(htd_Long_145);
+      longScalarList.add(htdLongScalar150);
       
-      HashTestData<? extends Object> htd_Long_146 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar151 = new HashTestData<Long>(
          new Long(9223372036854775807L),
          "bf7f9f8d6e0a3426aef3f0ce773e69e85821efc7",
          HashAlgorithm.SHA1SUM);
-      longList.add(htd_Long_146);
+      longScalarList.add(htdLongScalar151);
       
-      HashTestData<? extends Object> htd_Long_147 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar152 = new HashTestData<Long>(
          new Long(9223372036854775807L),
          "c624eebf5b9282431fc4e19c3c707a012275e198d3a077dcd36a7b74e4a804ad",
          HashAlgorithm.SHA256SUM);
-      longList.add(htd_Long_147);
+      longScalarList.add(htdLongScalar152);
       
-      HashTestData<? extends Object> htd_Long_148 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar153 = new HashTestData<Long>(
          new Long(9223372036854775807L),
          "ddfe5a9e0659c196434c9d1b8a098cda10c8ce89d4c160374cf781847a5b143d4ab889651516e201cd89f2d5416afbda",
          HashAlgorithm.SHA384SUM);
-      longList.add(htd_Long_148);
+      longScalarList.add(htdLongScalar153);
       
-      HashTestData<? extends Object> htd_Long_149 = new HashTestData<Long>(
+      HashTestData<? extends Object> htdLongScalar154 = new HashTestData<Long>(
          new Long(9223372036854775807L),
          "f48eaadddca1083f42f340f4ad0ab5bf7e50d9f7b6fec01807e12cef9bb0c014506c6393155095bf4ea4963f409b8db58fb17f0f2c5887824b53aa7cc69dc8b3",
          HashAlgorithm.SHA512SUM);
-      longList.add(htd_Long_149);
+      longScalarList.add(htdLongScalar154);
       
-      HashTestData<? extends Object> htd_Short_150 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar155 = new HashTestData<Short>(
          new Short((short)-32768),
          "fc609b43cb8595a9a832cbc2591ed83a",
          HashAlgorithm.MD5SUM);
-      shortList.add(htd_Short_150);
+      shortScalarList.add(htdShortScalar155);
       
-      HashTestData<? extends Object> htd_Short_151 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar156 = new HashTestData<Short>(
          new Short((short)-32768),
          "62439f3a4ecafdb281b9fcbfeda62bcb70d11b1e",
          HashAlgorithm.SHA1SUM);
-      shortList.add(htd_Short_151);
+      shortScalarList.add(htdShortScalar156);
       
-      HashTestData<? extends Object> htd_Short_152 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar157 = new HashTestData<Short>(
          new Short((short)-32768),
          "8509b81230019d2ad970d970f791dfbdc8caf54f5c594fcd327cef9feed206c1",
          HashAlgorithm.SHA256SUM);
-      shortList.add(htd_Short_152);
+      shortScalarList.add(htdShortScalar157);
       
-      HashTestData<? extends Object> htd_Short_153 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar158 = new HashTestData<Short>(
          new Short((short)-32768),
          "29235c2fee6c8ef1a7cc772d557258f17a10a7ba3051dd1406f7c8391ac32614d305151b551ca53a3779ed7fd3d9f672",
          HashAlgorithm.SHA384SUM);
-      shortList.add(htd_Short_153);
+      shortScalarList.add(htdShortScalar158);
       
-      HashTestData<? extends Object> htd_Short_154 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar159 = new HashTestData<Short>(
          new Short((short)-32768),
          "680f1814dfb81bbb8e376ce1f71b502a1051d55200874a737eae8cf918cf1db5f5276c1eeca7357161c21852ee8cc9d951c0f837f6a5c435505227496cdf6215",
          HashAlgorithm.SHA512SUM);
-      shortList.add(htd_Short_154);
+      shortScalarList.add(htdShortScalar159);
       
-      HashTestData<? extends Object> htd_Short_155 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar160 = new HashTestData<Short>(
          new Short((short)-647),
          "a46bf4a8432d0e44b5781ace34b4d2f0",
          HashAlgorithm.MD5SUM);
-      shortList.add(htd_Short_155);
+      shortScalarList.add(htdShortScalar160);
       
-      HashTestData<? extends Object> htd_Short_156 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar161 = new HashTestData<Short>(
          new Short((short)-647),
          "c6cc7667dfd9577caf720144c53dd6fdde6f8a5e",
          HashAlgorithm.SHA1SUM);
-      shortList.add(htd_Short_156);
+      shortScalarList.add(htdShortScalar161);
       
-      HashTestData<? extends Object> htd_Short_157 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar162 = new HashTestData<Short>(
          new Short((short)-647),
          "875a84d2628abfbe1b34c40f1a211005c32953a86537522a49bb1e581e0f902a",
          HashAlgorithm.SHA256SUM);
-      shortList.add(htd_Short_157);
+      shortScalarList.add(htdShortScalar162);
       
-      HashTestData<? extends Object> htd_Short_158 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar163 = new HashTestData<Short>(
          new Short((short)-647),
          "bab4d6aace6343f78770f399e67e46a1c6a3d8832d09822344b3a52e6d180969ef1f36e15a09abb4761363cbfb707390",
          HashAlgorithm.SHA384SUM);
-      shortList.add(htd_Short_158);
+      shortScalarList.add(htdShortScalar163);
       
-      HashTestData<? extends Object> htd_Short_159 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar164 = new HashTestData<Short>(
          new Short((short)-647),
          "550828c1a538c3ebebfc54b293faa9cdad47ca1a930ac58def85bf3fa33832dfe07a14a10e5bb8e25b2957315056dfb66f75dd43f4ba7f292e9a05796e4bfaea",
          HashAlgorithm.SHA512SUM);
-      shortList.add(htd_Short_159);
+      shortScalarList.add(htdShortScalar164);
       
-      HashTestData<? extends Object> htd_Short_160 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar165 = new HashTestData<Short>(
          new Short((short)0),
          "c4103f122d27677c9db144cae1394a66",
          HashAlgorithm.MD5SUM);
-      shortList.add(htd_Short_160);
+      shortScalarList.add(htdShortScalar165);
       
-      HashTestData<? extends Object> htd_Short_161 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar166 = new HashTestData<Short>(
          new Short((short)0),
          "1489f923c4dca729178b3e3233458550d8dddf29",
          HashAlgorithm.SHA1SUM);
-      shortList.add(htd_Short_161);
+      shortScalarList.add(htdShortScalar166);
       
-      HashTestData<? extends Object> htd_Short_162 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar167 = new HashTestData<Short>(
          new Short((short)0),
          "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
          HashAlgorithm.SHA256SUM);
-      shortList.add(htd_Short_162);
+      shortScalarList.add(htdShortScalar167);
       
-      HashTestData<? extends Object> htd_Short_163 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar168 = new HashTestData<Short>(
          new Short((short)0),
          "1dd6f7b457ad880d840d41c961283bab688e94e4b59359ea45686581e90feccea3c624b1226113f824f315eb60ae0a7c",
          HashAlgorithm.SHA384SUM);
-      shortList.add(htd_Short_163);
+      shortScalarList.add(htdShortScalar168);
       
-      HashTestData<? extends Object> htd_Short_164 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar169 = new HashTestData<Short>(
          new Short((short)0),
          "5ea71dc6d0b4f57bf39aadd07c208c35f06cd2bac5fde210397f70de11d439c62ec1cdf3183758865fd387fcea0bada2f6c37a4a17851dd1d78fefe6f204ee54",
          HashAlgorithm.SHA512SUM);
-      shortList.add(htd_Short_164);
+      shortScalarList.add(htdShortScalar169);
       
-      HashTestData<? extends Object> htd_Short_165 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar170 = new HashTestData<Short>(
          new Short((short)6487),
          "dd7c52d1136976161a74b7dc86309171",
          HashAlgorithm.MD5SUM);
-      shortList.add(htd_Short_165);
+      shortScalarList.add(htdShortScalar170);
       
-      HashTestData<? extends Object> htd_Short_166 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar171 = new HashTestData<Short>(
          new Short((short)6487),
          "eb90ea60766c9430209c0f6fa99d91202aa438d1",
          HashAlgorithm.SHA1SUM);
-      shortList.add(htd_Short_166);
+      shortScalarList.add(htdShortScalar171);
       
-      HashTestData<? extends Object> htd_Short_167 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar172 = new HashTestData<Short>(
          new Short((short)6487),
          "3e5b30da27e48bcdff090fbfc3d8ccb9d069ffa4d0b4ae8c775db6b1e1438bb0",
          HashAlgorithm.SHA256SUM);
-      shortList.add(htd_Short_167);
+      shortScalarList.add(htdShortScalar172);
       
-      HashTestData<? extends Object> htd_Short_168 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar173 = new HashTestData<Short>(
          new Short((short)6487),
          "a93693c005ca95a44da9ef59dd42dc46bb8c58eda34b6fe79d65393c89de302cc1667766eb7ebbe7948aa4dbda70469f",
          HashAlgorithm.SHA384SUM);
-      shortList.add(htd_Short_168);
+      shortScalarList.add(htdShortScalar173);
       
-      HashTestData<? extends Object> htd_Short_169 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar174 = new HashTestData<Short>(
          new Short((short)6487),
          "69b6b378f2cbe707c5eec063f1c9ad380bd95511d23f4ecc1c181037f8ad67ca2e5d0fe6886dad9f961ccf6420aec367860eaa1a92a2150c9ac8e252cdbaa263",
          HashAlgorithm.SHA512SUM);
-      shortList.add(htd_Short_169);
+      shortScalarList.add(htdShortScalar174);
       
-      HashTestData<? extends Object> htd_Short_170 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar175 = new HashTestData<Short>(
          new Short((short)32767),
          "b8114a9c9a26c5680be3c4d89073bde1",
          HashAlgorithm.MD5SUM);
-      shortList.add(htd_Short_170);
+      shortScalarList.add(htdShortScalar175);
       
-      HashTestData<? extends Object> htd_Short_171 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar176 = new HashTestData<Short>(
          new Short((short)32767),
          "eb99f41f6592620287cfc309b2ddb3aa605643dc",
          HashAlgorithm.SHA1SUM);
-      shortList.add(htd_Short_171);
+      shortScalarList.add(htdShortScalar176);
       
-      HashTestData<? extends Object> htd_Short_172 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar177 = new HashTestData<Short>(
          new Short((short)32767),
          "fc5c2283015b212d975b85e56b2a75aac4b50bd5aba30cbe74f62857c380bd47",
          HashAlgorithm.SHA256SUM);
-      shortList.add(htd_Short_172);
+      shortScalarList.add(htdShortScalar177);
       
-      HashTestData<? extends Object> htd_Short_173 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar178 = new HashTestData<Short>(
          new Short((short)32767),
          "4888c35519cec1aef5ec0510324ddbbdeefcb907ebd77b4dacef80dbbf5087a7ed17e7474f54a7933c941ef39fbda394",
          HashAlgorithm.SHA384SUM);
-      shortList.add(htd_Short_173);
+      shortScalarList.add(htdShortScalar178);
       
-      HashTestData<? extends Object> htd_Short_174 = new HashTestData<Short>(
+      HashTestData<? extends Object> htdShortScalar179 = new HashTestData<Short>(
          new Short((short)32767),
          "59590271d7fa0ce4bf3e48b59e312ecd42ef17df855e77e5ed6b0d286e71add38cd236a88913c4ccc0e001e2459cccd4262dbbd9c55726eb4eec708ab8ceed85",
          HashAlgorithm.SHA512SUM);
-      shortList.add(htd_Short_174);
+      shortScalarList.add(htdShortScalar179);
       
-      HashTestData<? extends Object> htd_String_175 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar180 = new HashTestData<String>(
          new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
          "bde7a553e49ab8b21bb0284813934097",
          HashAlgorithm.MD5SUM);
-      stringList.add(htd_String_175);
+      stringScalarList.add(htdStringScalar180);
       
-      HashTestData<? extends Object> htd_String_176 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar181 = new HashTestData<String>(
          new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
          "a28b2c3824d27adaa6bee513c2e64cde41299f2e",
          HashAlgorithm.SHA1SUM);
-      stringList.add(htd_String_176);
+      stringScalarList.add(htdStringScalar181);
       
-      HashTestData<? extends Object> htd_String_177 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar182 = new HashTestData<String>(
          new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
          "fc517e23108da33c97836a1453720a36e3f407f443f519c454322313604c7e71",
          HashAlgorithm.SHA256SUM);
-      stringList.add(htd_String_177);
+      stringScalarList.add(htdStringScalar182);
       
-      HashTestData<? extends Object> htd_String_178 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar183 = new HashTestData<String>(
          new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
          "ab98b182d1ec418798ad4e56a21966a41f1aa620dd60d8f2a6ad459cffce548371e15e28e2489f9ab6dcf1f71c49bb4e",
          HashAlgorithm.SHA384SUM);
-      stringList.add(htd_String_178);
+      stringScalarList.add(htdStringScalar183);
       
-      HashTestData<? extends Object> htd_String_179 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar184 = new HashTestData<String>(
          new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
          "7dd8fbb380e9622e6b61eb57aa665d0320eae3f2ad43ae2db9ed8852e7f0c71478dc8baedbbe551dc0d2ac6ab4b11e4d5b05c459f4bcb9f45e191496d2823198",
          HashAlgorithm.SHA512SUM);
-      stringList.add(htd_String_179);
+      stringScalarList.add(htdStringScalar184);
       
-      HashTestData<? extends Object> htd_String_180 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar185 = new HashTestData<String>(
          new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
          "c98f8e5e7556e0d5ebedf37621a1890a",
          HashAlgorithm.MD5SUM);
-      stringList.add(htd_String_180);
+      stringScalarList.add(htdStringScalar185);
       
-      HashTestData<? extends Object> htd_String_181 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar186 = new HashTestData<String>(
          new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
          "facc65d7a8f976c713015ee75c54b03395bfc779",
          HashAlgorithm.SHA1SUM);
-      stringList.add(htd_String_181);
+      stringScalarList.add(htdStringScalar186);
       
-      HashTestData<? extends Object> htd_String_182 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar187 = new HashTestData<String>(
          new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
          "4bfc103bbdb5e30be37bfdd6d96da483c2628d77b5ec29b908a2b31b8df9d182",
          HashAlgorithm.SHA256SUM);
-      stringList.add(htd_String_182);
+      stringScalarList.add(htdStringScalar187);
       
-      HashTestData<? extends Object> htd_String_183 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar188 = new HashTestData<String>(
          new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
          "3fa214843bce9a3e5c4c3935eb52c3d84e3f9ebe3f3d714ea629900f7172b707a4993e671277033cbb13b77f8abf1eb7",
          HashAlgorithm.SHA384SUM);
-      stringList.add(htd_String_183);
+      stringScalarList.add(htdStringScalar188);
       
-      HashTestData<? extends Object> htd_String_184 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar189 = new HashTestData<String>(
          new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
          "d99ab54d06d9980119518d8b7e88fb2e35df089bc0693f8006ef7024d50d8dec26d973e0092634f0f365129b3a1fca42c1288596adc172ad225c57fbf1f0658a",
          HashAlgorithm.SHA512SUM);
-      stringList.add(htd_String_184);
+      stringScalarList.add(htdStringScalar189);
       
-      HashTestData<? extends Object> htd_String_185 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar190 = new HashTestData<String>(
          new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
          "5ea3850467fe128706c2dc159316e2b7",
          HashAlgorithm.MD5SUM);
-      stringList.add(htd_String_185);
+      stringScalarList.add(htdStringScalar190);
       
-      HashTestData<? extends Object> htd_String_186 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar191 = new HashTestData<String>(
          new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
          "73e83a22999a0ceaa47a306f358a5cceb8099751",
          HashAlgorithm.SHA1SUM);
-      stringList.add(htd_String_186);
+      stringScalarList.add(htdStringScalar191);
       
-      HashTestData<? extends Object> htd_String_187 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar192 = new HashTestData<String>(
          new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
          "81cde82f5d533a6bb1566ff07c512ed963fc3a369e0621173db411d9c22b049f",
          HashAlgorithm.SHA256SUM);
-      stringList.add(htd_String_187);
+      stringScalarList.add(htdStringScalar192);
       
-      HashTestData<? extends Object> htd_String_188 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar193 = new HashTestData<String>(
          new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
          "ab12e9621f0f22871bb197db434bc4688d965da3db9715978413d3c5627428d951a0829b9b40d9b9f5b537846c61d87c",
          HashAlgorithm.SHA384SUM);
-      stringList.add(htd_String_188);
+      stringScalarList.add(htdStringScalar193);
       
-      HashTestData<? extends Object> htd_String_189 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar194 = new HashTestData<String>(
          new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
          "feedbbd563f3a1122311e5e4978753c4bded49cb0f52e7641c3271e7b33600d6d17c132ac0390e6ab9ce7f6e3da12158dd0a89c106066670642fd0111f121c9c",
          HashAlgorithm.SHA512SUM);
-      stringList.add(htd_String_189);
+      stringScalarList.add(htdStringScalar194);
       
-      HashTestData<? extends Object> htd_String_190 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar195 = new HashTestData<String>(
          new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
          "d90d48cd75e78b04bc5c54534ae813f4",
          HashAlgorithm.MD5SUM);
-      stringList.add(htd_String_190);
+      stringScalarList.add(htdStringScalar195);
       
-      HashTestData<? extends Object> htd_String_191 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar196 = new HashTestData<String>(
          new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
          "8a6af4b0bc5a35764ce4052bb49a20f475993fa0",
          HashAlgorithm.SHA1SUM);
-      stringList.add(htd_String_191);
+      stringScalarList.add(htdStringScalar196);
       
-      HashTestData<? extends Object> htd_String_192 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar197 = new HashTestData<String>(
          new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
          "0b31e7f4d6c0a5df1d49a3c740e1dbdcb08733ff5f6a890708be5bb2987e3961",
          HashAlgorithm.SHA256SUM);
-      stringList.add(htd_String_192);
+      stringScalarList.add(htdStringScalar197);
       
-      HashTestData<? extends Object> htd_String_193 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar198 = new HashTestData<String>(
          new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
          "35a3eb15cd3a111df7c78ad527153a98e08a6a471724db209e64205964e2ae89dea4353393de183135b92f8d4401f65d",
          HashAlgorithm.SHA384SUM);
-      stringList.add(htd_String_193);
+      stringScalarList.add(htdStringScalar198);
       
-      HashTestData<? extends Object> htd_String_194 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar199 = new HashTestData<String>(
          new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
          "a2453fbf0e527261c4db3908c5757d1de46619049720143eb52dc37386d65e96677933a0cfb4c38f66d9cb7f2ce9ea03de2723b86fd08f9e8b06bb6774a19dfe",
          HashAlgorithm.SHA512SUM);
-      stringList.add(htd_String_194);
+      stringScalarList.add(htdStringScalar199);
       
-      HashTestData<? extends Object> htd_String_195 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar200 = new HashTestData<String>(
          new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
          "6a6b0f178c44ed36401fcb520f84e01b",
          HashAlgorithm.MD5SUM);
-      stringList.add(htd_String_195);
+      stringScalarList.add(htdStringScalar200);
       
-      HashTestData<? extends Object> htd_String_196 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar201 = new HashTestData<String>(
          new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
          "7304ad2c2d61f8dca57e3cc8deeb11012d5ac022",
          HashAlgorithm.SHA1SUM);
-      stringList.add(htd_String_196);
+      stringScalarList.add(htdStringScalar201);
       
-      HashTestData<? extends Object> htd_String_197 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar202 = new HashTestData<String>(
          new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
          "4491f528df58c3315d0bc94705c44462282d31ebb7839a5e907885c6ea8f171e",
          HashAlgorithm.SHA256SUM);
-      stringList.add(htd_String_197);
+      stringScalarList.add(htdStringScalar202);
       
-      HashTestData<? extends Object> htd_String_198 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar203 = new HashTestData<String>(
          new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
          "32b2b4ba6df7edae9fce96745af027230d0674ddfa8dce23b2ef8cda41640bda61b7fb9ae8112b12f9796f66183e7d20",
          HashAlgorithm.SHA384SUM);
-      stringList.add(htd_String_198);
+      stringScalarList.add(htdStringScalar203);
       
-      HashTestData<? extends Object> htd_String_199 = new HashTestData<String>(
+      HashTestData<? extends Object> htdStringScalar204 = new HashTestData<String>(
          new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
          "ebb5f5d89c974cbae4b8119d48644428a445b22d112cdc3f3d6796ea9102f4b6056c15035e6a3bb0dddf0e5ed025a566421963cdfb16f49af4b5aec71a3fcd80",
          HashAlgorithm.SHA512SUM);
-      stringList.add(htd_String_199);
+      stringScalarList.add(htdStringScalar204);
 
+      
    }
 }

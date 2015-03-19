@@ -735,6 +735,23 @@ public class HashGeneratorTest {
          e.printStackTrace();
       }
       
+      type = DataType.CHARACTER_ARRAY;
+      HashTestDataList<? extends Object> htdl =
+            getSingleHashTestDataListObject(type);
+      
+      @SuppressWarnings("unchecked")
+      List<Character> charList = (List<Character>) htdl.getData();
+      char[] charArray = new char[charList.size()];
+      
+      for (int i = 0; i < charList.size(); i++) {
+         charArray[i] = charList.get(i).charValue();
+      }
+      
+//      try {
+//         HashGenerator.createHash(characterArray, htdl.getAlgo());
+//      }
+ 
+      
       String errMsg = "createHash method did NOT throw an " +
             "IllegalArgumentException when invoked with a null HashAlgorithm";
       validateDataTypeBooleanMap(errMsg, exceptionMap);
@@ -962,19 +979,29 @@ public class HashGeneratorTest {
     * @return a {@link HashGeneratorTestData} instance of the requested type.
     */
    private HashTestData<? extends Object>
-      getSingleHashTestDataObject(HashGenerator.DataType type)
+      getSingleHashTestDataObject(DataType type)
    {
-      List<HashTestData<? extends Object>> longList =
+      List<HashTestData<? extends Object>> list =
             HashGeneratorTestData.testDataMap.get(type);
-      return longList.get(0);
+      return list.get(0);
    }
    
+   private HashTestDataList<? extends Object>
+      getSingleHashTestDataListObject(DataType type)
+   {
+      List<HashTestDataList<? extends Object>> list =
+            HashGeneratorTestData.testDataListMap.get(type);
+      return list.get(0);
+   }
+   
+   
    /**
-    * Data container object to store data and its expected hash value.
+    * Data container object to store scalar data and its expected hash value.
     * 
     * @author Ryan Chapin
     * @since  2015-03-12
-    * @param <T> - data type that will be hashed
+    * @param <T>
+    *        data type that will be hashed.
     */
    public static class HashTestData<T> {
       private T data;
@@ -1000,6 +1027,15 @@ public class HashGeneratorTest {
       }
    }
    
+   /**
+    * Data container object to store arrays of data and the expected hash
+    * value.
+    * 
+    * @author Ryan Chapin
+    * @since  2015-03-19
+    * @param <T>
+    *        data type that will be hashed.
+    */
    public static class HashTestDataList<T> {
       private List<T> data;
       private String hash;
