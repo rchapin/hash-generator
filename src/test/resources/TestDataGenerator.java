@@ -23,11 +23,15 @@ import java.util.HashMap;
  */
 public class TestDataGenerator {
    
-//   private static final String LONG_FILE_PREFIX   = "long_data";
-//   private static final String INT_FILE_PREFIX    = "int_data";
-//   private static final String FLOAT_FILE_PREFIX  = "float_data";
-//   private static final String DOUBLE_FILE_PREFIX = "double_data";
-//   private static final String STRING_FILE_PREFIX = "string_data";
+   /** 
+    * The default char encoding we will use to generate byte arrays for
+    * <code>Strings</code> test data.
+    * <p>
+    * IF THIS IS CHANGED, ENSURE TO CHANGE THE SAME FIELD IN THE
+    * HashGeneratorTest class and then re-generate the test data.
+    */
+   public static final String DEFAULT_CHAR_ENCODING = "US-ASCII";
+   
    
    private int outputCounter;
    
@@ -37,7 +41,8 @@ public class TestDataGenerator {
    public TestDataGenerator() {}
    
    /**
-    * Write out binary data and a text file containing the data in ASCII.
+    * Write out binary data and a text file containing the data in ASCII
+    * representation of the data.
     * 
     * @param data - The data to be written out
     * @throws IOException
@@ -56,13 +61,13 @@ public class TestDataGenerator {
       BufferedWriter writer = getBufferedWriter(dataId + FILE_ASCII_SUFFIX);
 
       if (data instanceof Byte) {
-         ((DataOutputStream)out).writeInt(((Byte)data).byteValue());
+         ((DataOutputStream)out).writeByte(((Byte)data).byteValue());
          writer.write("(byte)" + ((Byte)data).toString());
       } else if (data instanceof Character) {
-         ((DataOutputStream)out).writeInt(((Character)data).charValue());
+         ((DataOutputStream)out).writeChar(((Character)data).charValue());
          writer.write("'" +  ((Character)data).toString()  + "'");
       } else if (data instanceof Short) {
-         ((DataOutputStream)out).writeInt(((Short)data).shortValue());
+         ((DataOutputStream)out).writeShort(((Short)data).shortValue());
          writer.write("(short)" + ((Short)data).toString());
       } else if (data instanceof Integer) {
          ((DataOutputStream)out).writeInt(((Integer)data).intValue());
@@ -80,7 +85,8 @@ public class TestDataGenerator {
          BigDecimal bd = new BigDecimal(((Float)data).toString());
          writer.write(bd.toPlainString() + "F");
       } else if (data instanceof String){
-         ((DataOutputStream)out).writeBytes((String)data);
+         byte[] byteArr = ((String)data).getBytes(DEFAULT_CHAR_ENCODING);
+         ((DataOutputStream)out).write(byteArr);
          writer.write("\"" + data.toString() + "\"");   
       } else {
          // NoOp as we don't know how to write out this data
@@ -132,7 +138,7 @@ public class TestDataGenerator {
       };
       
       Long[] longArr = new Long[] {
-            Long.MAX_VALUE,
+            Long.MIN_VALUE,
             -36028797018963968L,
             0L,
             2305843009213693952L,
@@ -140,7 +146,7 @@ public class TestDataGenerator {
       };
       
       Float[] floatArr = new Float[] {
-            Float.MAX_VALUE,
+            Float.MIN_VALUE,
             -234.7234621F,
             0F,
             232864343.234027846268F,
@@ -156,11 +162,11 @@ public class TestDataGenerator {
       };
       
       String[] stringArr = new String[] {
-         "Here is a String that is human readable.  It is a lot easier to read than the random Strings that comprise the rest of this map, no?",
-         "8EOTMO,9<R*.s[e3s;n.I/ipJsAkedF>i82]ezG$BzJ9/c`kQw\\\"07ByH#zR\\\"~xo3x#7&iEdQ\\\"Lf>C#YHqMG.@$J7GHlb3.2J(bT@N4fLq?pqkCz`uDsWW;,FBo#_1a&",
-         "L`%xA9CT|Wj|HpER|~rv]wc`qI#z*i&{'14GP4Yr*IE>#8ipXhH>Z|_1@FyKawbHcaIkI0#JHkzb*&[`vDJl`[_r$H1$T_?@\\\"(GR@(,I^U9+A0_]w*PqD5:,Is1'@u#z",
-         "et83qQS&T{Ask{'!3$/RnLzn<DHGtBmQRq?Uf~j)9]1JbRJd/.|55BY{8o0c/u&?q>5<BosYlT/sk8x#(:$u5c!Vlsw\\\"^_`G`7]]b`3N+q$OV..6]HSpA3srw*jq]`(",
-         "g3&ElAY%T(JQEH|k{D~zDXoxPqA\\\"R<y5oE>w#IOc4%%xD'x|y9@OM;_F/gi1<_}]#7%\\\"Y'P8wyjARsn2+E.~7lAf{>o(Z|?EbP&rF^>>Q3wiyP,}sas1\\\"OSi^2W(J)t$"
+         "Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?",
+         "%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh",
+         "J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2",
+         "V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n",
+         "UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"
       };
 
       Object[][]   testData = new Object[8][];

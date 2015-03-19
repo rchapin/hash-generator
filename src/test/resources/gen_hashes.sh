@@ -126,7 +126,7 @@ do
 HashTestData<? extends Object> $HTD_NAME = new HashTestData<$TYPE>(
    new ${TYPE}(${ASCII_VALUE}),
    "$HASH",
-   HashAlgo.${HASH_ALGO_ENUM});
+   HashAlgorithm.${HASH_ALGO_ENUM});
 ${LIST_NAME}.add($HTD_NAME);
 EOF
 
