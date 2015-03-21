@@ -1,6 +1,7 @@
 package com.ryanchapin.util.hashgenerator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -8,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -152,11 +154,11 @@ public class HashGeneratorTest {
    
    @Test
    public void shouldCorrectlyHashByteInstance()
-      throws NoSuchAlgorithmException, IllegalStateException,
-      UnsupportedEncodingException
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingInstanceMethod(DataType.BYTE);
+      hashScalarUsingInstanceMethod(DataType.BYTE);
    }
    
    @Test
@@ -165,7 +167,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingStaticMethod(DataType.BYTE);
+      hashScalarUsingStaticMethod(DataType.BYTE);
    }
    
    @Test
@@ -174,18 +176,18 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashReusingInternalInstances(DataType.BYTE);
+      hashScalarReusingInternalInstances(DataType.BYTE);
    }
    
    /** -- Short Tests ------------------------------------------------------ */
    
    @Test
    public void shouldCorrectlyHashShortInstance()
-      throws NoSuchAlgorithmException, IllegalStateException,
-      UnsupportedEncodingException
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingInstanceMethod(DataType.SHORT);
+      hashScalarUsingInstanceMethod(DataType.SHORT);
    }
    
    @Test
@@ -194,7 +196,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingStaticMethod(DataType.SHORT);
+      hashScalarUsingStaticMethod(DataType.SHORT);
    }
    
    @Test
@@ -203,18 +205,18 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashReusingInternalInstances(DataType.SHORT);
+      hashScalarReusingInternalInstances(DataType.SHORT);
    }
    
    /** -- Character Tests -------------------------------------------------- */
    
    @Test
    public void shouldCorrectlyHashCharacterInstance()
-      throws NoSuchAlgorithmException, IllegalStateException,
-      UnsupportedEncodingException
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingInstanceMethod(DataType.CHARACTER);
+      hashScalarUsingInstanceMethod(DataType.CHARACTER);
    }
    
    @Test
@@ -223,7 +225,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingStaticMethod(DataType.CHARACTER);
+      hashScalarUsingStaticMethod(DataType.CHARACTER);
    }
    
    @Test
@@ -232,18 +234,18 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashReusingInternalInstances(DataType.CHARACTER);
+      hashScalarReusingInternalInstances(DataType.CHARACTER);
    }
    
    /** -- Integer Tests ---------------------------------------------------- */
 
    @Test
    public void shouldCorrectlyHashIntegerInstance()
-      throws NoSuchAlgorithmException, IllegalStateException,
-      UnsupportedEncodingException
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingInstanceMethod(DataType.INTEGER);
+      hashScalarUsingInstanceMethod(DataType.INTEGER);
    }
    
    @Test
@@ -252,7 +254,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingStaticMethod(DataType.INTEGER);
+      hashScalarUsingStaticMethod(DataType.INTEGER);
    }
    
    @Test
@@ -261,7 +263,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashReusingInternalInstances(DataType.INTEGER);
+      hashScalarReusingInternalInstances(DataType.INTEGER);
    }
    
    /** -- Long Tests ------------------------------------------------------- */
@@ -272,7 +274,7 @@ public class HashGeneratorTest {
       UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingInstanceMethod(DataType.LONG);
+      hashScalarUsingInstanceMethod(DataType.LONG);
    }
    
    @Test
@@ -281,7 +283,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingStaticMethod(DataType.LONG);
+      hashScalarUsingStaticMethod(DataType.LONG);
    }
    
    @Test
@@ -290,18 +292,18 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashReusingInternalInstances(DataType.LONG);
+      hashScalarReusingInternalInstances(DataType.LONG);
    }
 
    /** -- Float Tests ------------------------------------------------------ */
    
    @Test
    public void shouldCorrectlyHashFloatInstance()
-      throws NoSuchAlgorithmException, IllegalStateException,
-      UnsupportedEncodingException
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingInstanceMethod(DataType.FLOAT);
+      hashScalarUsingInstanceMethod(DataType.FLOAT);
    }
    
    @Test
@@ -310,7 +312,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingStaticMethod(DataType.FLOAT);
+      hashScalarUsingStaticMethod(DataType.FLOAT);
    }
    
    @Test
@@ -319,18 +321,18 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashReusingInternalInstances(DataType.FLOAT);
+      hashScalarReusingInternalInstances(DataType.FLOAT);
    }
    
    /** -- Double Tests ----------------------------------------------------- */ 
    
    @Test
    public void shouldCorrectlyHashDoubleInstance()
-      throws NoSuchAlgorithmException, IllegalStateException,
-      UnsupportedEncodingException
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingInstanceMethod(DataType.DOUBLE);
+      hashScalarUsingInstanceMethod(DataType.DOUBLE);
    }
    
    @Test
@@ -339,7 +341,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingStaticMethod(DataType.DOUBLE);
+      hashScalarUsingStaticMethod(DataType.DOUBLE);
    }
    
    @Test
@@ -348,7 +350,7 @@ public class HashGeneratorTest {
          UnsupportedEncodingException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashReusingInternalInstances(DataType.DOUBLE);
+      hashScalarReusingInternalInstances(DataType.DOUBLE);
    }
    
    /** -- String Tests ----------------------------------------------------- */
@@ -359,7 +361,7 @@ public class HashGeneratorTest {
       IllegalStateException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingInstanceMethod(DataType.STRING);
+      hashScalarUsingInstanceMethod(DataType.STRING);
    }
    
    @Test
@@ -368,7 +370,7 @@ public class HashGeneratorTest {
          IllegalStateException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashUsingStaticMethod(DataType.STRING);
+      hashScalarUsingStaticMethod(DataType.STRING);
    }
 
    @Test
@@ -377,7 +379,7 @@ public class HashGeneratorTest {
          NoSuchAlgorithmException
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
-      hashReusingInternalInstances(DataType.STRING);
+      hashScalarReusingInternalInstances(DataType.STRING);
    }
    
    @Test(expected = IllegalArgumentException.class)
@@ -412,6 +414,156 @@ public class HashGeneratorTest {
       String hash = hg.createHash(data, null);
    }   
       
+   /** -- Character Array Tests -------------------------------------------- */
+   
+   @Test
+   public void shouldCorrectlyHashCharArrayInstance()
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
+   {
+      LOGGER.info("Running test: {}", testName.getMethodName());
+      hashArrayUsingInstanceMethod(DataType.CHARACTER_ARRAY);
+   }
+   
+   @Test
+   public void shouldCorrectlyHashCharArrayStatic()
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
+   {
+      LOGGER.info("Running test: {}", testName.getMethodName());
+      hashArrayUsingStaticMethod(DataType.CHARACTER_ARRAY);
+   }
+   
+   @Test
+   public void shouldCorrectlyHashCharArrayReusingInternalInstances()
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
+   {
+      LOGGER.info("Running test: {}", testName.getMethodName());
+      hashArrayReusingInternalInstances(DataType.CHARACTER_ARRAY);
+   }
+   
+   /** -- Multi-threaded Tests --------------------------------------------- */
+   
+   @Test
+   public void shouldCorrectlyHashScalarStaticMultiThreaded()
+         throws InterruptedException
+   {
+      // Create an object in which will then instantiate multiple threads.
+      // Each thread will hash each type n number of times in succession
+      // When finished, each thread will write back it's result to
+      // the parent object which will then aggregate the results.
+      
+      //
+      // FIXME:  Make this some sort of cli property that you can set
+      // 
+      // Number of threads to instantiate for each DataType to test
+      int numThreads = 8;
+      // Number of times each thread will each thread will loop through the
+      // test data set, each time hashing the configured type.
+      int numIter    = 32;
+      
+      Map<DataType, Map<String, Integer>> expectedResults =
+            buildExpectedResultsMap(numThreads, numIter);
+      
+      ClientTest clientTest = new ClientTest(numThreads, numIter);
+      clientTest.init();
+      
+      Thread t = new Thread(clientTest);
+      t.start();
+      t.join();
+      
+      // Now we need to compare the expected results against the hashes
+      // and their counts that we collected from our ClientTest class.
+      Map<DataType, Map<String, Integer>> actualResults =
+            clientTest.getResultMap();
+      
+      Iterator<Map.Entry<DataType, Map<String, Integer>>> itr =
+            expectedResults.entrySet().iterator();
+      while (itr.hasNext()) {
+         Map.Entry<DataType, Map<String, Integer>> entry = itr.next();
+         DataType expectedType               = entry.getKey();
+         Map<String, Integer> expectedCounts = entry.getValue();
+         
+         if (actualResults.containsKey(expectedType)) {
+            Map<String, Integer> actualCounts = actualResults.get(expectedType);
+            boolean countsMatch = expectedCounts.equals(actualCounts);
+            String errMsg = "For type '" + expectedType + "', actualCounts " +
+                  "did not match expectedCounts";
+            assertEquals(errMsg, true, countsMatch);
+         } else {
+            fail("Expected type/key was not present in actualResultMap");
+         }
+         
+         // Remove both of the maps from the parent map
+         itr.remove();
+         actualResults.remove(expectedType);
+      }
+      
+      // At this point, both of the Maps should be empty
+      assertEquals("expectedResults map was not empty",
+            0, expectedResults.size());
+      assertEquals("actualResults map was not empty",
+            0, actualResults.size());     
+   }
+   
+   private Map<DataType, Map<String, Integer>> buildExpectedResultsMap(
+         int numThreads, int numIter)
+   {
+      int expectedInstances = numThreads * numIter;
+      Map<DataType, Map<String, Integer>> expectedResultsMap = new HashMap<>();
+      
+      // Generate expectations for Scalar values.
+      for (Map.Entry<DataType, List<HashTestData<? extends Object>>> entry :
+           HashGeneratorTestData.testDataMap.entrySet())
+      {
+         DataType type = entry.getKey();
+         List<HashTestData<? extends Object>> list = entry.getValue();
+       
+         Map<String, Integer> typeResultsMap = null;
+         if (expectedResultsMap.containsKey(type)) {
+            typeResultsMap = expectedResultsMap.get(type);
+         } else {
+            typeResultsMap = new HashMap<>();
+            expectedResultsMap.put(type, typeResultsMap);
+         }
+         
+         for (HashTestData<? extends Object> htd : list) {
+            String hash = htd.getHash();            
+            // Add the hash and the number of expected instances we will
+            // be looking for.
+            typeResultsMap.put(hash, expectedInstances);
+         }
+         expectedResultsMap.put(type, typeResultsMap);
+      }
+      
+      // Generate expectations for Array values.
+      for (Map.Entry<DataType, List<HashTestDataList<? extends Object>>> entry :
+           HashGeneratorTestData.testDataListMap.entrySet())
+      {
+         DataType type = entry.getKey();
+         List<HashTestDataList<? extends Object>> list = entry.getValue();
+         
+         Map<String, Integer> typeResultsMap = null;
+         if (expectedResultsMap.containsKey(type)) {
+            typeResultsMap = expectedResultsMap.get(type);
+         } else {
+            typeResultsMap = new HashMap<>();
+            expectedResultsMap.put(type, typeResultsMap);
+         }
+         
+         for (HashTestDataList<? extends Object> htdl : list) {
+            String hash = htdl.getHash();
+            // Add the hash and the number of expected instances we will be
+            // looking for.
+            typeResultsMap.put(hash, expectedInstances);
+         }
+         expectedResultsMap.put(type, typeResultsMap);
+      }
+      
+      return expectedResultsMap;
+   }
+   
    /** -- Consolidated Tests ----------------------------------------------- */
    
    /**
@@ -431,17 +583,18 @@ public class HashGeneratorTest {
       
       // Map to keep track of all of the expected types for which
       // we should get an IllegalArgumentException thrown.
-      Map<DataType, Boolean> exceptionMap = getDataTypeBooleanMap();
+      Map<DataType, Boolean> exceptionMap = buildDataTypeBooleanMap();
       
       HashTestData<? extends Object> htd = null;
       DataType type                      = null;
       HashGenerator hg                   = null;
+      String hash                        = null;
       
       type = DataType.BYTE;
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator(null);
       try {
-         String hash = hg.createHash((Byte)htd.getData());
+         hash = hg.createHash((Byte)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -451,7 +604,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator(null);
       try {
-         String hash = hg.createHash((Character)htd.getData());
+         hash = hg.createHash((Character)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -461,7 +614,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator(null);
       try {
-         String hash = hg.createHash((Short)htd.getData());
+         hash = hg.createHash((Short)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -471,7 +624,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator(null);
       try {
-         String hash = hg.createHash((Integer)htd.getData());
+         hash = hg.createHash((Integer)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -481,7 +634,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator(null);
       try {
-         String hash = hg.createHash((Long)htd.getData());
+         hash = hg.createHash((Long)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -491,7 +644,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator(null);
       try {
-         String hash = hg.createHash((Float)htd.getData());
+         hash = hg.createHash((Float)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -501,7 +654,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator(null);
       try {
-         String hash = hg.createHash((Double)htd.getData());
+         hash = hg.createHash((Double)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -511,12 +664,28 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator(null);
       try {
-         String hash = hg.createHash((String)htd.getData(), "UTF-8");
+         hash = hg.createHash((String)htd.getData(), "UTF-8");
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       } catch (UnsupportedEncodingException e) {
          e.printStackTrace();
+      }
+      
+      type = DataType.CHARACTER_ARRAY;
+      HashTestDataList<? extends Object> htdl =
+            getSingleHashTestDataListObject(type);
+      
+      @SuppressWarnings("unchecked")
+      List<Character> charList = (List<Character>) htdl.getData();
+      char[] charArray = convertListToArray(charList, new char[0]);
+
+      hg   = new HashGenerator(null);
+      try {
+         hash = hg.createHash(charArray);
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+         exceptionMap.put(type, true);
       }
       
       String errMsg = "createHash method did NOT throw a " +
@@ -546,17 +715,18 @@ public class HashGeneratorTest {
             
       // Map to keep track of all of the expected types for which
       // we should get an IllegalArgumentException thrown.
-      Map<DataType, Boolean> exceptionMap = getDataTypeBooleanMap();
+      Map<DataType, Boolean> exceptionMap = buildDataTypeBooleanMap();
       
       HashTestData<? extends Object> htd = null;
       DataType type                      = null;
       HashGenerator hg                   = null;
+      String hash                        = null;
       
       type = DataType.BYTE;
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator();
       try {
-         String hash = hg.createHash((Byte)htd.getData());
+         hash = hg.createHash((Byte)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -566,7 +736,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator();
       try {
-         String hash = hg.createHash((Character)htd.getData());
+         hash = hg.createHash((Character)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -576,7 +746,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator();
       try {
-         String hash = hg.createHash((Short)htd.getData());
+         hash = hg.createHash((Short)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -586,7 +756,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator();
       try {
-         String hash = hg.createHash((Integer)htd.getData());
+         hash = hg.createHash((Integer)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -596,7 +766,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator();
       try {
-         String hash = hg.createHash((Long)htd.getData());
+         hash = hg.createHash((Long)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -606,7 +776,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator();
       try {
-         String hash = hg.createHash((Float)htd.getData());
+         hash = hg.createHash((Float)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -616,7 +786,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator();
       try {
-         String hash = hg.createHash((Double)htd.getData());
+         hash = hg.createHash((Double)htd.getData());
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -626,7 +796,7 @@ public class HashGeneratorTest {
       htd  = getSingleHashTestDataObject(type);
       hg   = new HashGenerator();
       try {
-         String hash = hg.createHash((String)htd.getData(), "UTF-8");
+         hash = hg.createHash((String)htd.getData(), "UTF-8");
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -634,6 +804,20 @@ public class HashGeneratorTest {
          e.printStackTrace();
       }
       
+      type = DataType.CHARACTER_ARRAY;
+      HashTestDataList<? extends Object> htdl =
+            getSingleHashTestDataListObject(type);
+      
+      @SuppressWarnings("unchecked")
+      List<Character> charList = (List<Character>) htdl.getData();
+      char[] charArray = convertListToArray(charList, new char[0]);
+      try {
+         hash = hg.createHash(charArray);
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
+         exceptionMap.put(type, true);
+      }
+
       String errMsg = "createHash method did NOT throw a " +
             "IllegalStateException when the method was invoked on an " +
             "instance with a null HashAlgorithm";
@@ -656,7 +840,7 @@ public class HashGeneratorTest {
       
       // Map to keep track of all of the expected types for which
       // we should get an IllegalArgumentException thrown.
-      Map<DataType, Boolean> exceptionMap = getDataTypeBooleanMap();
+      Map<DataType, Boolean> exceptionMap = buildDataTypeBooleanMap();
       
       HashTestData<? extends Object> htd = null;
       DataType type = null;
@@ -741,15 +925,13 @@ public class HashGeneratorTest {
       
       @SuppressWarnings("unchecked")
       List<Character> charList = (List<Character>) htdl.getData();
-      char[] charArray = new char[charList.size()];
-      
-      for (int i = 0; i < charList.size(); i++) {
-         charArray[i] = charList.get(i).charValue();
+      char[] charArray = convertListToArray(charList, new char[0]);
+      try {
+         HashGenerator.createHash(charArray, null);
+      } catch (IllegalArgumentException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
+         exceptionMap.put(type, true);
       }
-      
-//      try {
-//         HashGenerator.createHash(characterArray, htdl.getAlgo());
-//      }
  
       
       String errMsg = "createHash method did NOT throw an " +
@@ -759,7 +941,7 @@ public class HashGeneratorTest {
    
    /** -- Utility Methods -------------------------------------------------- */
 
-   public void hashReusingInternalInstances(DataType type)
+   public void hashScalarReusingInternalInstances(DataType type)
          throws NoSuchAlgorithmException, IllegalStateException,
          UnsupportedEncodingException
    {   
@@ -825,7 +1007,7 @@ public class HashGeneratorTest {
       } 
    }
    
-   public void hashUsingStaticMethod(DataType type)
+   public void hashScalarUsingStaticMethod(DataType type)
          throws UnsupportedEncodingException, IllegalStateException,
          NoSuchAlgorithmException
    {
@@ -883,7 +1065,7 @@ public class HashGeneratorTest {
       }
    }
    
-   public void hashUsingInstanceMethod(DataType type)
+   private void hashScalarUsingInstanceMethod(DataType type)
          throws UnsupportedEncodingException, IllegalStateException,
          NoSuchAlgorithmException
    {
@@ -944,6 +1126,116 @@ public class HashGeneratorTest {
       }
    }
    
+   private void hashArrayReusingInternalInstances(DataType type)
+      throws IllegalStateException, NoSuchAlgorithmException
+   {
+      // Single hash algorithm to be used
+      HashAlgorithm algo = HashAlgorithm.MD5SUM;
+      HashGenerator hg = new HashGenerator(algo);
+      
+      // Get list for the given DataType
+      List<HashTestDataList<? extends Object>> list =
+            HashGeneratorTestData.testDataListMap.get(type);
+      
+      String expectedHash             = null;
+      String hash                     = null;
+      List<? extends Object>  objList = null;
+      
+      for (HashTestDataList<? extends Object> htdl : list) {
+         
+         if (algo == htdl.getAlgo()) {
+            expectedHash = htdl.getHash();
+            
+            switch (type) {
+               case CHARACTER_ARRAY:
+                  objList          = htdl.getData();
+                  char[] charArray = convertListToArray(objList, new char[0]);
+                  hash             = hg.createHash(charArray);
+                  break;
+               default:
+            }          
+         }
+         String arrayString = listToString(objList);
+         
+         LOGGER.info("'{}' hash for type '{}', '{}' = {}",
+               algo, type, arrayString, hash);
+         String errMsg = "Returned hash for type '" + type +
+               "' for value '" + arrayString + "' does not match expected";
+         assertEquals(errMsg, expectedHash, hash);
+      }  
+   }
+   
+   private void hashArrayUsingInstanceMethod(DataType type)
+         throws IllegalStateException, NoSuchAlgorithmException
+   {
+      HashGenerator hg = new HashGenerator();
+      
+      // Get list for the given DataType
+      List<HashTestDataList<? extends Object>> list =
+            HashGeneratorTestData.testDataListMap.get(type);
+      
+      for (HashTestDataList<? extends Object> htdl : list) {
+         String expectedHash             = htdl.getHash();
+         HashAlgorithm algo              = htdl.getAlgo();
+         String hash                     = null;
+         StringBuilder data              = new StringBuilder();
+         List<? extends Object>  objList = null;
+         
+         hg.setHashAlgo(algo);
+         
+         switch (type) {
+            case CHARACTER_ARRAY:
+               objList          = htdl.getData();
+               char[] charArray = convertListToArray(objList, new char[0]);
+               hash             = hg.createHash(charArray);   
+               break;
+            default:
+         }
+         
+         data.delete(0, data.length());
+         for (Object o : objList) {
+            data.append(o.toString() + ", ");
+         }
+         data.delete(data.length()-2, data.length());
+         
+         LOGGER.info("'{}' hash for type '{}', '{}' = {}",
+               algo, type, data, hash);
+         String errMsg = "Returned hash for type '" + type +
+               "' for value '" + data + "' does not match expected";
+         assertEquals(errMsg, expectedHash, hash);
+      }
+   }
+   
+   private void hashArrayUsingStaticMethod(DataType type)
+         throws IllegalArgumentException, NoSuchAlgorithmException
+   {
+      // Get list for the given DataType
+      List<HashTestDataList<? extends Object>> list =
+            HashGeneratorTestData.testDataListMap.get(type);
+      
+      for (HashTestDataList<? extends Object> htdl : list) {
+         String expectedHash             = htdl.getHash();
+         HashAlgorithm algo              = htdl.getAlgo();
+         String hash                     = null;
+         List<? extends Object>  objList = null;
+         
+         switch (type) {
+            case CHARACTER_ARRAY:
+               objList          = htdl.getData();
+               char[] charArray = convertListToArray(objList, new char[0]);
+               hash = HashGenerator.createHash(charArray, algo);
+               break;
+            default:         
+         }
+         String arrayString = listToString(objList);
+         LOGGER.info("'{}' hash for type '{}', '{}' = {}",
+               algo, type, arrayString, hash);
+         String errMsg = "Returned hash for type '" + type +
+               "' for value '" + arrayString + "' does not match expected";
+         assertEquals(errMsg, expectedHash, hash);
+      }
+   }
+   
    /**
     * Instantiates and configures a Map<DataType, Boolean> instance pre-
     * set with all Boolean values to null.
@@ -951,7 +1243,7 @@ public class HashGeneratorTest {
     * @return  map instance used to keep track of boolean flags for each
     *          element in the @link {@link DataType} enum.
     */
-   private Map<DataType, Boolean> getDataTypeBooleanMap() {
+   private Map<DataType, Boolean> buildDataTypeBooleanMap() {
       Map<DataType, Boolean> retVal = new HashMap<>();
       for (DataType t : DataType.values()) {
          retVal.put(t, false);
@@ -993,8 +1285,23 @@ public class HashGeneratorTest {
             HashGeneratorTestData.testDataListMap.get(type);
       return list.get(0);
    }
+      
+   public static char[] convertListToArray(List<? extends Object> list, char[] arr) {
+      char[] retVal = new char[list.size()];
+      for (int i = 0; i < list.size(); i++) {
+         retVal[i] = ((Character) list.get(i)).charValue();
+      }
+      return retVal; 
+   }
    
-   
+   public static String listToString(List<? extends Object> list) {
+      StringBuilder retVal = new StringBuilder();
+      for (Object o : list) {
+         retVal.append(o.toString() + ", ");
+      }
+      retVal.delete(retVal.length()-2, retVal.length()); 
+      return retVal.toString();
+   }
    /**
     * Data container object to store scalar data and its expected hash value.
     * 

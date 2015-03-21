@@ -653,11 +653,26 @@ public class HashGenerator {
    /** -- Character Arrays ------------------------------------------------- */
    
    public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
-      throws IllegalArgumentException
+      throws IllegalArgumentException, NoSuchAlgorithmException
    {
       checkHashAlgoInput(hashAlgorithm);
       
-      String retVal = null;
+      // Calculate the length of the required ByteBuffer
+      int elementLength = input.length * CHAR_BYTES_SIZE;
+      ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+      
+      // For each char in the input array, add it's bytes to the buffer
+      for (int i = 0; i < input.length; i++) {
+         byteBuffer.putChar(input[i]);
+      }
+      
+      byteBuffer.rewind();
+
+      byte[] byteArray = new byte[elementLength];
+      byteBuffer.get(byteArray);
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+      clearByteArray(byteArray);
       return retVal;
    }
    
@@ -666,7 +681,29 @@ public class HashGenerator {
    {
       checkHashAlgoField();
 
-      String retVal = null;
+      // Calculate the length of the required ByteBuffer
+      int elementLength = input.length * CHAR_BYTES_SIZE;
+      
+      // We cannot reuse any existing array as each call to this
+      // method can pass in a different sized array.  We could always
+      // extend the class and add a method that takes a size argument
+      // but that can wait for future development as needed.
+      ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+      
+      // For each char in the input array, add it's bytes to the buffer
+      for (int i = 0; i < input.length; i++) {
+         byteBuffer.putChar(input[i]);
+      }
+      
+      byteBuffer.rewind();
+      
+      // We will not be re-using the byte[] for the same reason that we are not
+      // re-using the ByteBuffer instance above.
+      byte[] byteArray = new byte[elementLength];
+      byteBuffer.get(byteArray);
+      
+      String retVal = bytesToHex(computeHashBytes(byteArray));
+      clearByteArray(byteArray);
       return retVal;
    }
    
