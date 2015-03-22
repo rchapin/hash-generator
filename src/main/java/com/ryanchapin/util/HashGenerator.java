@@ -1,4 +1,4 @@
-package com.ryanchapin.util.hashgenerator;
+package com.ryanchapin.util;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;

@@ -1,11 +1,12 @@
-package com.ryanchapin.util.hashgenerator;
+package com.ryanchapin.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ryanchapin.util.hashgenerator.HashGenerator.DataType;
+import com.ryanchapin.util.HashGenerator;
+import com.ryanchapin.util.HashGenerator.DataType;
 
 public class ClientTest implements Runnable {
 

@@ -1,4 +1,4 @@
-package com.ryanchapin.util.hashgenerator;
+package com.ryanchapin.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -19,8 +19,9 @@ import org.junit.rules.TestName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ryanchapin.util.hashgenerator.HashGenerator.DataType;
-import com.ryanchapin.util.hashgenerator.HashGenerator.HashAlgorithm;
+import com.ryanchapin.util.HashGenerator;
+import com.ryanchapin.util.HashGenerator.DataType;
+import com.ryanchapin.util.HashGenerator.HashAlgorithm;
 
 public class HashGeneratorTest {
    
