@@ -26,6 +26,12 @@ public class HashGeneratorTest {
    
    private static final Logger LOGGER = LoggerFactory.getLogger(HashGeneratorTest.class);
    
+   private static final String NUM_THREADS_PROP_KEY = "hashGen.multithread.test.numThreads";
+   private static final int NUM_THREADS_DEFAULT     = 8;
+   
+   private static final String NUM_ITER_PROP_KEY    = "hashGen.multithread.test.numIter";
+   private static final int NUM_ITER_DEFAULT        = 32;
+
    /** 
     * The default char encoding we will pass into <code>HashGenerator</code>
     * calls when hashing <code>Strings</code>.
@@ -449,19 +455,23 @@ public class HashGeneratorTest {
    public void shouldCorrectlyHashScalarStaticMultiThreaded()
          throws InterruptedException
    {
+      LOGGER.info("Running test: {}", testName.getMethodName());
       // Create an object in which will then instantiate multiple threads.
       // Each thread will hash each type n number of times in succession
       // When finished, each thread will write back it's result to
       // the parent object which will then aggregate the results.
-      
+
+      // Read, if set, the system properties to set the numThreads and
+      // numIter values for the test
       //
-      // FIXME:  Make this some sort of cli property that you can set
-      // 
       // Number of threads to instantiate for each DataType to test
-      int numThreads = 8;
+      int numThreads = getSystemPropertyInt(NUM_THREADS_PROP_KEY, NUM_THREADS_DEFAULT);
+      
       // Number of times each thread will each thread will loop through the
       // test data set, each time hashing the configured type.
-      int numIter    = 32;
+      int numIter = getSystemPropertyInt(NUM_ITER_PROP_KEY, NUM_ITER_DEFAULT);
+      
+      LOGGER.info("numThreads = {}, numIter = {}", numThreads, numIter);
       
       Map<DataType, Map<String, Integer>> expectedResults =
             buildExpectedResultsMap(numThreads, numIter);
@@ -504,7 +514,7 @@ public class HashGeneratorTest {
       assertEquals("expectedResults map was not empty",
             0, expectedResults.size());
       assertEquals("actualResults map was not empty",
-            0, actualResults.size());     
+            0, actualResults.size()); 
    }
    
    private Map<DataType, Map<String, Integer>> buildExpectedResultsMap(
@@ -1302,6 +1312,28 @@ public class HashGeneratorTest {
       retVal.delete(retVal.length()-2, retVal.length()); 
       return retVal.toString();
    }
+   
+   private int getSystemPropertyInt(String propName, int defaultValue) {
+      int retVal = 0;
+      String propValString = System.getProperty(propName);
+      if (null == propValString || propValString.isEmpty()) {
+         LOGGER.info(propName
+               + " property is not set, using default " + "value: "
+               + defaultValue);
+         retVal = defaultValue;
+      } else {
+         try {
+            retVal = Integer.parseInt(propValString);
+         } catch (NumberFormatException e) {
+            e.printStackTrace();
+            LOGGER.error(propName+ " was set to an invalid int " +
+                  "value.  Using default value of '" +
+                  defaultValue + "', instead");
+         }
+      }
+      return retVal;
+   }
+   
    /**
     * Data container object to store scalar data and its expected hash value.
     * 

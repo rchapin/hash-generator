@@ -16,6 +16,14 @@ To build, simply run the following command in the hash-generator directory
 
 This will build the project and create the jar in the target/ directory as expected.
 
+### Failures running test ```shouldCorrectlyHashScalarStaticMultiThreaded```
+
+If you encounter problems with resource starvation while running the aforementioned test you can add the following JVM properties to your ```mvn test|compile|package``` invocation to reduce the number of threads instantiated for the test, and/or the number of iterations that each thread runs for the test:
+
+```-DhashGen.multithread.test.numThreads=n -DhashGen.multithread.test.numIter=n```
+
+For more details about this test, check the source for the ```shouldCorrectlyHashScalarStaticMultiThreaded``` method.
+
 ## To Include In Your Project
 
 (add pom declaration)
