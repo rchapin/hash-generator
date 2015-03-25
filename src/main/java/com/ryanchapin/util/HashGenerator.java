@@ -131,9 +131,7 @@ public class HashGenerator {
       // the updated algorithm.
       md = null;
    }
-   
-   
-   
+
    // -------------------------------------------------------------------------
    // Constructor:
    //
@@ -594,8 +592,8 @@ public class HashGenerator {
     * @param  input
     *         String to be hashed.
     * @param  encoding
-    *         valid @link {@link java.nio.charset.Charset} to be used when
-    *         generating byte array from the
+    *         valid {@link java.nio.charset.StandardCharsets} constant to be
+    *         used when generating byte array from the
     *         {@link java.lang.String#getBytes(String)} method.
     * @param  hashAlgorithm
     *         {@link HashAlgorithm} to be used to generate the hash.
@@ -625,7 +623,7 @@ public class HashGenerator {
     * @param  input
     *         String to be hashed.
     * @param  encoding
-    *         valid @link {@link java.nio.charset.Charset} to be used when
+    *         valid {@link java.nio.charset.Charset} to be used when
     *         generating byte array from the
     *         {@link java.lang.String#getBytes(String)} method.
     * @return hexadecimal hash of the input data.
