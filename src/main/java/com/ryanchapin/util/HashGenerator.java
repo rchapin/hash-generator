@@ -8,62 +8,74 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The <code>Hash-Generator</code> is a class used for generating hexidecimal
- * hashes for various types of input data.
+ * The <code>HashGenerator</code> is a class used for creating hexadecimal
+ * hashes for multiple types of input data.
  * <p>
- * Supported input formats (and their associated wrapper classes) are:
+ * Supported input formats:
  * <ul>
  *    <li>byte</li>
+ *    <li>{@link java.lang.Byte}</li>
  *    <li>char</li>
+ *    <li>{@link java.lang.Character}</li>
  *    <li>short</li>
+ *    <li>{@link java.lang.Short}</li>
  *    <li>int</li>
+ *    <li>{@link java.lang.Integer}</li>
  *    <li>long</li>
+ *    <li>{@link java.lang.Long}</li>
  *    <li>float</li>
+ *    <li>{@link java.lang.Float}</li>
  *    <li>double</li>
+ *    <li>{@link java.lang.Double}</li>
  *    <li>String</li>
+ *    <li>char[]</li>
  * </ul>
  * <p>
- * It supports any of the hash algorithms that are supported by the
- * {@link java.security.MessageDigest} class.
+ * It supports any of the hash algorithms that are supported by the Java SE 7
+ * {@link java.security.MessageDigest#digest()} class/method.  See the
+ * MessageDigest section in the
+ * {@see <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest">Java Cryptography Architecture Standard Algorithm Name Documentation</a>}
+ * for information about standard algorithm names.
+ * 
  * <p>
- * NOTE: that the unit tests in this project DO NOT test the usage of the
- * <code>MD2</code> digest algorithm as it has not been included in the openssl
+ * NOTE: that the unit tests in this project <b>DO NOT</b> test the usage of the
+ * <code>MD2</code> digest algorithm as it has not been included in openssl
  * since openssl-0.9.8m (2010-02-25), and is not in general use anymore.
  * <p>
  * The class is thread safe <b>depending on how it is instantiated and/or
  * called</b>.  Used in the following manner it is thread safe:
- * <p><blockquote><pre>
- *    // Calling static methods
- *    String sha1Hash = HashGenerator.createHash("This is a test", "SHA-1"); 
- * </pre></blockquote>
  * <p>
+ *    <blockquote><pre>
+ *    // Calling static methods
+ *    String sha1Hash = HashGenerator.createHash("This is a test", "UTF-8", HashAlgorithm.SHA1SUM); 
+ * </pre></blockquote>
+ *
  * Used in the following manner thread safety must be taken into account by
  * the calling code:
- * <p><blockquote><pre>
- *    // Calling member methods on a HashGenerator Instance
- *    HashGenerator hashGenerator = new HashGenerator();
- *    String sha1Hash = hashGenerator.createHash("This is a test", "SHA-1"); 
- * </pre></blockquote>
  * <p>
+ *    <blockquote><pre>
+ *    // Calling member methods on a HashGenerator Instances
+ *    HashGenerator hashGenerator = new HashGenerator(HashAlgorithm.SHA1SUM);
+ *    String sha1Hash = hashGenerator.createHash("This is a test", "UTF-8"); 
+ * </pre></blockquote>
+ * 
  * When the <code>createHash</code> methods are called on a
- * <code>HashGenerator</code> instance synchronization must be handled by the
+ * <code>HashGenerator</code> instance, synchronization must be handled by the
  * calling code or their must only be a single thread making calls into the
  * <code>HashGenerator</code> instance.
  * <p>
  * The reason for this design is to enable the user to optimize for either
- * "build-in" synchronization (usage of the static methods), or optimize for
+ * "built-in" synchronization (usage of the static methods), or optimize for
  * fewer Objects on the heap to be garbage collected.
  * <p>
  * In the case where there is a high rate and volume of calls to the
- * <code>HashGenerator</code> static methods, resulting in garbage which
- * collection causes performance issues, the programmer can opt to instantiate
- * a <code>HashGenerator</code>.  Then calls to the instance can be limited to
+ * <code>HashGenerator</code> static methods, resulting in garbage collection
+ * causing performance issues, the programmer can opt to instantiate a
+ * <code>HashGenerator</code>.  Then calls to the instance can be limited to
  * a single thread, or the calling code can wrap the <code>HashGenerator</code>
  * in synchronized methods.
  * 
- * @author  Ryan Chapin
- * @since   2015-03-01
- * @version 1.0
+ * @since   1.0.0
  */
 public class HashGenerator {
    
@@ -89,6 +101,7 @@ public class HashGenerator {
    
    private static final String EMPTY_OR_NULL_ENCODING_ERR =
          "null or empty String passed as encoding argument";
+   
    /**
     * Map of ByteBuffer instances that will be re-used during the life cycle
     * of the HashGenerator instance.  They will NOT be used when the static members
@@ -650,6 +663,17 @@ public class HashGenerator {
    
    /** -- Character Arrays ------------------------------------------------- */
    
+   /**
+    * Generates a hexadecimal hash of a character array.
+    * 
+    * @param  input
+    *         char[] to be hashed
+    * @param  hashAlgorithm
+    *         {@link HashAlgorithm} to be used to generate the hash.
+    * @return hexadecimal hash of the input data.
+    * @throws IllegalArgumentException
+    * @throws NoSuchAlgorithmException
+    */
    public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
       throws IllegalArgumentException, NoSuchAlgorithmException
    {
@@ -674,6 +698,15 @@ public class HashGenerator {
       return retVal;
    }
    
+   /**
+    * Generates a hexadecimal hash of a character array.
+    * 
+    * @param  input
+    *         char[] to be hashed
+    * @return hexadecimal hash of the input data.
+    * @throws IllegalStateException
+    * @throws NoSuchAlgorithmException
+    */
    public String createHash(char[] input)
          throws IllegalStateException, NoSuchAlgorithmException
    {
@@ -805,9 +838,12 @@ public class HashGenerator {
    }
    
    /**
-    * 
-    * @param hashBytes
-    * @return
+    * Generates a hexadecimal String representation of the hashed bytes.
+    *
+    * @param  hashBytes
+    *         byte[] output from the
+    *         {@link java.security.MessageDigest#digest()} method.
+    * @return hexadecimal representation of the hashed bytes.
     */
    public static String bytesToHex(byte[] hashBytes) {
       
@@ -860,8 +896,7 @@ public class HashGenerator {
    /**
     * Data types supported by the HashGenerator.
     * 
-    * @author Ryan Chapin
-    * @since  2015-03-16
+    * @since  1.0.0
     */
    public static enum DataType {
       BYTE,
@@ -878,8 +913,7 @@ public class HashGenerator {
    /**
     * Supported hashing algorithms.
     * 
-    * @author Ryan Chapin
-    * @since  2015-03-17
+    * @since  1.0.0
     */
    public static enum HashAlgorithm {
       MD2SUM("MD2"),

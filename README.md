@@ -2,9 +2,53 @@
 
 **By:** Ryan Chapin [Contact Info](http://www.ryanchapin.com/contact.html)
 
-Hash-Generator is a Java library for creating hashes for various types of input data.
+The HashGenerator is a Java library for creating hexadecimal hashes for multiple types of input data.
+
+Supported input formats:
+
+- byte
+- Byte
+- char
+- Character
+- short
+- Short
+- int
+- Integer
+- long
+- Long
+- float
+- Float
+- double
+- Double
+- String
+- char[]
 
 It supports any of the hash algorithms that are supported by the Java SE 7 [MessageDigest.getInstance(String algorithm)](http://docs.oracle.com/javase/7/docs/api/java/security/MessageDigest.html#getInstance%28java.lang.String%29) class/method.  See the MessageDigest section in the [Java Cryptography Architecture Standard Algorithm Name Documentation](http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest) for information about standard algorithm names.
+
+
+NOTE: that the unit tests in this project DO NOT test the usage of the MD2 digest algorithm as it has not been included in openssl since openssl-0.9.8m (2010-02-25), and is not in general use anymore.
+
+The class is thread safe depending on how it is instantiated and/or called. Used in the following manner it is thread safe:
+
+```
+// Calling static methods
+String sha1Hash = HashGenerator.createHash("This is a test", "UTF-8", HashAlgorithm.SHA1SUM); 
+```  
+
+Used in the following manner thread safety must be taken into account by the calling code:
+
+```
+// Calling member methods on a HashGenerator Instance
+HashGenerator hashGenerator = new HashGenerator(HashAlgorithm.SHA1SUM);
+String sha1Hash = hashGenerator.createHash("This is a test", "UTF-8"); 
+```  
+
+When the createHash methods are called on a HashGenerator instance, synchronization must be handled by the calling code or their must only be a single thread making calls into the HashGenerator instance.
+
+The reason for this design is to enable the user to optimize for either "built-in" synchronization (usage of the static methods), or optimize for fewer Objects on the heap to be garbage collected.
+
+In the case where there is a high rate and volume of calls to the HashGenerator static methods, resulting in garbage collection causing performance issues, the programmer can opt to instantiate a HashGenerator. Then calls to the instance can be limited to a single thread, or the calling code can wrap the HashGenerator in synchronized methods.
+
 
 ## Building a Distribution
 
