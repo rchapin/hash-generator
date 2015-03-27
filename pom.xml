@@ -3,7 +3,7 @@
 
   <groupId>com.ryanchapin.util</groupId>
   <artifactId>hashgenerator</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <description>
     HashGenerator is a Java library for creating hashes for various types of input data.
