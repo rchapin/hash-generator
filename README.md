@@ -59,7 +59,11 @@ To build, simply run the following command in the hash-generator directory
 # mvn clean package
 ```
 
-This will build the project and create the jar in the target/ directory as expected.
+This will build the project and create the jar in the target/ directory as expected.  There is a profile, build-release-artifacts, which is activeByDefault and which will build javadoc and source jars.  To disable, and speed up builds during development build as follows:
+
+```
+# mvn -P\!build-release-artifacts clean package
+```
 
 ### Failures running test ```shouldCorrectlyHashScalarStaticMultiThreaded```
 
