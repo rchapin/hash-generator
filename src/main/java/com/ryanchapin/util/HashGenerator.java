@@ -1,3 +1,42 @@
+/**
+ * This software is released under the Revised BSD License.
+ * 
+ * Copyright (c) 2015, Ryan Chapin, http:www.ryanchapin.com       
+ * All rights reserved.                   
+ *                                                                     
+ * Redistribution  and  use  in  source  and binary forms, with or
+ * without modification, are permitted provided that the following
+ * conditions are met:
+ *                                                                     
+ * -   Redistributions  of  source  code  must  retain  the  above
+ * copyright  notice,  this  list  of conditions and the following
+ * disclaimer.
+ * 
+ * -  Redistributions  in  binary  form  must  reproduce the above
+ * copyright  notice,  this  list  of conditions and the following
+ * disclaimer in the documentation and or other materials provided
+ * with the distribution.
+ * 
+ * -  Neither  the  name  of  Ryan  Chapin  nor  the  names of its
+ * contributors may be used to endorse or promote products derived
+ * from this software without specific prior written permission.
+ *                                                                     
+ * THIS   SOFTWARE  IS  PROVIDED  BY  THE  COPYRIGHT  HOLDERS  AND
+ * CONTRIBUTORS  "AS  IS"  AND  ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING,  BUT  NOT  LIMITED  TO,  THE  IMPLIED  WARRANTIES OF
+ * MERCHANTABILITY  AND  FITNESS  FOR  A  PARTICULAR  PURPOSE  ARE
+ * DISCLAIMED.   IN   NO  EVENT  SHALL  RYAN  CHAPIN,  ANY  HEIRS,
+ * SUCCESSORS,  EXECUTORS AND OR ASSIGNS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT,  INCIDENTAL,  SPECIAL,  EXEMPLARY,  OR  CONSEQUENTIAL
+ * DAMAGES   (INCLUDING,   BUT  NOT  LIMITED  TO,  PROCUREMENT  OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS  INTERRUPTION)  HOWEVER  CAUSED  AND  ON ANY THEORY OF
+ * LIABILITY,  WHETHER  IN  CONTRACT,  STRICT  LIABILITY,  OR TORT
+ * (INCLUDING  NEGLIGENCE  OR OTHERWISE) ARISING IN ANY WAY OUT OF
+ * THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE. 
+ */
+
 package com.ryanchapin.util;
 
 import java.io.UnsupportedEncodingException;
@@ -34,7 +73,7 @@ import java.util.Map;
  * It supports any of the hash algorithms that are supported by the Java SE 7
  * {@link java.security.MessageDigest#digest()} class/method.  See the
  * MessageDigest section in the
- * {@see <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest">Java Cryptography Architecture Standard Algorithm Name Documentation</a>}
+ * {@link <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest">Java Cryptography Architecture Standard Algorithm Name Documentation</a>}
  * for information about standard algorithm names.
  * 
  * <p>
@@ -74,6 +113,24 @@ import java.util.Map;
  * <code>HashGenerator</code>.  Then calls to the instance can be limited to
  * a single thread, or the calling code can wrap the <code>HashGenerator</code>
  * in synchronized methods.
+ * <p>
+ * The <code>HashGenerator</code> can be used to hash sensitive data as
+ * all intermediary data generated internally is explicitly wiped before the
+ * method returns to the calling code.
+ * <p>
+ * <b>To use the HashGenerator to hash passwords</b>, use the methods
+ * {@link HashGenerator#createHash(char[])} or
+ * {@link HashGenerator#createHash(char[], HashAlgorithm)} as this enables the
+ * caller to wipe the character array input by overwriting every element in the
+ * array with <code>0x0</code> after creating a hash.
+ * <p>
+ * <b>DO NOT USE {@link java.lang.String}</b> as input data for hashing
+ * passwords as <code>String</code> objects cannot be deterministically
+ * overwritten or garbage collected by the JVM.
+ * <p>
+ * To hash PINs or other sensitive numeric data use any of the methods which
+ * accept primitive types as input and make sure to use and pass in primitive
+ * types and not their corollary wrapper classes.
  * 
  * @since   1.0.0
  */

@@ -50,6 +50,14 @@ The reason for this design is to enable the user to optimize for either "built-i
 
 In the case where there is a high rate and volume of calls to the HashGenerator static methods, resulting in garbage collection causing performance issues, the programmer can opt to instantiate a HashGenerator. Then calls to the instance can be limited to a single thread, or the calling code can wrap the HashGenerator in synchronized methods.
 
+The HashGenerator can be used to hash sensitive data as all intermediary data generated internally is explicitly wiped before the method returns to the calling code.
+
+**To use the HashGenerator to hash passwords**, use the methods ```createHash(char[])``` or ```createHash(char[], HashAlgorithm)``` as this enables the caller to wipe the character array input by overwriting every element in the array with ```0x0``` after creating a hash.
+
+**DO NOT USE String as input data for hashing passwords** as String objects cannot be deterministically overwritten or garbage collected by the JVM.
+
+To hash PINs or other sensitive numeric data use any of the methods which accept primitive types as input and make sure to use and pass in primitive types and not their corollary wrapper classes.
+
 
 ## Building a Distribution
 
@@ -59,10 +67,10 @@ To build, simply run the following command in the hash-generator directory
 # mvn clean package
 ```
 
-This will build the project and create the jar in the target/ directory as expected.  There is a profile, build-release-artifacts, which is activeByDefault and which will build javadoc and source jars.  To disable, and speed up builds during development build as follows:
+This will build the project and create the jar in the target/ directory as expected.  There is a profile, ```release```, which is activeByDefault and which will build javadoc and source jars.  To disable, and speed up builds during development build as follows:
 
 ```
-# mvn -P\!build-release-artifacts clean package
+# mvn -P\!release clean package
 ```
 
 ### Failures running test ```shouldCorrectlyHashScalarStaticMultiThreaded```
