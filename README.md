@@ -85,7 +85,7 @@ For more details about this test, check the source for the ```shouldCorrectlyHas
 
 ## To Include In Your Project
 
-(add pom declaration)
+Either execute a ```maven build install``` if you do not have access to the Internet, or [version 1.0.0 is available via The Central Repository](http://search.maven.org/#artifactdetails%7Ccom.ryanchapin.util%7Chashgenerator%7C1.0.0%7Cjar).
 
 ## Development Environment Set-up
 
