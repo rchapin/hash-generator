@@ -4,6 +4,8 @@
 
 The HashGenerator is a Java library for creating hexadecimal hashes for multiple types of input data.
 
+[Version 1.0.0 is available via The Central Repository](http://search.maven.org/#artifactdetails%7Ccom.ryanchapin.util%7Chashgenerator%7C1.0.0%7Cjar).
+
 Supported input formats:
 
 - byte
