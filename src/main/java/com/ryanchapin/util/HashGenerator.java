@@ -70,12 +70,11 @@ import java.util.Map;
  *    <li>char[]</li>
  * </ul>
  * <p>
- * It supports any of the hash algorithms that are supported by the Java SE 7
+ * It supports any of the hash algorithms that are supported by the Java SE 8
  * {@link java.security.MessageDigest#digest()} class/method.  See the
  * MessageDigest section in the
- * {@link <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest">Java Cryptography Architecture Standard Algorithm Name Documentation</a>}
+ * <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#MessageDigest" target="_blank">Java Cryptography Architecture Standard Algorithm Name Documentation</a>
  * for information about standard algorithm names.
- * 
  * <p>
  * NOTE: that the unit tests in this project <b>DO NOT</b> test the usage of the
  * <code>MD2</code> digest algorithm as it has not been included in openssl
@@ -83,21 +82,19 @@ import java.util.Map;
  * <p>
  * The class is thread safe <b>depending on how it is instantiated and/or
  * called</b>.  Used in the following manner it is thread safe:
- * <p>
  *    <blockquote><pre>
  *    // Calling static methods
  *    String sha1Hash = HashGenerator.createHash("This is a test", "UTF-8", HashAlgorithm.SHA1SUM); 
  * </pre></blockquote>
- *
+ * <p>
  * Used in the following manner thread safety must be taken into account by
  * the calling code:
- * <p>
  *    <blockquote><pre>
  *    // Calling member methods on a HashGenerator Instances
  *    HashGenerator hashGenerator = new HashGenerator(HashAlgorithm.SHA1SUM);
  *    String sha1Hash = hashGenerator.createHash("This is a test", "UTF-8"); 
  * </pre></blockquote>
- * 
+ * <p>
  * When the <code>createHash</code> methods are called on a
  * <code>HashGenerator</code> instance, synchronization must be handled by the
  * calling code or their must only be a single thread making calls into the
@@ -131,7 +128,7 @@ import java.util.Map;
  * To hash PINs or other sensitive numeric data use any of the methods which
  * accept primitive types as input and make sure to use and pass in primitive
  * types and not their corollary wrapper classes.
- * 
+ *
  * @since   1.0.0
  */
 public class HashGenerator {
@@ -249,6 +246,8 @@ public class HashGenerator {
     * Will check the hashAlgo field ensuring that it contains a valid value.
     * 
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    private void checkHashAlgoField() throws IllegalStateException {
       if (null == this.hashAlgo) {
@@ -264,6 +263,7 @@ public class HashGenerator {
     * @param hashAlgo
     *        Hash algorithm to be validated.
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    private static void checkHashAlgoInput(HashAlgorithm hashAlgo)
          throws IllegalArgumentException
@@ -283,8 +283,10 @@ public class HashGenerator {
     * @param  hashAlgorithm
     *         {@link HashAlgorithm} to be used to generate the hash. 
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
+    * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(byte input, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException, IllegalArgumentException
@@ -303,8 +305,12 @@ public class HashGenerator {
     * @param  input
     *         byte to be hashed.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
+    * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(byte input)
       throws NoSuchAlgorithmException, IllegalStateException
@@ -328,8 +334,10 @@ public class HashGenerator {
     * @param  hashAlgorithm
     *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
+    * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(char input, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException, IllegalArgumentException
@@ -355,8 +363,12 @@ public class HashGenerator {
     * @param  input
     *         char to be hashed.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
+    * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(char input)
       throws NoSuchAlgorithmException, IllegalStateException
@@ -384,8 +396,10 @@ public class HashGenerator {
     * @param  hashAlgorithm
     *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
+    * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(short input, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException, IllegalArgumentException
@@ -411,8 +425,12 @@ public class HashGenerator {
     * @param  input
     *         short to be hashed.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
+    * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(short input)
       throws NoSuchAlgorithmException, IllegalStateException
@@ -440,8 +458,10 @@ public class HashGenerator {
     * @param  hashAlgorithm
     *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
+    * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(int input, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException, IllegalArgumentException
@@ -467,8 +487,12 @@ public class HashGenerator {
     * @param  input
     *         int to be hashed.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
+    * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(int input)
       throws NoSuchAlgorithmException, IllegalStateException
@@ -496,8 +520,10 @@ public class HashGenerator {
     * @param  hashAlgorithm
     *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
+    * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(long input, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException, IllegalArgumentException
@@ -523,8 +549,12 @@ public class HashGenerator {
     * @param  input
     *         int to be hashed.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
+    * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(long input)
       throws NoSuchAlgorithmException, IllegalStateException
@@ -552,8 +582,10 @@ public class HashGenerator {
     * @param  hashAlgorithm
     *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
+    * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(float input, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException, IllegalArgumentException
@@ -579,8 +611,12 @@ public class HashGenerator {
     * @param  input
     *         long to be hashed.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
+    * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(float input)
       throws NoSuchAlgorithmException, IllegalStateException
@@ -608,8 +644,10 @@ public class HashGenerator {
     * @param  hashAlgorithm
     *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
+    * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(double input, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException, IllegalArgumentException
@@ -635,8 +673,12 @@ public class HashGenerator {
     * @param  input
     *         double to be hashed.
     * @return hexadecimal hash of the input data.
-    * @throws NoSuchAlgorithmException
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
+    * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(double input)
       throws NoSuchAlgorithmException, IllegalStateException
@@ -669,8 +711,12 @@ public class HashGenerator {
     *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
     * @throws UnsupportedEncodingException
+    *         if the encoding <code>String</code> argument is not a valid
+    *         encoding.
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(String input,
          String encoding, HashAlgorithm hashAlgorithm)
@@ -698,8 +744,14 @@ public class HashGenerator {
     *         {@link java.lang.String#getBytes(String)} method.
     * @return hexadecimal hash of the input data.
     * @throws UnsupportedEncodingException
+    *         if the encoding <code>String</code> argument is not a valid
+    *         encoding.
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(String input, String encoding)
          throws UnsupportedEncodingException, IllegalStateException,
@@ -729,7 +781,9 @@ public class HashGenerator {
     *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
     * @throws IllegalArgumentException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
       throws IllegalArgumentException, NoSuchAlgorithmException
@@ -762,7 +816,11 @@ public class HashGenerator {
     *         char[] to be hashed
     * @return hexadecimal hash of the input data.
     * @throws IllegalStateException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    public String createHash(char[] input)
          throws IllegalStateException, NoSuchAlgorithmException
@@ -864,6 +922,9 @@ public class HashGenerator {
     *        byte array of the data to be hashed.
     *        
     * @return the array of bytes representing the hashed data.
+    * @throws NoSuchAlgorithmException
+    *         if the <code>HashGenerator</code> instance has not yet been
+    *         configured with a valid {@link HashAlgorithm} enum.
     */
    private byte[] computeHashBytes(byte[] inputBytes) throws NoSuchAlgorithmException {
       if (null == md) {
@@ -884,6 +945,8 @@ public class HashGenerator {
     * @param  hashAlgorithm
     *         algorithm to be used to calculate the hash.
     * @return the array of bytes representing the hashed data.
+    * @throws NoSuchAlgorithmException
+    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
    private static byte[] computeHashBytes(byte[] inputBytes, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException
