@@ -4,7 +4,7 @@
 
 The HashGenerator is a Java library for creating hexadecimal hashes for multiple types of input data.
 
-[Version 1.0.0 is available via The Central Repository](http://search.maven.org/#artifactdetails%7Ccom.ryanchapin.util%7Chashgenerator%7C1.0.0%7Cjar).
+[Version 1.1.0 is available via The Central Repository](http://search.maven.org/#artifactdetails%7Ccom.ryanchapin.util%7Chashgenerator%7C1.1.0%7Cjar).
 
 Supported input formats:
 
@@ -25,7 +25,7 @@ Supported input formats:
 - String
 - char[]
 
-It supports any of the hash algorithms that are supported by the Java SE 7 [MessageDigest.getInstance(String algorithm)](http://docs.oracle.com/javase/7/docs/api/java/security/MessageDigest.html#getInstance%28java.lang.String%29) class/method.  See the MessageDigest section in the [Java Cryptography Architecture Standard Algorithm Name Documentation](http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#MessageDigest) for information about standard algorithm names.
+It supports any of the hash algorithms that are supported by the Java SE 8 [MessageDigest.getInstance(String algorithm)](http://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html#getInstance%28java.lang.String%29) class/method.  See the MessageDigest section in the [Java Cryptography Architecture Standard Algorithm Name Documentation](http://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#MessageDigest) for information about standard algorithm names.
 
 
 NOTE: that the unit tests in this project DO NOT test the usage of the MD2 digest algorithm as it has not been included in openssl since openssl-0.9.8m (2010-02-25), and is not in general use anymore.
