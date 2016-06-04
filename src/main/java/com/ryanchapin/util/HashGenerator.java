@@ -1,26 +1,26 @@
 /**
  * This software is released under the Revised BSD License.
- * 
- * Copyright (c) 2015, Ryan Chapin, http:www.ryanchapin.com       
- * All rights reserved.                   
- *                                                                     
+ *
+ * Copyright (c) 2015, Ryan Chapin, http:www.ryanchapin.com
+ * All rights reserved.
+ *
  * Redistribution  and  use  in  source  and binary forms, with or
  * without modification, are permitted provided that the following
  * conditions are met:
- *                                                                     
+ *
  * -   Redistributions  of  source  code  must  retain  the  above
  * copyright  notice,  this  list  of conditions and the following
  * disclaimer.
- * 
+ *
  * -  Redistributions  in  binary  form  must  reproduce the above
  * copyright  notice,  this  list  of conditions and the following
  * disclaimer in the documentation and or other materials provided
  * with the distribution.
- * 
+ *
  * -  Neither  the  name  of  Ryan  Chapin  nor  the  names of its
  * contributors may be used to endorse or promote products derived
  * from this software without specific prior written permission.
- *                                                                     
+ *
  * THIS   SOFTWARE  IS  PROVIDED  BY  THE  COPYRIGHT  HOLDERS  AND
  * CONTRIBUTORS  "AS  IS"  AND  ANY EXPRESS OR IMPLIED WARRANTIES,
  * INCLUDING,  BUT  NOT  LIMITED  TO,  THE  IMPLIED  WARRANTIES OF
@@ -34,7 +34,7 @@
  * LIABILITY,  WHETHER  IN  CONTRACT,  STRICT  LIABILITY,  OR TORT
  * (INCLUDING  NEGLIGENCE  OR OTHERWISE) ARISING IN ANY WAY OUT OF
  * THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE. 
+ * SUCH DAMAGE.
  */
 
 package com.ryanchapin.util;
@@ -45,6 +45,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * The <code>HashGenerator</code> is a class used for creating hexadecimal
@@ -84,7 +87,7 @@ import java.util.Map;
  * called</b>.  Used in the following manner it is thread safe:
  *    <blockquote><pre>
  *    // Calling static methods
- *    String sha1Hash = HashGenerator.createHash("This is a test", "UTF-8", HashAlgorithm.SHA1SUM); 
+ *    String sha1Hash = HashGenerator.createHash("This is a test", "UTF-8", HashAlgorithm.SHA1SUM);
  * </pre></blockquote>
  * <p>
  * Used in the following manner thread safety must be taken into account by
@@ -92,7 +95,7 @@ import java.util.Map;
  *    <blockquote><pre>
  *    // Calling member methods on a HashGenerator Instances
  *    HashGenerator hashGenerator = new HashGenerator(HashAlgorithm.SHA1SUM);
- *    String sha1Hash = hashGenerator.createHash("This is a test", "UTF-8"); 
+ *    String sha1Hash = hashGenerator.createHash("This is a test", "UTF-8");
  * </pre></blockquote>
  * <p>
  * When the <code>createHash</code> methods are called on a
@@ -132,51 +135,52 @@ import java.util.Map;
  * @since   1.0.0
  */
 public class HashGenerator {
-   
+
    /**
     * Hash algorithm to be used to generate hashes for subsequent calls to
-    * any of the overloaded <code>createHash</code> methods. 
+    * any of the overloaded <code>createHash</code> methods.
     */
    private HashAlgorithm hashAlgo;
-      
+
    /**
     * {@link java.security.MessageDigest} instance instantiated when a
     * <code>HashGenerator</code> instance is used in lieu of the
     * <code>HashGenerator</code> static methods.
     */
    private MessageDigest md;
-   
-   private static final int CHAR_BYTES_SIZE    = Character.SIZE/8;
-   private static final int SHORT_BYTES_SIZE   = Short.SIZE/8;
-   private static final int INTEGER_BYTES_SIZE = Integer.SIZE/8;
-   private static final int LONG_BYTES_SIZE    = Long.SIZE/8;
-   private static final int FLOAT_BYTES_SIZE   = Float.SIZE/8;
-   private static final int DOUBLE_BYTES_SIZE  = Double.SIZE/8;
-   
+
+   // TODO:  Change these to n.BYTES
+   private static final int CHAR_BYTES_SIZE    = Character.BYTES;
+   private static final int SHORT_BYTES_SIZE   = Short.BYTES;
+   private static final int INTEGER_BYTES_SIZE = Integer.BYTES;
+   private static final int LONG_BYTES_SIZE    = Long.BYTES;
+   private static final int FLOAT_BYTES_SIZE   = Float.BYTES;
+   private static final int DOUBLE_BYTES_SIZE  = Double.BYTES;
+
    private static final String EMPTY_OR_NULL_ENCODING_ERR =
          "null or empty String passed as encoding argument";
-   
+
    /**
     * Map of ByteBuffer instances that will be re-used during the life cycle
     * of the HashGenerator instance.  They will NOT be used when the static members
     * are called.
     */
    private Map<DataType, ByteBuffer> byteBufferMap;
-   
+
    /**
     * Map of byte arrays that will be re-used during the life cycle of the
     * HashGenerator instance.  They will NOT be used when the static members
     * are called.
     */
    private Map<DataType, byte[]> byteArrayMap;
-   
+
    // -------------------------------------------------------------------------
    // Accessor/Mutators:
    //
 
    /**
     * Get the currently configured hash algorithm setting.
-    * 
+    *
     * @return  the currently configured hash algorithm.
     */
    public HashAlgorithm getHashAlgo() {
@@ -186,13 +190,13 @@ public class HashGenerator {
    /**
     * Sets the hash algorithm to be used for the next invocation the overloaded
     * createHash methods.
-    * 
+    *
     * @param hashAlgo
     *        new hash algorithm to be set.
     */
    public void setHashAlgo(HashAlgorithm hashAlgo) {
       this.hashAlgo = hashAlgo;
-      
+
       // When we update the hashAlgo we must null the existing reference to the
       // MessageDigest instance such that we can regenerate a new instance with
       // the updated algorithm.
@@ -202,7 +206,7 @@ public class HashGenerator {
    // -------------------------------------------------------------------------
    // Constructor:
    //
-   
+
    /**
     * Initializes a new {@code HashGenerator} instance such that subsequent
     * calls can be made passing in only the data to be hashed.
@@ -216,7 +220,7 @@ public class HashGenerator {
     * In that case, the developer may opt to instantiate a new instance per
     * thread, or simply synchronize calls to the class if that will not
     * cause a performance bottleneck.
-    * 
+    *
     * @param hashAlgo
     *        Hash algorithm to be used to create hashes.
     */
@@ -225,7 +229,7 @@ public class HashGenerator {
       byteBufferMap = new HashMap<DataType, ByteBuffer>();
       byteArrayMap  = new HashMap<DataType, byte[]>();
    }
-   
+
    /**
     * Default constructor.  Instantiating in this manner leaves the instance
     * without a configured {@link HashAlgorithm} value, and subsequent calls
@@ -237,14 +241,14 @@ public class HashGenerator {
    public HashGenerator() {
       this(null);
    }
-   
+
    // -------------------------------------------------------------------------
    // Member Methods:
    //
 
    /**
     * Will check the hashAlgo field ensuring that it contains a valid value.
-    * 
+    *
     * @throws IllegalStateException
     *         if the <code>HashGenerator</code> instance has not yet been
     *         configured with a valid {@link HashAlgorithm} enum.
@@ -252,14 +256,14 @@ public class HashGenerator {
    private void checkHashAlgoField() throws IllegalStateException {
       if (null == this.hashAlgo) {
          throw new IllegalStateException("No hashing algorithm was set for this HashGenerator instance.");
-      }  
+      }
    }
-   
+
    /**
     * Will check the hashAlgo argument that is passed in to any of the static
     * <code>createHash</code> methods, ensuring that is valid before continuing
     * to generate a hash.
-    *  
+    *
     * @param hashAlgo
     *        Hash algorithm to be validated.
     * @throws IllegalArgumentException
@@ -268,20 +272,149 @@ public class HashGenerator {
    private static void checkHashAlgoInput(HashAlgorithm hashAlgo)
          throws IllegalArgumentException
    {
+     // TODO:  Shouldn't we actually validate the algo?
       if (null == hashAlgo) {
          throw new IllegalArgumentException("No hashing algorithm was provided.");
       }
    }
-   
+
+
+
+
+
+
+
+
+
+
+   public static String createHash(char input, HashAlgorithm hashAlgorithm)
+       throws NoSuchAlgorithmException, IllegalStateException
+   {
+     Supplier<ByteBuffer> bufferSupplier = () -> {
+       ByteBuffer byteBuffer = ByteBuffer.allocate(CHAR_BYTES_SIZE);
+       byteBuffer.putChar(input);
+       return byteBuffer;
+     };
+
+     return createHash(bufferSupplier,
+                       createByteArrayFunction(CHAR_BYTES_SIZE),
+                       hashAlgorithm);
+   }
+
+   public String createHash(char input)
+       throws NoSuchAlgorithmException, IllegalStateException
+   {
+     Supplier<ByteBuffer> bufferSupplier = () -> {
+       ByteBuffer byteBuffer = getByteBuffer(DataType.CHARACTER, CHAR_BYTES_SIZE);
+       byteBuffer.putChar(input);
+       return byteBuffer;
+     };
+
+     return createHash(bufferSupplier,
+            createByteArrayFunction(DataType.CHARACTER, CHAR_BYTES_SIZE),
+            DataType.CHARACTER);
+   }
+
+
+   public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
+       throws IllegalArgumentException, NoSuchAlgorithmException
+   {
+     // Calculate the length of the required ByteBuffer
+     final int elementLength = input.length * CHAR_BYTES_SIZE;
+
+     Supplier<ByteBuffer> bufferSupplier = () -> {
+       ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+
+       // For each char in the input array, add it's bytes to the buffer
+       for (int i = 0; i < input.length; i++) {
+         byteBuffer.putChar(input[i]);
+       }
+       return byteBuffer;
+     };
+
+     return createHash(bufferSupplier,
+         createByteArrayFunction(elementLength),
+         hashAlgorithm);
+   }
+
+
+
+
+
+
+   private Function<ByteBuffer, byte[]> createByteArrayFunction(DataType type, int size) {
+     Function<ByteBuffer, byte[]> retVal = (buffer) -> {
+       byte[] arr = getByteArray(type, size);
+       buffer.get(arr);
+       return arr;
+     };
+     return retVal;
+   }
+
+   private static Function<ByteBuffer, byte[]> createByteArrayFunction(int size) {
+     Function<ByteBuffer, byte[]> retVal = (buffer) -> {
+       byte[] arr = new byte[size];
+       buffer.get(arr);
+       return arr;
+     };
+     return retVal;
+   }
+
+
+
+
+   private static String createHash(Supplier<ByteBuffer> buffSupplier,
+                                   Function<ByteBuffer, byte[]> byteArrFunction,
+                                   HashAlgorithm hashAlgorithm)
+       throws NoSuchAlgorithmException, IllegalStateException
+   {
+     checkHashAlgoInput(hashAlgorithm);
+
+     ByteBuffer buffer = buffSupplier.get();
+     buffer.rewind();
+     byte[] bytes = byteArrFunction.apply(buffer);
+     String retVal = bytesToHex(computeHashBytes(bytes, hashAlgorithm));
+     clearByteArray(bytes);
+
+     return retVal;
+   }
+
+   private String createHash(Supplier<ByteBuffer> buffSupplier,
+                             Function<ByteBuffer, byte[]> byteArrFunction,
+                             DataType type)
+       throws NoSuchAlgorithmException, IllegalStateException
+   {
+     checkHashAlgoField();
+
+     ByteBuffer buffer = buffSupplier.get();
+     buffer.rewind();
+     byte[] bytes = byteArrFunction.apply(buffer);
+     String retVal = bytesToHex(computeHashBytes(bytes));
+     clearByteArray(type);
+
+     return retVal;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
    /** -- Bytes ------------------------------------------------------------ */
-   
+
    /**
     * Generates a hexadecimal hash of a byte.
-    * 
+    *
     * @param  input
     *         byte to be hashed.
     * @param  hashAlgorithm
-    *         {@link HashAlgorithm} to be used to generate the hash. 
+    *         {@link HashAlgorithm} to be used to generate the hash.
     * @return hexadecimal hash of the input data.
     * @throws IllegalArgumentException
     *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
@@ -293,15 +426,15 @@ public class HashGenerator {
    {
       checkHashAlgoInput(hashAlgorithm);
       byte[] byteArray = new byte[] {input};
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
       clearByteArray(byteArray);
       return retVal;
    }
-   
+
    /**
     * Generates a hexadecimal hash of a byte and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         byte to be hashed.
     * @return hexadecimal hash of the input data.
@@ -318,17 +451,17 @@ public class HashGenerator {
       checkHashAlgoField();
       byte[] byteArray = getByteArray(DataType.BYTE, 1);
       byteArray[0] = input;
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray));
       clearByteArray(DataType.BYTE);
       return retVal;
    }
-   
+
    /** -- Characters ------------------------------------------------------- */
-   
+
    /**
     * Generates a hexadecimal hash of a char and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         char to be hashed.
     * @param  hashAlgorithm
@@ -339,27 +472,26 @@ public class HashGenerator {
     * @throws NoSuchAlgorithmException
     *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
-   public static String createHash(char input, HashAlgorithm hashAlgorithm)
-      throws NoSuchAlgorithmException, IllegalArgumentException
-   {
-      checkHashAlgoInput(hashAlgorithm);
-      
-      // Extract the byte array of the long
-      ByteBuffer byteBuffer = ByteBuffer.allocate(CHAR_BYTES_SIZE);
-      byteBuffer.putChar(input);
-      byteBuffer.rewind();
-      
-      byte[] byteArray = new byte[CHAR_BYTES_SIZE];
-      byteBuffer.get(byteArray);
-      
-      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
-      clearByteArray(byteArray);
-      return retVal;
-   }
-   
+//   public static String createHash(char input, HashAlgorithm hashAlgorithm)
+//      throws NoSuchAlgorithmException, IllegalArgumentException
+//   {
+//      checkHashAlgoInput(hashAlgorithm);
+//
+//      ByteBuffer byteBuffer = ByteBuffer.allocate(CHAR_BYTES_SIZE);
+//      byteBuffer.putChar(input);
+//      byteBuffer.rewind();
+//
+//      byte[] byteArray = new byte[CHAR_BYTES_SIZE];
+//      byteBuffer.get(byteArray);
+//
+//      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+//      clearByteArray(byteArray);
+//      return retVal;
+//   }
+
    /**
     * Generates a hexadecimal hash of a char and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         char to be hashed.
     * @return hexadecimal hash of the input data.
@@ -370,27 +502,27 @@ public class HashGenerator {
     *         if the <code>HashGenerator</code> instance has not yet been
     *         configured with a valid {@link HashAlgorithm} enum.
     */
-   public String createHash(char input)
-      throws NoSuchAlgorithmException, IllegalStateException
-   {
-      checkHashAlgoField();
-      ByteBuffer byteBuffer = getByteBuffer(DataType.CHARACTER, CHAR_BYTES_SIZE);
-      byteBuffer.putChar(input);
-      byteBuffer.rewind();
-      
-      byte[] byteArray = getByteArray(DataType.CHARACTER, CHAR_BYTES_SIZE);
-      byteBuffer.get(byteArray);
-      
-      String retVal = bytesToHex(computeHashBytes(byteArray));
-      clearByteArray(DataType.CHARACTER);
-      return retVal;
-   }
+//   public String createHash(char input)
+//      throws NoSuchAlgorithmException, IllegalStateException
+//   {
+//      checkHashAlgoField();
+//      ByteBuffer byteBuffer = getByteBuffer(DataType.CHARACTER, CHAR_BYTES_SIZE);
+//      byteBuffer.putChar(input);
+//      byteBuffer.rewind();
+//
+//      byte[] byteArray = getByteArray(DataType.CHARACTER, CHAR_BYTES_SIZE);
+//      byteBuffer.get(byteArray);
+//
+//      String retVal = bytesToHex(computeHashBytes(byteArray));
+//      clearByteArray(DataType.CHARACTER);
+//      return retVal;
+//   }
 
    /** -- Shorts ----------------------------------------------------------- */
-   
+
    /**
     * Generates a hexadecimal hash of a short and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         short to be hashed.
     * @param  hashAlgorithm
@@ -405,23 +537,22 @@ public class HashGenerator {
       throws NoSuchAlgorithmException, IllegalArgumentException
    {
       checkHashAlgoInput(hashAlgorithm);
-      
-      // Extract the byte array of the long
+
       ByteBuffer byteBuffer = ByteBuffer.allocate(SHORT_BYTES_SIZE);
       byteBuffer.putShort(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = new byte[SHORT_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
       clearByteArray(byteArray);
       return retVal;
    }
-   
+
    /**
     * Generates a hexadecimal hash of a short and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         short to be hashed.
     * @return hexadecimal hash of the input data.
@@ -439,20 +570,20 @@ public class HashGenerator {
       ByteBuffer byteBuffer = getByteBuffer(DataType.SHORT, SHORT_BYTES_SIZE);
       byteBuffer.putShort(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = getByteArray(DataType.SHORT, SHORT_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray));
       clearByteArray(DataType.SHORT);
       return retVal;
    }
-   
+
    /** -- Integers --------------------------------------------------------- */
-   
+
    /**
     * Generates a hexadecimal hash of a int and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         int to be hashed.
     * @param  hashAlgorithm
@@ -467,23 +598,23 @@ public class HashGenerator {
       throws NoSuchAlgorithmException, IllegalArgumentException
    {
       checkHashAlgoInput(hashAlgorithm);
-      
+
       // Extract the byte array of the long
       ByteBuffer byteBuffer = ByteBuffer.allocate(INTEGER_BYTES_SIZE);
       byteBuffer.putInt(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = new byte[INTEGER_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
       clearByteArray(byteArray);
       return retVal;
    }
-   
+
    /**
     * Generates a hexadecimal hash of a int and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         int to be hashed.
     * @return hexadecimal hash of the input data.
@@ -501,20 +632,20 @@ public class HashGenerator {
       ByteBuffer byteBuffer = getByteBuffer(DataType.INTEGER, INTEGER_BYTES_SIZE);
       byteBuffer.putInt(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = getByteArray(DataType.INTEGER, INTEGER_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray));
       clearByteArray(DataType.INTEGER);
       return retVal;
    }
-   
+
    /** -- Longs ------------------------------------------------------------ */
-   
+
    /**
     * Generates a hexadecimal hash of a long and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         int to be hashed.
     * @param  hashAlgorithm
@@ -529,23 +660,23 @@ public class HashGenerator {
       throws NoSuchAlgorithmException, IllegalArgumentException
    {
       checkHashAlgoInput(hashAlgorithm);
-      
+
       // Extract the byte array of the long
       ByteBuffer byteBuffer = ByteBuffer.allocate(LONG_BYTES_SIZE);
       byteBuffer.putLong(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = new byte[LONG_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
       clearByteArray(byteArray);
       return retVal;
    }
-   
+
    /**
     * Generates a hexadecimal hash of a long and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         int to be hashed.
     * @return hexadecimal hash of the input data.
@@ -563,20 +694,20 @@ public class HashGenerator {
       ByteBuffer byteBuffer = getByteBuffer(DataType.LONG, LONG_BYTES_SIZE);
       byteBuffer.putLong(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = getByteArray(DataType.LONG, LONG_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray));
       clearByteArray(DataType.LONG);
       return retVal;
    }
 
    /** -- Floats ----------------------------------------------------------- */
-   
+
    /**
     * Generates a hexadecimal hash of a long and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         long to be hashed.
     * @param  hashAlgorithm
@@ -591,23 +722,23 @@ public class HashGenerator {
       throws NoSuchAlgorithmException, IllegalArgumentException
    {
       checkHashAlgoInput(hashAlgorithm);
-      
+
       // Extract the byte array of the long
       ByteBuffer byteBuffer = ByteBuffer.allocate(FLOAT_BYTES_SIZE);
       byteBuffer.putFloat(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = new byte[FLOAT_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
       clearByteArray(byteArray);
       return retVal;
    }
-   
+
    /**
     * Generates a hexadecimal hash of a long and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         long to be hashed.
     * @return hexadecimal hash of the input data.
@@ -625,20 +756,20 @@ public class HashGenerator {
       ByteBuffer byteBuffer = getByteBuffer(DataType.FLOAT, FLOAT_BYTES_SIZE);
       byteBuffer.putFloat(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = getByteArray(DataType.FLOAT, FLOAT_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray));
       clearByteArray(DataType.FLOAT);
       return retVal;
    }
-   
+
    /** -- Doubles ---------------------------------------------------------- */
-   
+
    /**
     * Generates a hexadecimal hash of a double and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         double to be hashed.
     * @param  hashAlgorithm
@@ -653,23 +784,23 @@ public class HashGenerator {
       throws NoSuchAlgorithmException, IllegalArgumentException
    {
       checkHashAlgoInput(hashAlgorithm);
-      
+
       // Extract the byte array of the long
       ByteBuffer byteBuffer = ByteBuffer.allocate(DOUBLE_BYTES_SIZE);
       byteBuffer.putDouble(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = new byte[DOUBLE_BYTES_SIZE];
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
       clearByteArray(byteArray);
       return retVal;
    }
-   
+
    /**
     * Generates a hexadecimal hash of a double and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         double to be hashed.
     * @return hexadecimal hash of the input data.
@@ -687,20 +818,20 @@ public class HashGenerator {
       ByteBuffer byteBuffer = getByteBuffer(DataType.DOUBLE, DOUBLE_BYTES_SIZE);
       byteBuffer.putDouble(input);
       byteBuffer.rewind();
-      
+
       byte[] byteArray = getByteArray(DataType.DOUBLE, DOUBLE_BYTES_SIZE);
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray));
       clearByteArray(DataType.DOUBLE);
       return retVal;
    }
-   
+
    /** -- Strings ---------------------------------------------------------- */
-   
+
    /**
     * Generates a hexadecimal hash of a double and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         String to be hashed.
     * @param  encoding
@@ -727,7 +858,7 @@ public class HashGenerator {
 
       // Generate a byte array from the input String.
       byte[] byteArray = input.getBytes(encoding);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
       clearByteArray(byteArray);
       return retVal;
@@ -735,7 +866,7 @@ public class HashGenerator {
 
    /**
     * Generates a hexadecimal hash of a double and/or its wrapper class.
-    * 
+    *
     * @param  input
     *         String to be hashed.
     * @param  encoding
@@ -764,17 +895,17 @@ public class HashGenerator {
 
       // Generate a byte array from the input String.
       byte[] byteArray = input.getBytes(encoding);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray));
       clearByteArray(byteArray);
       return retVal;
    }
-   
+
    /** -- Character Arrays ------------------------------------------------- */
-   
+
    /**
     * Generates a hexadecimal hash of a character array.
-    * 
+    *
     * @param  input
     *         char[] to be hashed
     * @param  hashAlgorithm
@@ -785,33 +916,33 @@ public class HashGenerator {
     * @throws NoSuchAlgorithmException
     *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
-   public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
-      throws IllegalArgumentException, NoSuchAlgorithmException
-   {
-      checkHashAlgoInput(hashAlgorithm);
-      
-      // Calculate the length of the required ByteBuffer
-      int elementLength = input.length * CHAR_BYTES_SIZE;
-      ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
-      
-      // For each char in the input array, add it's bytes to the buffer
-      for (int i = 0; i < input.length; i++) {
-         byteBuffer.putChar(input[i]);
-      }
-      
-      byteBuffer.rewind();
+//   public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
+//      throws IllegalArgumentException, NoSuchAlgorithmException
+//   {
+//      checkHashAlgoInput(hashAlgorithm);
+//
+//      // Calculate the length of the required ByteBuffer
+//      int elementLength = input.length * CHAR_BYTES_SIZE;
+//      ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+//
+//      // For each char in the input array, add it's bytes to the buffer
+//      for (int i = 0; i < input.length; i++) {
+//         byteBuffer.putChar(input[i]);
+//      }
+//
+//      byteBuffer.rewind();
+//
+//      byte[] byteArray = new byte[elementLength];
+//      byteBuffer.get(byteArray);
+//
+//      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
+//      clearByteArray(byteArray);
+//      return retVal;
+//   }
 
-      byte[] byteArray = new byte[elementLength];
-      byteBuffer.get(byteArray);
-      
-      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
-      clearByteArray(byteArray);
-      return retVal;
-   }
-   
    /**
     * Generates a hexadecimal hash of a character array.
-    * 
+    *
     * @param  input
     *         char[] to be hashed
     * @return hexadecimal hash of the input data.
@@ -829,38 +960,38 @@ public class HashGenerator {
 
       // Calculate the length of the required ByteBuffer
       int elementLength = input.length * CHAR_BYTES_SIZE;
-      
+
       // We cannot reuse any existing array as each call to this
       // method can pass in a different sized array.  We could always
       // extend the class and add a method that takes a size argument
       // but that can wait for future development as needed.
       ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
-      
+
       // For each char in the input array, add it's bytes to the buffer
       for (int i = 0; i < input.length; i++) {
          byteBuffer.putChar(input[i]);
       }
-      
+
       byteBuffer.rewind();
-      
+
       // We will not be re-using the byte[] for the same reason that we are not
       // re-using the ByteBuffer instance above.
       byte[] byteArray = new byte[elementLength];
       byteBuffer.get(byteArray);
-      
+
       String retVal = bytesToHex(computeHashBytes(byteArray));
       clearByteArray(byteArray);
       return retVal;
    }
-   
+
    /** -- Utility Methods -------------------------------------------------- */
-   
+
    /**
     * Returns a reference to a ByteBuffer instance stored in the
     * {@link #byteBufferMap}.  If the instance does not exist, it instantiates
     * it, adding it to the map.  If it already exists it clears the map
     * making it ready for the next iteration of usage.
-    * 
+    *
     * @param  type
     *         the key in the {@link #byteBufferMap}.
     * @param  size
@@ -881,13 +1012,13 @@ public class HashGenerator {
       }
       return buffer;
    }
-   
+
    /**
     * Returns a reference to a byte array that is stored in the
     * {@link #byteArrayMap}.  If the instance does not exist, it is allocated
     * and added to the map.  If it already exists, the array is cleared,
     * making it ready for the next iteration of usages.
-    * 
+    *
     * @param  type
     *         the key in the {@link #byteArrayMap}.
     * @param  size
@@ -904,23 +1035,23 @@ public class HashGenerator {
       } else {
          // Get a reference to the array and clear it.
          byteArray = byteArrayMap.get(type);
-         
+
          for (int i = 0; i < size; i++) {
             byteArray[i] = 0x00;
          }
       }
       return byteArray;
    }
-      
+
    /**
     * Computes the hashed bytes for the byte array representation of the input
     * data.  Enables the usage of an existing instance of a
     * {@link java.security.MessageDigest} instance.  To be used when thread
     * safety is handled by the client code.
-    * 
+    *
     * @param inputBytes
     *        byte array of the data to be hashed.
-    *        
+    *
     * @return the array of bytes representing the hashed data.
     * @throws NoSuchAlgorithmException
     *         if the <code>HashGenerator</code> instance has not yet been
@@ -935,11 +1066,11 @@ public class HashGenerator {
       md.update(inputBytes);
       return md.digest();
    }
-   
+
    /**
     * Computers the hashed bytes for the byte array representation of the input
     * data.
-    * 
+    *
     * @param  inputBytes
     *         byte array of the data to be hashed.
     * @param  hashAlgorithm
@@ -956,7 +1087,7 @@ public class HashGenerator {
       MessageDigest msgDigest = MessageDigest.getInstance(hashAlgorithm.getAlgo());
       return msgDigest.digest(inputBytes);
    }
-   
+
    /**
     * Generates a hexadecimal String representation of the hashed bytes.
     *
@@ -966,17 +1097,17 @@ public class HashGenerator {
     * @return hexadecimal representation of the hashed bytes.
     */
    public static String bytesToHex(byte[] hashBytes) {
-      
+
       // Convert the hashBytes to a String of hex values
       StringBuilder retVal   = new StringBuilder();
       StringBuilder hexValue = new StringBuilder();
-      
+
       for (byte hashByte : hashBytes) {
          // Flush our StringBuilder to be used as a container for the
          // hex value for each byte as it is read.
          hexValue.delete(0, hexValue.length());
          hexValue.append(Integer.toHexString(0xFF & hashByte));
-         
+
          // Add a trailing '0' if our hexValue is only 1 char long
          if (hexValue.length() == 1) {
             hexValue.insert(0, '0');
@@ -985,10 +1116,10 @@ public class HashGenerator {
       }
       return retVal.toString();
    }
-   
+
    /**
     * Will set all of the bytes in the given byte array to 0x00.
-    * 
+    *
     * @param  arr
     *         byte array to 'reset'.
     */
@@ -997,12 +1128,12 @@ public class HashGenerator {
          arr[i] = 0x00;
       }
    }
-   
+
    /**
     * Will set all of the bytes in the byte array that is in the
     * internal byte array map, keyed by the DataType value passed in,
     * to 0x00.
-    * 
+    *
     * @param  type
     *         value of the array in the byte array map to be 'reset'.
     */
@@ -1012,10 +1143,10 @@ public class HashGenerator {
          arr[i] = 0x00;
       }
    }
-   
+
    /**
     * Data types supported by the HashGenerator.
-    * 
+    *
     * @since  1.0.0
     */
    public static enum DataType {
@@ -1027,12 +1158,13 @@ public class HashGenerator {
       FLOAT,
       DOUBLE,
       STRING,
+      BYTE_ARRAY,
       CHARACTER_ARRAY
    }
-   
+
    /**
     * Supported hashing algorithms.
-    * 
+    *
     * @since  1.0.0
     */
    public static enum HashAlgorithm {
@@ -1042,13 +1174,13 @@ public class HashGenerator {
       SHA256SUM("SHA-256"),
       SHA384SUM("SHA-384"),
       SHA512SUM("SHA-512");
-      
+
       private String algo;
-      
+
       public String getAlgo() {
          return algo;
       }
-      
+
       private HashAlgorithm(String algo) {
          this.algo = algo;
       }
