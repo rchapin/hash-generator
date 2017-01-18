@@ -10,7 +10,8 @@
 # name:     gen_hashes.sh
 # author:   Ryan Chapin
 # created:  2015-03-12
-# version:  0.01
+# modified: 2016-12-07
+# version:  1.00
 #
 # #############################################################################
 # CONFIGURATIONS
@@ -24,8 +25,14 @@ TXT_FILE_EXT=".txt"
 # Array of hash commands to run
 HASH_ALGOS="md5sum sha1sum sha256sum sha384sum sha512sum"
 
+# Java source file path
+JAVA_SRC_PATH=com/ryanchapin/util
+
 # Java source file
 JAVA_SRC_FILE=TestDataGenerator.java
+
+# Java package
+JAVA_PKG=com.ryanchapin.util
 
 # Java source class name
 JAVA_CLASS_NAME=TestDataGenerator
@@ -40,7 +47,7 @@ rm *${BIN_FILE_EXT}
 rm *${TXT_FILE_EXT}
 
 # compile the java class
-javac $JAVA_SRC_FILE
+javac $JAVA_SRC_PATH/$JAVA_SRC_FILE
 
 # ensure that the java program exited properly
 JAVAC_RETVAL=$?
@@ -52,7 +59,7 @@ then
 fi
 
 # run the class
-java $JAVA_CLASS_NAME
+java $JAVA_PKG.$JAVA_CLASS_NAME
 
 # ensure that the java program exited properly
 JAVA_RETVAL=$?
@@ -65,8 +72,10 @@ then
 fi
 
 
-# Now generate hashes for each of the bin files
+exit
 
+
+# Now generate hashes for each of the bin files
 if [ -e "$CODE_OUTFILE" ];
 then
    rm $CODE_OUTFILE
@@ -115,7 +124,7 @@ do
       echo "LIST_NAME = $LIST_NAME"
 
       HTD_NAME="htd${TYPE}${VAR_TYPE}${INSTANCE_COUNTER}"
-      echo "HTD_NAME = $HTD_NAME" 
+      echo "HTD_NAME = $HTD_NAME"
 
       HASH_ALGO_ENUM=$(echo "$HASH_ALGO" | tr [:lower:] [:upper:])
       echo "HASH_ALGO_ENUM = $HASH_ALGO_ENUM"
@@ -123,7 +132,7 @@ do
       # Extract the ASCII value of the data
       ASCII_FILE=${TYPE_VAR_TYPE_ID}${TXT_FILE_EXT}
       ASCII_VALUE=$(cat $ASCII_FILE)
-      echo "ASCII_VALUE = $ASCII_VALUE" 
+      echo "ASCII_VALUE = $ASCII_VALUE"
 
       #
       # Write out the Java code to instantiate this test data object
@@ -157,7 +166,7 @@ EOF
       INSTANCE_COUNTER=$(($INSTANCE_COUNTER+1))
 
    done
-   
+
 done
 
 exit 0

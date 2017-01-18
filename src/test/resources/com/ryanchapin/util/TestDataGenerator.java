@@ -1,22 +1,22 @@
+package com.ryanchapin.util;
+
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.io.IOException;
-import java.io.BufferedWriter;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.HashMap;
 
 /**
- * Utility for binary data files on the host OS with which we can then get a
- * baseline of the variety of hash algos that we are going to test.
+ * Utility for generating binary files with which we can then use to get
+ * known good hashes of our input data.  The results of which we will
+ * use in our unit tests.
  *
  * @author Ryan Chapin
  * @since  2015-03-11
@@ -117,42 +117,70 @@ public class TestDataGenerator {
       // Get the last token, which is the unqualified class name, and remove
       // ';' if they exist.
       String className = classNameArr[((classNameArr.length)-1)]
-            .replace(";", "");
+         .replace(";", "");
       String dataId = className + "_" + ARRAY + "_" + outputCounter;
       System.out.println("dataId = " + dataId);
 
       // Binary data
-      OutputStream out = getOutputStream(dataId + FILE_BIN_SUFFIX);
+      DataOutputStream out = getOutputStream(dataId + FILE_BIN_SUFFIX);
       // ASCII data
       BufferedWriter writer = getBufferedWriter(dataId + FILE_ASCII_SUFFIX);
 
       int arrLen           = data.length;
       int delimLenBoundary = arrLen - 1;
 
+//      /*
+//       * Define a Map of Supplier lambdas for the range of input data types.
+//       */
+//      Consumer<Object> charConsumer = (o) -> {
+//         Character charData = (Character)o;
+//         charData.charValue();
+//
+//      };
+////      Supplier<>
+//
+//      Function<Object, Byte[]> charFunct = (o) -> {
+//         Character charData = (Character)o;
+//
+////         byte retVal = charData.charValue();
+//         return null;
+//      };
+
       if (data[0] instanceof Character) {
+         //
+         // The only thing different here is the name of the type 'Character'
+         //
          // Write the prefix for the instantiation of the List
          writer.write("Arrays.asList(new Character[] {");
 
          for (int i = 0; i < arrLen; i++) {
             Character charData   = (Character)data[i];
-            ((DataOutputStream)out).writeChar(charData.charValue());
+            out.writeChar(charData.charValue());
 
             // Write out the ASCII representation in hex
             writer.write("(char)0x" + Integer.toHexString((int)charData));
+
+            // exactly the same
             if (i < delimLenBoundary) {
                writer.write(", ");
             }
          }
+
+         //
+         // This is exactly the same for each type
+         //
          // Write the suffix for the instantiation of the list
          writer.write("})");
+
+
+
       } else if (data[0] instanceof Byte) {
         writer.write("Arrays.asList(new Byte[] {");
 
           for (int i = 0; i < arrLen; i++) {
             Byte byteData = (byte)data[i];
-            ((DataOutputStream)out).writeByte(byteData.byteValue());
+            out.writeByte(byteData.byteValue());
 
-            // Write out the ASCII representation in hex
             writer.write("(byte)" + byteData);
             if (i < delimLenBoundary) {
                writer.write(", ");
@@ -168,9 +196,16 @@ public class TestDataGenerator {
       outputCounter++;
    }
 
-   private OutputStream getOutputStream(String fileName) throws IOException {
+//   private void doSomething(Object obj) {
+//     /*
+//      * 1. Know what kind of data to write to the (binary) OutputStream
+//      * 2. Know what the prefix
+//      */
+//   }
+
+   private DataOutputStream getOutputStream(String fileName) throws IOException {
       System.out.println("fileName = " + fileName);
-      OutputStream out = new DataOutputStream (
+      DataOutputStream out = new DataOutputStream (
             new BufferedOutputStream(
                   new FileOutputStream(fileName)));
       return out;
@@ -192,6 +227,8 @@ public class TestDataGenerator {
    }
 
    public static void main(String[] args) throws IOException {
+      System.out.println("From TestDataGenerator.main");
+      System.exit(0);
 
       Byte[] byteArr = new Byte[] {Byte.MIN_VALUE, (byte)-23, (byte)0,
             (byte)87, Byte.MAX_VALUE};

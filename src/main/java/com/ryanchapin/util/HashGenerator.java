@@ -272,7 +272,7 @@ public class HashGenerator {
    private static void checkHashAlgoInput(HashAlgorithm hashAlgo)
          throws IllegalArgumentException
    {
-     // TODO:  Shouldn't we actually validate the algo?
+      // TODO:  Shouldn't we actually validate the algo?
       if (null == hashAlgo) {
          throw new IllegalArgumentException("No hashing algorithm was provided.");
       }

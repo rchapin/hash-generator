@@ -4,7 +4,7 @@
 
 The HashGenerator is a Java library for creating hexadecimal hashes for multiple types of input data.
 
-[Version 1.1.0 is available via The Central Repository](http://search.maven.org/#artifactdetails%7Ccom.ryanchapin.util%7Chashgenerator%7C1.1.0%7Cjar).
+[Jars are available via The Central Repository](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22hashgenerator%22).
 
 Supported input formats:
 
@@ -75,7 +75,7 @@ This will build the project and create the jar in the target/ directory as expec
 # mvn -P\!release clean package
 ```
 
-### Failures running test ```shouldCorrectlyHashScalarStaticMultiThreaded```
+### Failures running test shouldCorrectlyHashScalarStaticMultiThreaded
 
 If you encounter problems with resource starvation while running the aforementioned test you can add the following JVM properties to your ```mvn test|compile|package``` invocation to reduce the number of threads instantiated for the test, and/or the number of iterations that each thread runs for the test:
 
@@ -85,13 +85,13 @@ For more details about this test, check the source for the ```shouldCorrectlyHas
 
 ## To Include In Your Project
 
-Either execute a ```maven build install``` if you do not have access to the Internet, or [version 1.0.0 is available via The Central Repository](http://search.maven.org/#artifactdetails%7Ccom.ryanchapin.util%7Chashgenerator%7C1.0.0%7Cjar).
+Either execute a ```maven build install``` if you do not have access to the Internet, or [jars art available via The Central Repository](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22hashgenerator%22).
 
 ## Development Environment Set-up
 
 This project was developed with Eclipse Kepler, but can be compiled from the command line with maven.
 
-The pom specifies _Java 1.7_, and the project required JDK 1.7 for development.
+The pom specifies _Java 1.8_, and the project required JDK 1.8 for development.
 
 ### To set up to develop, test, and run from within Eclipse (requires m2e and m2e slf4j Eclipse plugins)
 
