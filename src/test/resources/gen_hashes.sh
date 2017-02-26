@@ -71,10 +71,6 @@ then
    exit
 fi
 
-
-exit
-
-
 # Now generate hashes for each of the bin files
 if [ -e "$CODE_OUTFILE" ];
 then

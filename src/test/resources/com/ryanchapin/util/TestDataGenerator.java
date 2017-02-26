@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.function.Consumer;
 
 /**
  * Utility for generating binary files with which we can then use to get
@@ -50,13 +52,17 @@ public class TestDataGenerator {
     */
    private static final String ARRAY = "Array";
 
+   private static final String OUTPUT_DATAID_FORMAT = "%s_%s_%d";
+   private static final String ARR_STRING_PREFIX_FORMAT = "Arrays.asList(new %s {";
+
    public TestDataGenerator() {}
 
    /**
     * Write out binary data and a text file containing the data in ASCII
     * representation of the data.
     *
-    * @param data - The data to be written out
+    * @param data
+    *        The data to be written out
     * @throws IOException
     */
    public void writeData(Object data) throws IOException {
@@ -110,98 +116,123 @@ public class TestDataGenerator {
    }
 
    public void writeDataArray(Object[] data) throws IOException {
-
-      // Get the unprefixed class name,
-      String[] classNameArr = data.getClass().getName().split("[.]");
-
-      // Get the last token, which is the unqualified class name, and remove
-      // ';' if they exist.
-      String className = classNameArr[((classNameArr.length)-1)]
-         .replace(";", "");
+      // Get the class name for the data we are writing out
+      String simpleName = data.getClass().getSimpleName();
+      String className = simpleName.substring(0, simpleName.length() - 2);
       String dataId = className + "_" + ARRAY + "_" + outputCounter;
+      dataId = String.format(
+         OUTPUT_DATAID_FORMAT,
+         className,
+         ARRAY,
+         outputCounter);
       System.out.println("dataId = " + dataId);
 
-      // Binary data
-      DataOutputStream out = getOutputStream(dataId + FILE_BIN_SUFFIX);
-      // ASCII data
-      BufferedWriter writer = getBufferedWriter(dataId + FILE_ASCII_SUFFIX);
+      String binaryFileName = dataId + FILE_BIN_SUFFIX;
+      String asciiFileName = dataId + FILE_ASCII_SUFFIX;
 
-      int arrLen           = data.length;
-      int delimLenBoundary = arrLen - 1;
+      final DataOutputStream out = getOutputStream(binaryFileName);
+      final BufferedWriter writer = getBufferedWriter(asciiFileName);
 
-//      /*
-//       * Define a Map of Supplier lambdas for the range of input data types.
-//       */
-//      Consumer<Object> charConsumer = (o) -> {
-//         Character charData = (Character)o;
-//         charData.charValue();
-//
-//      };
-////      Supplier<>
-//
-//      Function<Object, Byte[]> charFunct = (o) -> {
-//         Character charData = (Character)o;
-//
-////         byte retVal = charData.charValue();
-//         return null;
-//      };
+      Consumer<Object> consumer = null;
 
-      if (data[0] instanceof Character) {
-         //
-         // The only thing different here is the name of the type 'Character'
-         //
-         // Write the prefix for the instantiation of the List
-         writer.write("Arrays.asList(new Character[] {");
+      switch (className) {
 
-         for (int i = 0; i < arrLen; i++) {
-            Character charData   = (Character)data[i];
-            out.writeChar(charData.charValue());
+         case "Character":
+            consumer = (o) -> {
+               Character charData = (Character) o;
+               try {
+                  // Write out the binary value of the char
+                  out.writeChar(charData.charValue());
 
-            // Write out the ASCII representation in hex
-            writer.write("(char)0x" + Integer.toHexString((int)charData));
+                  // Write out the ASCII representation in hex
+                  writer.write("(char)0x" + Integer.toHexString((int) charData));
+               } catch (IOException e) {
+                  e.printStackTrace();
+               }
+            };
+            break;
 
-            // exactly the same
-            if (i < delimLenBoundary) {
-               writer.write(", ");
-            }
-         }
+         case "Byte":
+            consumer = (o) -> {
+               try {
+                  Byte byteData = (byte) o;
+                  out.writeByte(byteData.byteValue());
+                  writer.write("(byte)" + byteData);
+               } catch (IOException e) {
+                  e.printStackTrace();
+               }
+            };
+            break;
 
-         //
-         // This is exactly the same for each type
-         //
-         // Write the suffix for the instantiation of the list
-         writer.write("})");
+         case "Short":
+            consumer = (o) -> {
+               try {
+                  Short shortData = (short) o;
+                  out.writeByte(shortData.shortValue());
+                  writer.write("(short)" + shortData);
+               } catch (IOException e) {
+                  e.printStackTrace();
+               }
+            };
+            break;
 
+         default:
+            System.out.printf("Unknown type %s provided, skipping it%n", className);
+      }
 
-
-      } else if (data[0] instanceof Byte) {
-        writer.write("Arrays.asList(new Byte[] {");
-
-          for (int i = 0; i < arrLen; i++) {
-            Byte byteData = (byte)data[i];
-            out.writeByte(byteData.byteValue());
-
-            writer.write("(byte)" + byteData);
-            if (i < delimLenBoundary) {
-               writer.write(", ");
-            }
-          }
-        writer.write("})");
-      } else {
-         // NoOp as we do not know how to write out this data.
+      if (consumer != null) {
+         writeOutValues(data, consumer, writer);
       }
 
       closeOutputStream(out);
       closeBufferedWriter(writer);
-      outputCounter++;
+
+      if (consumer == null) {
+         String cwd = System.getProperty("user.dir");
+         Path binaryFilePath = Paths.get(cwd, binaryFileName);
+         Path asciiFilePath = Paths.get(cwd, asciiFileName);
+         Files.delete(binaryFilePath);
+         Files.delete(asciiFilePath);
+      } else {
+         // Only increment the counter if we have written out data.
+         outputCounter++;
+      }
    }
 
-//   private void doSomething(Object obj) {
-//     /*
-//      * 1. Know what kind of data to write to the (binary) OutputStream
-//      * 2. Know what the prefix
-//      */
-//   }
+   /**
+    * The executor of the <code>Consumer</code> definition for the specific
+    * data type that is to be written out.
+    *
+    * @param data
+    *        An array of Objects to be written out.
+    * @param consumer
+    *        A <code>Consumer</code> to be executed for each element in the
+    *        data array.
+    * @param writer
+    *        Reference to a BufferedWriter to write out the ASCII
+    *        representation of each Object.
+    * @throws IOException
+    */
+   private void writeOutValues(
+      Object[] data,
+      Consumer<Object> consumer,
+      BufferedWriter writer)
+         throws IOException
+   {
+      int arrLen           = data.length;
+      int delimLenBoundary = arrLen - 1;
+
+      String type = data.getClass().getSimpleName();
+      writer.write(String.format(ARR_STRING_PREFIX_FORMAT, type));
+      for (int i = 0; i < arrLen; i++) {
+         consumer.accept(data[i]);
+
+         if (i < delimLenBoundary) {
+            writer.write(", ");
+         }
+      }
+      writer.write("})");
+   }
 
    private DataOutputStream getOutputStream(String fileName) throws IOException {
       System.out.println("fileName = " + fileName);
@@ -228,7 +259,6 @@ public class TestDataGenerator {
 
    public static void main(String[] args) throws IOException {
       System.out.println("From TestDataGenerator.main");
-      System.exit(0);
 
       Byte[] byteArr = new Byte[] {Byte.MIN_VALUE, (byte)-23, (byte)0,
             (byte)87, Byte.MAX_VALUE};
@@ -476,18 +506,22 @@ public class TestDataGenerator {
             (char)0xff, (char)0x7f
       };
 
-      Object[][][] testDataArray = new Object[2][][];
+      Short[][] shortArrayArr = new Short[1][];
+      shortArrayArr[0] = new Short[] {Short.MIN_VALUE, (short)Short.MAX_VALUE};
+
+      Object[][][] testDataArray = new Object[3][][];
       testDataArray[0] = charArrayArr;
       testDataArray[1] = byteArrayArr;
+      testDataArray[2] = shortArrayArr;
 
       TestDataGenerator tdg = new TestDataGenerator();
 
-      // Write out the arrays of objects
-      for (Object[] arr : testData) {
-         for (Object obj : arr) {
-            tdg.writeData(obj);
-         }
-      }
+//      // Write out the arrays of objects
+//      for (Object[] arr : testData) {
+//         for (Object obj : arr) {
+//            tdg.writeData(obj);
+//         }
+//      }
 
       // Write out the arrays of arrays of objects
       for (Object[][] arr : testDataArray) {
