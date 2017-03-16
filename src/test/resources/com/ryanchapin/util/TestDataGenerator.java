@@ -13,6 +13,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -53,61 +55,243 @@ public class TestDataGenerator {
    private static final String ARRAY = "Array";
 
    private static final String OUTPUT_DATAID_FORMAT = "%s_%s_%d";
-   private static final String ARR_STRING_PREFIX_FORMAT = "Arrays.asList(new %s {";
+   private static final String ARR_STRING_PREFIX_FORMAT = "Arrays.asList(new %s[] {";
+
+   private static Map<String, TriConsumer<DataOutputStream, BufferedWriter, Object>> TYPES = new HashMap<>();
+   {
+      TriConsumer<DataOutputStream,
+            BufferedWriter,
+            Object> byteConsumer = (out, writer, o) -> {
+         try {
+            Byte byteData = (byte) o;
+            out.writeByte(byteData.byteValue());
+            writer.write("(byte)" + byteData);
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      };
+
+      TriConsumer<DataOutputStream,
+            BufferedWriter,
+            Object> charConsumer = (out, writer, o) -> {
+         try {
+            Character charData = (Character) o;
+            out.writeChar(charData.charValue());
+            // Write out the ASCII representation in hex
+            writer.write("(char)0x" + Integer.toHexString((int) charData));
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      };
+
+      TriConsumer<DataOutputStream,
+            BufferedWriter,
+            Object> shortConsumer = (out, writer, o) -> {
+         try {
+            Short shortData = (Short) o;
+            out.writeShort(shortData.shortValue());
+            writer.write("(short)" + shortData.toString());
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      };
+
+      TriConsumer<DataOutputStream,
+            BufferedWriter,
+            Object> intConsumer = (out, writer, o) -> {
+         try {
+            Integer intData = (Integer) o;
+            out.writeInt(intData.intValue());
+            writer.write(intData.toString());
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      };
+
+      TriConsumer<DataOutputStream,
+            BufferedWriter,
+            Object> longConsumer = (out, writer, o) -> {
+         try {
+            Long longData = (Long) o;
+            out.writeLong(longData.longValue());
+            BigInteger bi = new BigInteger(longData.toString());
+            writer.write(bi.toString() + "L");
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      };
+
+      TriConsumer<DataOutputStream,
+            BufferedWriter,
+            Object> floatConsumer = (out, writer, o) -> {
+         try {
+            Float floatData = (Float) o;
+            out.writeFloat(floatData.floatValue());
+            BigDecimal bd = new BigDecimal(floatData.toString());
+            writer.write(bd.toPlainString() + "F");
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      };
+
+      TriConsumer<DataOutputStream,
+            BufferedWriter,
+            Object> doubleConsumer = (out, writer, o) -> {
+         try {
+            Double doubleData = (Double) o;
+            out.writeDouble(doubleData.doubleValue());
+            BigDecimal bd = new BigDecimal(doubleData.doubleValue());
+            writer.write(bd.toPlainString() + "D");
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      };
+
+      TriConsumer<DataOutputStream,
+            BufferedWriter,
+            Object> stringConsumer = (out, writer, o) -> {
+         try {
+            String stringData = (String) o;
+            byte[] byteArr = stringData.getBytes(DEFAULT_CHAR_ENCODING);
+            out.write(byteArr);
+            writer.write("\"" + stringData.toString() + "\"");
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      };
+
+      TYPES.put("Byte", byteConsumer);
+      TYPES.put("Character", charConsumer);
+      TYPES.put("Short", shortConsumer);
+      TYPES.put("Integer", intConsumer);
+      TYPES.put("Long", longConsumer);
+      TYPES.put("Float", floatConsumer);
+      TYPES.put("Double", doubleConsumer);
+      TYPES.put("String", stringConsumer);
+   }
 
    public TestDataGenerator() {}
 
-   /**
-    * Write out binary data and a text file containing the data in ASCII
-    * representation of the data.
-    *
-    * @param data
-    *        The data to be written out
-    * @throws IOException
-    */
+//   /**
+//    * Write out binary data and a text file containing the data in ASCII
+//    * representation of the data.
+//    *
+//    * @param data
+//    *        The data to be written out
+//    * @throws IOException
+//    */
+//   public void writeData(Object data) throws IOException {
+//
+//      // Get the unprefixed class name
+//      String[] classNameArr = data.getClass().getName().split("[.]");
+//      String className = classNameArr[((classNameArr.length)-1)];
+//      String dataId = className + "_" + SCALAR + "_" + outputCounter;
+//      System.out.println("dataId = " + dataId);
+//
+//      // Binary data
+//      OutputStream out = getOutputStream(dataId + FILE_BIN_SUFFIX);
+//      // ASCII data
+//      BufferedWriter writer = getBufferedWriter(dataId + FILE_ASCII_SUFFIX);
+//
+//      if (data instanceof Byte) {
+//         ((DataOutputStream)out).writeByte(((Byte)data).byteValue());
+//         writer.write("(byte)" + ((Byte)data).toString());
+//      } else if (data instanceof Character) {
+//         ((DataOutputStream)out).writeChar(((Character)data).charValue());
+//         writer.write("(char)0x" + Integer.toHexString((int)(Character)data));
+//      } else if (data instanceof Short) {
+//         ((DataOutputStream)out).writeShort(((Short)data).shortValue());
+//         writer.write("(short)" + ((Short)data).toString());
+//      } else if (data instanceof Integer) {
+//         ((DataOutputStream)out).writeInt(((Integer)data).intValue());
+//         writer.write(((Integer)data).toString());
+//      } else if (data instanceof Long){
+//         ((DataOutputStream)out).writeLong(((Long)data).longValue());
+//         BigInteger bi = new BigInteger(((Long)data).toString());
+//         writer.write(bi.toString() + "L");
+//      } else if (data instanceof Double){
+//         ((DataOutputStream)out).writeDouble(((Double)data).doubleValue());
+//         BigDecimal bd = new BigDecimal(((Double)data).doubleValue());
+//         writer.write(bd.toPlainString() + "D");
+//      } else if (data instanceof Float){
+//         ((DataOutputStream)out).writeFloat(((Float)data).floatValue());
+//         BigDecimal bd = new BigDecimal(((Float)data).toString());
+//         writer.write(bd.toPlainString() + "F");
+//      } else if (data instanceof String){
+//         byte[] byteArr = ((String)data).getBytes(DEFAULT_CHAR_ENCODING);
+//         ((DataOutputStream)out).write(byteArr);
+//         writer.write("\"" + data.toString() + "\"");
+//      } else {
+//         // NoOp as we do not know how to write out this data.
+//      }
+//
+//      closeOutputStream(out);
+//      closeBufferedWriter(writer);
+//      outputCounter++;
+//   }
+
    public void writeData(Object data) throws IOException {
+      writeData(new Object[]{data}, true);
+   }
 
-      // Get the unprefixed class name
-      String[] classNameArr = data.getClass().getName().split("[.]");
-      String className = classNameArr[((classNameArr.length)-1)];
-      String dataId = className + "_" + SCALAR + "_" + outputCounter;
-      System.out.println("dataId = " + dataId);
+   public void writeData(Object[] data) throws IOException {
+      writeData(data, false);
+   }
 
-      // Binary data
-      OutputStream out = getOutputStream(dataId + FILE_BIN_SUFFIX);
-      // ASCII data
-      BufferedWriter writer = getBufferedWriter(dataId + FILE_ASCII_SUFFIX);
+   public void writeData(
+      Object[] data,
+      boolean scalar)
+         throws IOException
+   {
+      // Get the class name for the data we are writing out.
+      String className = data[0].getClass().getSimpleName();
+      String dataId = null;
 
-      if (data instanceof Byte) {
-         ((DataOutputStream)out).writeByte(((Byte)data).byteValue());
-         writer.write("(byte)" + ((Byte)data).toString());
-      } else if (data instanceof Character) {
-         ((DataOutputStream)out).writeChar(((Character)data).charValue());
-         writer.write("(char)0x" + Integer.toHexString((int)(Character)data));
-      } else if (data instanceof Short) {
-         ((DataOutputStream)out).writeShort(((Short)data).shortValue());
-         writer.write("(short)" + ((Short)data).toString());
-      } else if (data instanceof Integer) {
-         ((DataOutputStream)out).writeInt(((Integer)data).intValue());
-         writer.write(((Integer)data).toString());
-      } else if (data instanceof Long){
-         ((DataOutputStream)out).writeLong(((Long)data).longValue());
-         BigInteger bi = new BigInteger(((Long)data).toString());
-         writer.write(bi.toString() + "L");
-      } else if (data instanceof Double){
-         ((DataOutputStream)out).writeDouble(((Double)data).doubleValue());
-         BigDecimal bd = new BigDecimal(((Double)data).doubleValue());
-         writer.write(bd.toPlainString() + "D");
-      } else if (data instanceof Float){
-         ((DataOutputStream)out).writeFloat(((Float)data).floatValue());
-         BigDecimal bd = new BigDecimal(((Float)data).toString());
-         writer.write(bd.toPlainString() + "F");
-      } else if (data instanceof String){
-         byte[] byteArr = ((String)data).getBytes(DEFAULT_CHAR_ENCODING);
-         ((DataOutputStream)out).write(byteArr);
-         writer.write("\"" + data.toString() + "\"");
+      if (scalar) {
+         dataId = className + "_" + SCALAR + "_" + outputCounter;
+         dataId = String.format(
+            OUTPUT_DATAID_FORMAT,
+            className,
+            SCALAR,
+            outputCounter);
       } else {
-         // NoOp as we do not know how to write out this data.
+         dataId = String.format(
+            OUTPUT_DATAID_FORMAT,
+            className,
+            ARRAY,
+            outputCounter);
+      }
+
+      TriConsumer<DataOutputStream, BufferedWriter, Object> triConsumer =
+         TYPES.get(className);
+      if (triConsumer == null) {
+         return;
+      }
+
+      String binaryFileName = dataId + FILE_BIN_SUFFIX;
+      String asciiFileName = dataId + FILE_ASCII_SUFFIX;
+      final DataOutputStream out = getOutputStream(binaryFileName);
+      final BufferedWriter writer = getBufferedWriter(asciiFileName);
+
+      /*
+       * At this point, we determine whether or not we have more than one object
+       * to write out, or an actual array of objects.
+       */
+      if (data.length > 1) {
+         int arrLen           = data.length;
+         int delimLenBoundary = arrLen - 1;
+         writer.write(String.format(ARR_STRING_PREFIX_FORMAT, className));
+         for (int i = 0; i < arrLen; i++) {
+            triConsumer.accept(out, writer, data[i]);
+
+            if (i < delimLenBoundary) {
+               writer.write(", ");
+            }
+         }
+         writer.write("})");
+
+      } else {
+         triConsumer.accept(out, writer, data[0]);
       }
 
       closeOutputStream(out);
@@ -139,8 +323,8 @@ public class TestDataGenerator {
 
          case "Character":
             consumer = (o) -> {
-               Character charData = (Character) o;
                try {
+                  Character charData = (Character) o;
                   // Write out the binary value of the char
                   out.writeChar(charData.charValue());
 
@@ -516,17 +700,23 @@ public class TestDataGenerator {
 
       TestDataGenerator tdg = new TestDataGenerator();
 
-//      // Write out the arrays of objects
-//      for (Object[] arr : testData) {
-//         for (Object obj : arr) {
+      // Write out the arrays of objects
+      for (Object[] arr : testData) {
+         for (Object obj : arr) {
+            // Old implementation
 //            tdg.writeData(obj);
-//         }
-//      }
+
+            // Potential new implementatin
+            tdg.writeData(obj);
+         }
+      }
 
       // Write out the arrays of arrays of objects
       for (Object[][] arr : testDataArray) {
          for (Object[] objArr : arr) {
-            tdg.writeDataArray(objArr);
+//            tdg.writeDataArray(objArr);
+            // Potential new invocation
+            tdg.writeData(objArr);
          }
       }
    }

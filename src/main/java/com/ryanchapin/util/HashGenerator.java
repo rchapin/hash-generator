@@ -1159,7 +1159,9 @@ public class HashGenerator {
       DOUBLE,
       STRING,
       BYTE_ARRAY,
-      CHARACTER_ARRAY
+      CHARACTER_ARRAY,
+      SHORT_ARRAY
+      // TODO Add the rest of the arrays
    }
 
    /**

@@ -698,6 +698,8 @@ public class HashGeneratorTest {
       HashTestDataList<? extends Object> htdl =
             getSingleHashTestDataListObject(type);
 
+      // TODO: implement the rest of the type array tests
+
       @SuppressWarnings("unchecked")
       List<Character> charList = (List<Character>) htdl.getData();
       char[] charArray = convertListToArray(charList, new char[0]);
