@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +26,8 @@ import java.util.function.Consumer;
  */
 public class TestDataGenerator {
 
+   private final String outputDir;
+
    /**
     * The default char encoding we will use to generate byte arrays for
     * <code>Strings</code> test data.
@@ -35,7 +36,6 @@ public class TestDataGenerator {
     * HashGeneratorTest class and then re-generate the test data.
     */
    public static final String DEFAULT_CHAR_ENCODING = "US-ASCII";
-
 
    private int outputCounter;
 
@@ -170,7 +170,9 @@ public class TestDataGenerator {
       TYPES.put("String", stringConsumer);
    }
 
-   public TestDataGenerator() {}
+   public TestDataGenerator(String outputDir) {
+      this.outputDir = outputDir;
+   }
 
 //   /**
 //    * Write out binary data and a text file containing the data in ASCII
@@ -243,6 +245,8 @@ public class TestDataGenerator {
       boolean scalar)
          throws IOException
    {
+      System.out.print(".");
+
       // Get the class name for the data we are writing out.
       String className = data[0].getClass().getSimpleName();
       String dataId = null;
@@ -419,10 +423,10 @@ public class TestDataGenerator {
    }
 
    private DataOutputStream getOutputStream(String fileName) throws IOException {
-      System.out.println("fileName = " + fileName);
+      Path outputPath = Paths.get(outputDir, fileName);
       DataOutputStream out = new DataOutputStream (
             new BufferedOutputStream(
-                  new FileOutputStream(fileName)));
+                  new FileOutputStream(outputPath.toString())));
       return out;
    }
 
@@ -432,8 +436,8 @@ public class TestDataGenerator {
    }
 
    private BufferedWriter getBufferedWriter(String fileName) throws IOException {
-      Path path = FileSystems.getDefault().getPath(fileName);
-      BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
+      Path outputPath = Paths.get(outputDir, fileName);
+      BufferedWriter writer = Files.newBufferedWriter(outputPath, StandardCharsets.UTF_8);
       return writer;
    }
 
@@ -442,7 +446,8 @@ public class TestDataGenerator {
    }
 
    public static void main(String[] args) throws IOException {
-      System.out.println("From TestDataGenerator.main");
+      String outputDir = args[0];
+      System.out.println("Running TestDataGenerator, writing output to " + outputDir);
 
       Byte[] byteArr = new Byte[] {Byte.MIN_VALUE, (byte)-23, (byte)0,
             (byte)87, Byte.MAX_VALUE};
@@ -698,7 +703,7 @@ public class TestDataGenerator {
       testDataArray[1] = byteArrayArr;
       testDataArray[2] = shortArrayArr;
 
-      TestDataGenerator tdg = new TestDataGenerator();
+      TestDataGenerator tdg = new TestDataGenerator(outputDir);
 
       // Write out the arrays of objects
       for (Object[] arr : testData) {

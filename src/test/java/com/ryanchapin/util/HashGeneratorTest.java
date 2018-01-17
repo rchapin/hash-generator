@@ -604,7 +604,7 @@ public class HashGeneratorTest {
       LOGGER.info("Running test: {}", testName.getMethodName());
 
       // Map to keep track of all of the expected types for which
-      // we should get an IllegalArgumentException thrown.
+      // an Exception should be thrown.
       Map<DataType, Boolean> exceptionMap = buildDataTypeBooleanMap();
 
       HashTestData<? extends Object> htd = null;
@@ -868,6 +868,8 @@ public class HashGeneratorTest {
 
       HashTestData<? extends Object> htd = null;
       DataType type = null;
+
+
 
       type = DataType.BYTE;
       htd  = getSingleHashTestDataObject(type);
@@ -1262,13 +1264,13 @@ public class HashGeneratorTest {
 
    /**
     * Instantiates and configures a Map<DataType, Boolean> instance pre-
-    * set with all Boolean values to null.
+    * set with all Boolean values to false.
     *
     * @return  map instance used to keep track of boolean flags for each
     *          element in the @link {@link DataType} enum.
     */
    private Map<DataType, Boolean> buildDataTypeBooleanMap() {
-      Map<DataType, Boolean> retVal = new HashMap<>();
+      Map<DataType, Boolean> retVal = new HashMap<>(DataType.values().length);
       for (DataType t : DataType.values()) {
          retVal.put(t, false);
       }

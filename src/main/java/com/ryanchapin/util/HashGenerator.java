@@ -174,6 +174,33 @@ public class HashGenerator {
     */
    private Map<DataType, byte[]> byteArrayMap;
 
+//   private static Map<DataType, Supplier<ByteBuffer>> bufferSuppliers = getBufferSuppliers();
+
+   private static Map<DataType, Function<? extends Object[], ByteBuffer>> getBufferSuppliers() {
+      Map<DataType, Function<? extends Object[], ByteBuffer>> bufferSuppliers = new HashMap<>();
+
+      Function<Character[], ByteBuffer> buffFunct = (c) -> {
+         ByteBuffer b = ByteBuffer.allocate(c.length);
+         for (int i = 0; i < c.length; i++) {
+            b.putChar(c[i]);
+         }
+         return b;
+      };
+
+      bufferSuppliers.put(DataType.CHARACTER_ARRAY, buffFunct);
+
+//      Supplier<ByteBuffer> bufferSupplier = () -> {
+//         ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+//         // ByteBuffer byteBuffer = getByteBuffer(DataType.CHARACTER,
+//         // elementLength);
+//         for (int i = 0; i < input.length; i++) {
+//            byteBuffer.putChar(input[i]);
+//         }
+//         return byteBuffer;
+
+      return bufferSuppliers;
+   }
+
    // -------------------------------------------------------------------------
    // Accessor/Mutators:
    //
@@ -296,9 +323,10 @@ public class HashGenerator {
        return byteBuffer;
      };
 
-     return createHash(bufferSupplier,
-                       createByteArrayFunction(CHAR_BYTES_SIZE),
-                       hashAlgorithm);
+     return createHash(
+        bufferSupplier,
+        createByteArrayFunction(CHAR_BYTES_SIZE),
+        hashAlgorithm);
    }
 
    public String createHash(char input)
@@ -310,33 +338,57 @@ public class HashGenerator {
        return byteBuffer;
      };
 
-     return createHash(bufferSupplier,
-            createByteArrayFunction(DataType.CHARACTER, CHAR_BYTES_SIZE),
-            DataType.CHARACTER);
+     return createHash(
+        bufferSupplier,
+        createByteArrayFunction(DataType.CHARACTER, CHAR_BYTES_SIZE),
+        DataType.CHARACTER);
    }
 
 
    public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
-       throws IllegalArgumentException, NoSuchAlgorithmException
+      throws IllegalArgumentException, NoSuchAlgorithmException
    {
-     // Calculate the length of the required ByteBuffer
-     final int elementLength = input.length * CHAR_BYTES_SIZE;
+      // Calculate the length of the required ByteBuffer
+      final int elementLength = input.length * CHAR_BYTES_SIZE;
 
-     Supplier<ByteBuffer> bufferSupplier = () -> {
-       ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+      Supplier<ByteBuffer> bufferSupplier = () -> {
+         ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
 
-       // For each char in the input array, add it's bytes to the buffer
-       for (int i = 0; i < input.length; i++) {
-         byteBuffer.putChar(input[i]);
-       }
-       return byteBuffer;
-     };
+         // For each char in the input array, add it's bytes to the buffer
+         for (int i = 0; i < input.length; i++) {
+            byteBuffer.putChar(input[i]);
+         }
+         return byteBuffer;
+      };
 
-     return createHash(bufferSupplier,
+      return createHash(
+         bufferSupplier,
          createByteArrayFunction(elementLength),
          hashAlgorithm);
    }
 
+   public String createHash(char[] input)
+      throws NoSuchAlgorithmException, IllegalStateException
+   {
+      final int elementLength = input.length * CHAR_BYTES_SIZE;
+
+      Supplier<ByteBuffer> bufferSupplier = () -> {
+         // We cannot reuse any existing array as each call to this
+         // method can pass in a different sized array. We could always
+         // extend the class and add a method that takes a size argument
+         // but that can wait for future development as needed.
+         ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+         for (int i = 0; i < input.length; i++) {
+            byteBuffer.putChar(input[i]);
+         }
+         return byteBuffer;
+      };
+
+      return createHash(
+         bufferSupplier,
+         createByteArrayFunction(DataType.CHARACTER_ARRAY, elementLength),
+         DataType.CHARACTER_ARRAY);
+   }
 
 
 
@@ -344,7 +396,17 @@ public class HashGenerator {
 
    private Function<ByteBuffer, byte[]> createByteArrayFunction(DataType type, int size) {
      Function<ByteBuffer, byte[]> retVal = (buffer) -> {
-       byte[] arr = getByteArray(type, size);
+       // We have to determine if the DataType for which we are hashing is an
+       // array of values.  If so, we will not attempt to re-use a byte array
+       // of a fixed size, since, in this case the number of elements that
+       // we will be hashing is variable.  If we need to optimize that we can
+       // later.
+       byte[] arr = null;
+       if (type.isArray()) {
+         arr = new byte[size];
+       } else {
+         arr = getByteArray(type, size);
+       }
        buffer.get(arr);
        return arr;
      };
@@ -353,6 +415,8 @@ public class HashGenerator {
 
    private static Function<ByteBuffer, byte[]> createByteArrayFunction(int size) {
      Function<ByteBuffer, byte[]> retVal = (buffer) -> {
+       // TODO: Determine if we need to do type checking if the input is an array
+       // probably not...
        byte[] arr = new byte[size];
        buffer.get(arr);
        return arr;
@@ -390,7 +454,11 @@ public class HashGenerator {
      buffer.rewind();
      byte[] bytes = byteArrFunction.apply(buffer);
      String retVal = bytesToHex(computeHashBytes(bytes));
-     clearByteArray(type);
+     if (type.isArray()) {
+        clearByteArray(bytes);
+     } else {
+        clearByteArray(type);
+     }
 
      return retVal;
    }
@@ -830,7 +898,7 @@ public class HashGenerator {
    /** -- Strings ---------------------------------------------------------- */
 
    /**
-    * Generates a hexadecimal hash of a double and/or its wrapper class.
+    * Generates a hexadecimal hash of a String.
     *
     * @param  input
     *         String to be hashed.
@@ -865,7 +933,7 @@ public class HashGenerator {
    }
 
    /**
-    * Generates a hexadecimal hash of a double and/or its wrapper class.
+    * Generates a hexadecimal hash of a String.
     *
     * @param  input
     *         String to be hashed.
@@ -953,36 +1021,36 @@ public class HashGenerator {
     *         if the <code>HashGenerator</code> instance has not yet been
     *         configured with a valid {@link HashAlgorithm} enum.
     */
-   public String createHash(char[] input)
-         throws IllegalStateException, NoSuchAlgorithmException
-   {
-      checkHashAlgoField();
-
-      // Calculate the length of the required ByteBuffer
-      int elementLength = input.length * CHAR_BYTES_SIZE;
-
-      // We cannot reuse any existing array as each call to this
-      // method can pass in a different sized array.  We could always
-      // extend the class and add a method that takes a size argument
-      // but that can wait for future development as needed.
-      ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
-
-      // For each char in the input array, add it's bytes to the buffer
-      for (int i = 0; i < input.length; i++) {
-         byteBuffer.putChar(input[i]);
-      }
-
-      byteBuffer.rewind();
-
-      // We will not be re-using the byte[] for the same reason that we are not
-      // re-using the ByteBuffer instance above.
-      byte[] byteArray = new byte[elementLength];
-      byteBuffer.get(byteArray);
-
-      String retVal = bytesToHex(computeHashBytes(byteArray));
-      clearByteArray(byteArray);
-      return retVal;
-   }
+//   public String createHash(char[] input)
+//         throws IllegalStateException, NoSuchAlgorithmException
+//   {
+//      checkHashAlgoField();
+//
+//      // Calculate the length of the required ByteBuffer
+//      int elementLength = input.length * CHAR_BYTES_SIZE;
+//
+//      // We cannot reuse any existing array as each call to this
+//      // method can pass in a different sized array.  We could always
+//      // extend the class and add a method that takes a size argument
+//      // but that can wait for future development as needed.
+//      ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+//
+//      // For each char in the input array, add it's bytes to the buffer
+//      for (int i = 0; i < input.length; i++) {
+//         byteBuffer.putChar(input[i]);
+//      }
+//
+//      byteBuffer.rewind();
+//
+//      // We will not be re-using the byte[] for the same reason that we are not
+//      // re-using the ByteBuffer instance above.
+//      byte[] byteArray = new byte[elementLength];
+//      byteBuffer.get(byteArray);
+//
+//      String retVal = bytesToHex(computeHashBytes(byteArray));
+//      clearByteArray(byteArray);
+//      return retVal;
+//   }
 
    /** -- Utility Methods -------------------------------------------------- */
 
@@ -1068,7 +1136,7 @@ public class HashGenerator {
    }
 
    /**
-    * Computers the hashed bytes for the byte array representation of the input
+    * Computes the hashed bytes for the byte array representation of the input
     * data.
     *
     * @param  inputBytes
@@ -1082,8 +1150,6 @@ public class HashGenerator {
    private static byte[] computeHashBytes(byte[] inputBytes, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException
    {
-      // Instantiate a MessageDigest instance configured with the desired
-      // algorithm.
       MessageDigest msgDigest = MessageDigest.getInstance(hashAlgorithm.getAlgo());
       return msgDigest.digest(inputBytes);
    }
@@ -1158,10 +1224,24 @@ public class HashGenerator {
       FLOAT,
       DOUBLE,
       STRING,
-      BYTE_ARRAY,
-      CHARACTER_ARRAY,
-      SHORT_ARRAY
+      BYTE_ARRAY(true),
+      CHARACTER_ARRAY(true),
+      SHORT_ARRAY(true);
       // TODO Add the rest of the arrays
+
+      private final boolean array;
+
+      public boolean isArray() {
+         return array;
+      }
+
+      DataType() {
+         this.array = false;
+      }
+
+      DataType(boolean array) {
+         this.array = array;
+      }
    }
 
    /**
