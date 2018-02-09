@@ -41,7 +41,9 @@ JAVA_PKG=com.ryanchapin.util
 JAVA_CLASS_NAME=TestDataGenerator
 
 # Hashes outfile
-CODE_OUTFILE=generated_test_data.java
+# CODE_OUTFILE=generated_test_data.java
+CODE_OUTFILE_SCALAR=generated_test_data_scalar.java
+CODE_OUTFILE_ARRAY=generated_test_data_array.java
 
 ################################################################################
 #
@@ -164,6 +166,8 @@ NOW=$(date +%Y-%d-%m_%H%M%S_%N)
 output_dir=$OUTPUT_PATH_PARENT_DIR/gen_hashes_output_$NOW
 tmp_dir=$output_dir/tmp
 code_output_file=$output_dir/$CODE_OUTFILE
+code_output_file_scalar=$output_dir/$CODE_OUTFILE_SCALAR
+code_output_file_array=$output_dir/$CODE_OUTFILE_ARRAY
 ddt "tmp_dir = $tmp_dir"
 ddt "output_dir = $output_dir"
 mkdir -p $tmp_dir
@@ -196,10 +200,10 @@ then
 fi
 
 # Now generate hashes for each of the bin files
-if [ -e "$code_output_file" ];
-then
-   rm $code_output_file
-fi
+# if [ -e "$code_output_file" ];
+# then
+#    rm $code_output_file
+# fi
 
 # Counter for each HashTestData instance
 INSTANCE_COUNTER=0
@@ -249,7 +253,7 @@ do
       ddt "HASH_ALGO_ENUM = $HASH_ALGO_ENUM"
 
       # Extract the ASCII value of the data
-      ASCII_FILE=${TYPE_VAR_TYPE_ID}${TXT_FILE_EXT}
+      ASCII_FILE=$tmp_dir/${TYPE_VAR_TYPE_ID}${TXT_FILE_EXT}
       ddt "ASCII_FILE = $ASCII_FILE"
       ASCII_VALUE=$(cat $ASCII_FILE)
       ddt "ASCII_VALUE = $ASCII_VALUE"
@@ -260,7 +264,7 @@ do
       case $VAR_TYPE in
 
       "Scalar")
-         cat <<EOF >> $code_output_file
+         cat <<EOF >> $code_output_file_scalar
 
 HashTestData<? extends Object> $HTD_NAME = new HashTestData<$TYPE>(
    new ${TYPE}(${ASCII_VALUE}),
@@ -271,7 +275,7 @@ EOF
          ;;
 
       "Array")
-         cat <<EOF >> $code_output_file
+         cat <<EOF >> $code_output_file_array
 
 HashTestDataList<? extends Object> $HTD_NAME = new HashTestDataList<$TYPE>(
    ${ASCII_VALUE},

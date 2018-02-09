@@ -13,13 +13,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ryanchapin.util.HashGenerator;
 import com.ryanchapin.util.HashGenerator.DataType;
 import com.ryanchapin.util.HashGenerator.HashAlgorithm;
 
@@ -41,6 +41,13 @@ public class HashGeneratorTest {
     * TestDataGenerator class and then re-generate the test data.
     */
    public static final String DEFAULT_CHAR_ENCODING = "US-ASCII";
+
+   private HashGeneratorTestData testData;
+
+   @BeforeClass
+   public void setupClass() {
+      testData = new HashGeneratorTestData();
+   }
 
    @Rule
    public TestName testName = new TestName();
@@ -537,7 +544,7 @@ public class HashGeneratorTest {
 
       // Generate expectations for Scalar values.
       for (Map.Entry<DataType, List<HashTestData<? extends Object>>> entry :
-           HashGeneratorTestData.testDataMap.entrySet())
+           testData.testDataMap.entrySet())
       {
          DataType type = entry.getKey();
          List<HashTestData<? extends Object>> list = entry.getValue();
@@ -561,7 +568,7 @@ public class HashGeneratorTest {
 
       // Generate expectations for Array values.
       for (Map.Entry<DataType, List<HashTestDataList<? extends Object>>> entry :
-           HashGeneratorTestData.testDataListMap.entrySet())
+           testData.testDataListMap.entrySet())
       {
          DataType type = entry.getKey();
          List<HashTestDataList<? extends Object>> list = entry.getValue();
@@ -976,7 +983,7 @@ public class HashGeneratorTest {
       HashGenerator hg = new HashGenerator(algo);
 
       List<HashTestData<? extends Object>> list =
-            HashGeneratorTestData.testDataMap.get(type);
+            testData.testDataMap.get(type);
       String expectedHash = null;
       String hash         = null;
       Object data         = null;
@@ -1038,7 +1045,7 @@ public class HashGeneratorTest {
          NoSuchAlgorithmException
    {
       List<HashTestData<? extends Object>> list =
-            HashGeneratorTestData.testDataMap.get(type);
+            testData.testDataMap.get(type);
 
       for (HashTestData<? extends Object> htd : list) {
          String expectedHash = htd.getHash();
@@ -1098,7 +1105,7 @@ public class HashGeneratorTest {
       HashGenerator hg = new HashGenerator();
 
       List<HashTestData<? extends Object>> list =
-            HashGeneratorTestData.testDataMap.get(type);
+            testData.testDataMap.get(type);
 
       for (HashTestData<? extends Object> htd : list) {
          String expectedHash = htd.getHash();
@@ -1161,7 +1168,7 @@ public class HashGeneratorTest {
 
       // Get list for the given DataType
       List<HashTestDataList<? extends Object>> list =
-            HashGeneratorTestData.testDataListMap.get(type);
+            testData.testDataListMap.get(type);
 
       String expectedHash             = null;
       String hash                     = null;
@@ -1198,7 +1205,7 @@ public class HashGeneratorTest {
 
       // Get list for the given DataType
       List<HashTestDataList<? extends Object>> list =
-            HashGeneratorTestData.testDataListMap.get(type);
+            testData.testDataListMap.get(type);
 
       for (HashTestDataList<? extends Object> htdl : list) {
          String expectedHash             = htdl.getHash();
@@ -1237,7 +1244,7 @@ public class HashGeneratorTest {
    {
       // Get list for the given DataType
       List<HashTestDataList<? extends Object>> list =
-            HashGeneratorTestData.testDataListMap.get(type);
+            testData.testDataListMap.get(type);
 
       for (HashTestDataList<? extends Object> htdl : list) {
          String expectedHash             = htdl.getHash();
@@ -1300,7 +1307,7 @@ public class HashGeneratorTest {
       getSingleHashTestDataObject(DataType type)
    {
       List<HashTestData<? extends Object>> list =
-            HashGeneratorTestData.testDataMap.get(type);
+            testData.testDataMap.get(type);
       return list.get(0);
    }
 
@@ -1308,7 +1315,7 @@ public class HashGeneratorTest {
       getSingleHashTestDataListObject(DataType type)
    {
       List<HashTestDataList<? extends Object>> list =
-            HashGeneratorTestData.testDataListMap.get(type);
+            testData.testDataListMap.get(type);
       return list.get(0);
    }
 

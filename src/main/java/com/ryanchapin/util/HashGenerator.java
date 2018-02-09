@@ -45,7 +45,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -70,6 +69,7 @@ import java.util.function.Supplier;
  *    <li>double</li>
  *    <li>{@link java.lang.Double}</li>
  *    <li>String</li>
+ *    # TODO:  Add the additional arrays that are now supported
  *    <li>char[]</li>
  * </ul>
  * <p>
@@ -310,90 +310,6 @@ public class HashGenerator {
 
 
 
-
-
-
-
-   public static String createHash(char input, HashAlgorithm hashAlgorithm)
-       throws NoSuchAlgorithmException, IllegalStateException
-   {
-     Supplier<ByteBuffer> bufferSupplier = () -> {
-       ByteBuffer byteBuffer = ByteBuffer.allocate(CHAR_BYTES_SIZE);
-       byteBuffer.putChar(input);
-       return byteBuffer;
-     };
-
-     return createHash(
-        bufferSupplier,
-        createByteArrayFunction(CHAR_BYTES_SIZE),
-        hashAlgorithm);
-   }
-
-   public String createHash(char input)
-       throws NoSuchAlgorithmException, IllegalStateException
-   {
-     Supplier<ByteBuffer> bufferSupplier = () -> {
-       ByteBuffer byteBuffer = getByteBuffer(DataType.CHARACTER, CHAR_BYTES_SIZE);
-       byteBuffer.putChar(input);
-       return byteBuffer;
-     };
-
-     return createHash(
-        bufferSupplier,
-        createByteArrayFunction(DataType.CHARACTER, CHAR_BYTES_SIZE),
-        DataType.CHARACTER);
-   }
-
-
-   public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
-      throws IllegalArgumentException, NoSuchAlgorithmException
-   {
-      // Calculate the length of the required ByteBuffer
-      final int elementLength = input.length * CHAR_BYTES_SIZE;
-
-      Supplier<ByteBuffer> bufferSupplier = () -> {
-         ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
-
-         // For each char in the input array, add it's bytes to the buffer
-         for (int i = 0; i < input.length; i++) {
-            byteBuffer.putChar(input[i]);
-         }
-         return byteBuffer;
-      };
-
-      return createHash(
-         bufferSupplier,
-         createByteArrayFunction(elementLength),
-         hashAlgorithm);
-   }
-
-   public String createHash(char[] input)
-      throws NoSuchAlgorithmException, IllegalStateException
-   {
-      final int elementLength = input.length * CHAR_BYTES_SIZE;
-
-      Supplier<ByteBuffer> bufferSupplier = () -> {
-         // We cannot reuse any existing array as each call to this
-         // method can pass in a different sized array. We could always
-         // extend the class and add a method that takes a size argument
-         // but that can wait for future development as needed.
-         ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
-         for (int i = 0; i < input.length; i++) {
-            byteBuffer.putChar(input[i]);
-         }
-         return byteBuffer;
-      };
-
-      return createHash(
-         bufferSupplier,
-         createByteArrayFunction(DataType.CHARACTER_ARRAY, elementLength),
-         DataType.CHARACTER_ARRAY);
-   }
-
-
-
-
-
    private Function<ByteBuffer, byte[]> createByteArrayFunction(DataType type, int size) {
      Function<ByteBuffer, byte[]> retVal = (buffer) -> {
        // We have to determine if the DataType for which we are hashing is an
@@ -540,22 +456,20 @@ public class HashGenerator {
     * @throws NoSuchAlgorithmException
     *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
-//   public static String createHash(char input, HashAlgorithm hashAlgorithm)
-//      throws NoSuchAlgorithmException, IllegalArgumentException
-//   {
-//      checkHashAlgoInput(hashAlgorithm);
-//
-//      ByteBuffer byteBuffer = ByteBuffer.allocate(CHAR_BYTES_SIZE);
-//      byteBuffer.putChar(input);
-//      byteBuffer.rewind();
-//
-//      byte[] byteArray = new byte[CHAR_BYTES_SIZE];
-//      byteBuffer.get(byteArray);
-//
-//      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
-//      clearByteArray(byteArray);
-//      return retVal;
-//   }
+   public static String createHash(char input, HashAlgorithm hashAlgorithm)
+       throws NoSuchAlgorithmException, IllegalStateException
+   {
+     Supplier<ByteBuffer> bufferSupplier = () -> {
+       ByteBuffer byteBuffer = ByteBuffer.allocate(CHAR_BYTES_SIZE);
+       byteBuffer.putChar(input);
+       return byteBuffer;
+     };
+
+     return createHash(
+        bufferSupplier,
+        createByteArrayFunction(CHAR_BYTES_SIZE),
+        hashAlgorithm);
+   }
 
    /**
     * Generates a hexadecimal hash of a char and/or its wrapper class.
@@ -570,21 +484,66 @@ public class HashGenerator {
     *         if the <code>HashGenerator</code> instance has not yet been
     *         configured with a valid {@link HashAlgorithm} enum.
     */
-//   public String createHash(char input)
-//      throws NoSuchAlgorithmException, IllegalStateException
-//   {
-//      checkHashAlgoField();
-//      ByteBuffer byteBuffer = getByteBuffer(DataType.CHARACTER, CHAR_BYTES_SIZE);
-//      byteBuffer.putChar(input);
-//      byteBuffer.rewind();
-//
-//      byte[] byteArray = getByteArray(DataType.CHARACTER, CHAR_BYTES_SIZE);
-//      byteBuffer.get(byteArray);
-//
-//      String retVal = bytesToHex(computeHashBytes(byteArray));
-//      clearByteArray(DataType.CHARACTER);
-//      return retVal;
-//   }
+   public String createHash(char input)
+       throws NoSuchAlgorithmException, IllegalStateException
+   {
+     Supplier<ByteBuffer> bufferSupplier = () -> {
+       ByteBuffer byteBuffer = getByteBuffer(DataType.CHARACTER, CHAR_BYTES_SIZE);
+       byteBuffer.putChar(input);
+       return byteBuffer;
+     };
+
+     return createHash(
+        bufferSupplier,
+        createByteArrayFunction(DataType.CHARACTER, CHAR_BYTES_SIZE),
+        DataType.CHARACTER);
+   }
+
+
+   public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
+      throws IllegalArgumentException, NoSuchAlgorithmException
+   {
+      // Calculate the length of the required ByteBuffer
+      final int elementLength = input.length * CHAR_BYTES_SIZE;
+
+      Supplier<ByteBuffer> bufferSupplier = () -> {
+         ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+
+         // For each char in the input array, add it's bytes to the buffer
+         for (int i = 0; i < input.length; i++) {
+            byteBuffer.putChar(input[i]);
+         }
+         return byteBuffer;
+      };
+
+      return createHash(
+         bufferSupplier,
+         createByteArrayFunction(elementLength),
+         hashAlgorithm);
+   }
+
+   public String createHash(char[] input)
+      throws NoSuchAlgorithmException, IllegalStateException
+   {
+      final int elementLength = input.length * CHAR_BYTES_SIZE;
+
+      Supplier<ByteBuffer> bufferSupplier = () -> {
+         // We cannot reuse any existing array as each call to this
+         // method can pass in a different sized array. We could always
+         // extend the class and add a method that takes a size argument
+         // but that can wait for future development as needed.
+         ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
+         for (int i = 0; i < input.length; i++) {
+            byteBuffer.putChar(input[i]);
+         }
+         return byteBuffer;
+      };
+
+      return createHash(
+         bufferSupplier,
+         createByteArrayFunction(DataType.CHARACTER_ARRAY, elementLength),
+         DataType.CHARACTER_ARRAY);
+   }
 
    /** -- Shorts ----------------------------------------------------------- */
 
@@ -1226,8 +1185,12 @@ public class HashGenerator {
       STRING,
       BYTE_ARRAY(true),
       CHARACTER_ARRAY(true),
-      SHORT_ARRAY(true);
-      // TODO Add the rest of the arrays
+      SHORT_ARRAY(true),
+      INTEGER_ARRAY(true),
+      LONG_ARRAY(true),
+      FLOAT_ARRAY(true),
+      DOUBLE_ARRAY(true),
+      STRING_ARRAY(true);
 
       private final boolean array;
 

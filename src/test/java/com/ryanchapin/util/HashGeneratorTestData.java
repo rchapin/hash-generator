@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ryanchapin.util.HashGenerator;
 import com.ryanchapin.util.HashGenerator.HashAlgorithm;
 import com.ryanchapin.util.HashGeneratorTest.HashTestData;
 import com.ryanchapin.util.HashGeneratorTest.HashTestDataList;
@@ -20,39 +19,48 @@ import com.ryanchapin.util.HashGeneratorTest.HashTestDataList;
 public class HashGeneratorTestData {
 
    /** Map to contain the List {@link HashTestData} instances for each data type. */
-   public static Map<HashGenerator.DataType,
+   public Map<HashGenerator.DataType,
          List<HashTestData<? extends Object>>> testDataMap;
 
    /**
     * Map to contain the List {@link HashTestDataList} instance for each data
     * array (or list) of data types
     */
-   public static Map<HashGenerator.DataType,
+   public Map<HashGenerator.DataType,
          List<HashTestDataList<? extends Object>>> testDataListMap;
 
-   static {
+   private List<HashTestData<? extends Object>> byteScalarList;
+   private List<HashTestData<? extends Object>> characterScalarList;
+   private List<HashTestData<? extends Object>> shortScalarList;
+   private List<HashTestData<? extends Object>> integerScalarList;
+   private List<HashTestData<? extends Object>> longScalarList;
+   private List<HashTestData<? extends Object>> floatScalarList;
+   private List<HashTestData<? extends Object>> doubleScalarList;
+   private List<HashTestData<? extends Object>> stringScalarList;
+   private List<HashTestDataList<? extends Object>> byteArrayList;
+   private List<HashTestDataList<? extends Object>> characterArrayList;
+   private List<HashTestDataList<? extends Object>> shortArrayList;
+   private List<HashTestDataList<? extends Object>> integerArrayList;
+   private List<HashTestDataList<? extends Object>> longArrayList;
+   private List<HashTestDataList<? extends Object>> floatArrayList;
+   private List<HashTestDataList<? extends Object>> doubleArrayList;
+   private List<HashTestDataList<? extends Object>> stringArrayList;
+
+   public HashGeneratorTestData() {
       testDataMap = new HashMap<HashGenerator.DataType,
             List<HashTestData<? extends Object>>>();
 
       // Each of the following lists contains a HashTestData instance with
       // the source value, it's hash, and the algorithm used to generate that
       // hash.
-      List<HashTestData<? extends Object>> byteScalarList      =
-            new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> characterScalarList =
-            new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> shortScalarList     =
-            new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> integerScalarList   =
-            new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> longScalarList      =
-            new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> floatScalarList     =
-            new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> doubleScalarList    =
-            new ArrayList<HashTestData<? extends Object>>();
-      List<HashTestData<? extends Object>> stringScalarList    =
-            new ArrayList<HashTestData<? extends Object>>();
+      byteScalarList = new ArrayList<HashTestData<? extends Object>>();
+      characterScalarList = new ArrayList<HashTestData<? extends Object>>();
+      shortScalarList = new ArrayList<HashTestData<? extends Object>>();
+      integerScalarList = new ArrayList<HashTestData<? extends Object>>();
+      longScalarList = new ArrayList<HashTestData<? extends Object>>();
+      floatScalarList = new ArrayList<HashTestData<? extends Object>>();
+      doubleScalarList = new ArrayList<HashTestData<? extends Object>>();
+      stringScalarList = new ArrayList<HashTestData<? extends Object>>();
 
       testDataMap.put(HashGenerator.DataType.BYTE,      byteScalarList);
       testDataMap.put(HashGenerator.DataType.SHORT,     shortScalarList);
@@ -63,1377 +71,101 @@ public class HashGeneratorTestData {
       testDataMap.put(HashGenerator.DataType.DOUBLE,    doubleScalarList);
       testDataMap.put(HashGenerator.DataType.STRING,    stringScalarList);
 
-
       testDataListMap = new HashMap<HashGenerator.DataType,
             List<HashTestDataList<? extends Object>>>();
 
-      List<HashTestDataList<? extends Object>> characterArrayList =
-            new ArrayList<HashTestDataList<? extends Object>>();
-      List<HashTestDataList<? extends Object>> byteArrayList =
-          new ArrayList<HashTestDataList<? extends Object>>();
-      List<HashTestDataList<? extends Object>> shortArrayList =
-         new ArrayList<HashTestDataList<? extends Object>>();
+      byteArrayList = new ArrayList<HashTestDataList<? extends Object>>();
+      characterArrayList = new ArrayList<HashTestDataList<? extends Object>>();
+      shortArrayList = new ArrayList<HashTestDataList<? extends Object>>();
+      integerArrayList = new ArrayList<HashTestDataList<? extends Object>>();
+      longArrayList = new ArrayList<HashTestDataList<? extends Object>>();
+      floatArrayList = new ArrayList<HashTestDataList<? extends Object>>();
+      doubleArrayList = new ArrayList<HashTestDataList<? extends Object>>();
+      stringArrayList = new ArrayList<HashTestDataList<? extends Object>>();
 
       testDataListMap.put(HashGenerator.DataType.BYTE_ARRAY, byteArrayList);
       testDataListMap.put(HashGenerator.DataType.CHARACTER_ARRAY, characterArrayList);
       testDataListMap.put(HashGenerator.DataType.SHORT_ARRAY, shortArrayList);
-
-      /*
-       * ----------------------------------------------------------------------
-       * All of the code for each of the following HashDataTest instances are
-       * dynamically generated by the gen_hashes.sh script in the
-       * src/test/resources directory.  See the README.md for full details.
-       */
-
-    HashTestDataList<? extends Object> htdByteArray0 = new HashTestDataList<Byte>(
-       Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
-       "e028df60a85e8e467918e1e0a0e8cdd5",
-       HashAlgorithm.MD5SUM);
-    byteArrayList.add(htdByteArray0);
-
-    HashTestDataList<? extends Object> htdByteArray1 = new HashTestDataList<Byte>(
-       Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
-       "850e8361212d577c695f87feee4ab24c6d89d936",
-       HashAlgorithm.SHA1SUM);
-    byteArrayList.add(htdByteArray1);
-
-    HashTestDataList<? extends Object> htdByteArray2 = new HashTestDataList<Byte>(
-       Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
-       "c095be74975eaba646090a1233190185bd4af7b1f02a94081b0a3775baf359e5",
-       HashAlgorithm.SHA256SUM);
-    byteArrayList.add(htdByteArray2);
-
-    HashTestDataList<? extends Object> htdByteArray3 = new HashTestDataList<Byte>(
-       Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
-       "adeb75f0d1e0273d3c1ba1362f72866ddb74d0284d53ecf2ccdb8e106a02a59e855bd4eeaa94deaedb60ea14cebc18af",
-       HashAlgorithm.SHA384SUM);
-    byteArrayList.add(htdByteArray3);
-
-    HashTestDataList<? extends Object> htdByteArray4 = new HashTestDataList<Byte>(
-       Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
-       "29a5a17e2bf50e51e41f53838a0133c4b3369e5e43d084047155f06956b23790f1194a0b2c4e519d5385a455ab462b510930be52c2ce3209e995a9687aa074b3",
-       HashAlgorithm.SHA512SUM);
-    byteArrayList.add(htdByteArray4);
-
-    HashTestData<? extends Object> htdByteScalar5 = new HashTestData<Byte>(
-       new Byte((byte)-128),
-       "8d39dd7eef115ea6975446ef4082951f",
-       HashAlgorithm.MD5SUM);
-    byteScalarList.add(htdByteScalar5);
-
-    HashTestData<? extends Object> htdByteScalar6 = new HashTestData<Byte>(
-       new Byte((byte)-128),
-       "c78ebd3c85a39a596d9f5cfd2b8d240bc1b9c125",
-       HashAlgorithm.SHA1SUM);
-    byteScalarList.add(htdByteScalar6);
-
-    HashTestData<? extends Object> htdByteScalar7 = new HashTestData<Byte>(
-       new Byte((byte)-128),
-       "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71",
-       HashAlgorithm.SHA256SUM);
-    byteScalarList.add(htdByteScalar7);
-
-    HashTestData<? extends Object> htdByteScalar8 = new HashTestData<Byte>(
-       new Byte((byte)-128),
-       "8db630b3036f40e29aa4c95e3c0156f55a593bf005fc425936d2134a4fc0b855bb4ab4767dd4b0b1dd261cd111598d3d",
-       HashAlgorithm.SHA384SUM);
-    byteScalarList.add(htdByteScalar8);
-
-    HashTestData<? extends Object> htdByteScalar9 = new HashTestData<Byte>(
-       new Byte((byte)-128),
-       "dfe8ef54110b3324d3b889035c95cfb80c92704614bf76f17546ad4f4b08218a630e16da7df34766a975b3bb85b01df9e99a4ec0a1d0ec3de6bed7b7a40b2f10",
-       HashAlgorithm.SHA512SUM);
-    byteScalarList.add(htdByteScalar9);
-
-    HashTestData<? extends Object> htdByteScalar10 = new HashTestData<Byte>(
-       new Byte((byte)-23),
-       "3406877694691ddd1dfb0aca54681407",
-       HashAlgorithm.MD5SUM);
-    byteScalarList.add(htdByteScalar10);
-
-    HashTestData<? extends Object> htdByteScalar11 = new HashTestData<Byte>(
-       new Byte((byte)-23),
-       "1599e9fa41ec68c80230491902786bee889f5bcb",
-       HashAlgorithm.SHA1SUM);
-    byteScalarList.add(htdByteScalar11);
-
-    HashTestData<? extends Object> htdByteScalar12 = new HashTestData<Byte>(
-       new Byte((byte)-23),
-       "de2e331d891ae267a7009cb45b4e8830f170e0c937288ea2731a1941c7a53b0d",
-       HashAlgorithm.SHA256SUM);
-    byteScalarList.add(htdByteScalar12);
-
-    HashTestData<? extends Object> htdByteScalar13 = new HashTestData<Byte>(
-       new Byte((byte)-23),
-       "cf16e9b450d92416b3a86e452a5162e8d6d496a9e126dcead3d60ce8cb9242baeb94b24c73af76c71c00c11a7c0acc03",
-       HashAlgorithm.SHA384SUM);
-    byteScalarList.add(htdByteScalar13);
-
-    HashTestData<? extends Object> htdByteScalar14 = new HashTestData<Byte>(
-       new Byte((byte)-23),
-       "b164716d213ddec0e2dbf8f2c7cc16d673b14c7a5ce46826e10ad36abe97fdeb9a34bb379da49edf29a46f4d2b77883c97786b63d543924dad3873c43a91a1af",
-       HashAlgorithm.SHA512SUM);
-    byteScalarList.add(htdByteScalar14);
-
-    HashTestData<? extends Object> htdByteScalar15 = new HashTestData<Byte>(
-       new Byte((byte)0),
-       "93b885adfe0da089cdf634904fd59f71",
-       HashAlgorithm.MD5SUM);
-    byteScalarList.add(htdByteScalar15);
-
-    HashTestData<? extends Object> htdByteScalar16 = new HashTestData<Byte>(
-       new Byte((byte)0),
-       "5ba93c9db0cff93f52b521d7420e43f6eda2784f",
-       HashAlgorithm.SHA1SUM);
-    byteScalarList.add(htdByteScalar16);
-
-    HashTestData<? extends Object> htdByteScalar17 = new HashTestData<Byte>(
-       new Byte((byte)0),
-       "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
-       HashAlgorithm.SHA256SUM);
-    byteScalarList.add(htdByteScalar17);
-
-    HashTestData<? extends Object> htdByteScalar18 = new HashTestData<Byte>(
-       new Byte((byte)0),
-       "bec021b4f368e3069134e012c2b4307083d3a9bdd206e24e5f0d86e13d6636655933ec2b413465966817a9c208a11717",
-       HashAlgorithm.SHA384SUM);
-    byteScalarList.add(htdByteScalar18);
-
-    HashTestData<? extends Object> htdByteScalar19 = new HashTestData<Byte>(
-       new Byte((byte)0),
-       "b8244d028981d693af7b456af8efa4cad63d282e19ff14942c246e50d9351d22704a802a71c3580b6370de4ceb293c324a8423342557d4e5c38438f0e36910ee",
-       HashAlgorithm.SHA512SUM);
-    byteScalarList.add(htdByteScalar19);
-
-    HashTestData<? extends Object> htdByteScalar20 = new HashTestData<Byte>(
-       new Byte((byte)87),
-       "61e9c06ea9a85a5088a499df6458d276",
-       HashAlgorithm.MD5SUM);
-    byteScalarList.add(htdByteScalar20);
-
-    HashTestData<? extends Object> htdByteScalar21 = new HashTestData<Byte>(
-       new Byte((byte)87),
-       "e2415cb7f63df0c9de23362326ad3c37a9adfc96",
-       HashAlgorithm.SHA1SUM);
-    byteScalarList.add(htdByteScalar21);
-
-    HashTestData<? extends Object> htdByteScalar22 = new HashTestData<Byte>(
-       new Byte((byte)87),
-       "fcb5f40df9be6bae66c1d77a6c15968866a9e6cbd7314ca432b019d17392f6f4",
-       HashAlgorithm.SHA256SUM);
-    byteScalarList.add(htdByteScalar22);
-
-    HashTestData<? extends Object> htdByteScalar23 = new HashTestData<Byte>(
-       new Byte((byte)87),
-       "0b75998ad89118532ac2d0d3561fbd159ec73950df3ec5cd0e358a9a166f0e267f110d029865e736c266eb528d1729d3",
-       HashAlgorithm.SHA384SUM);
-    byteScalarList.add(htdByteScalar23);
-
-    HashTestData<? extends Object> htdByteScalar24 = new HashTestData<Byte>(
-       new Byte((byte)87),
-       "61037724a2fb00a12fa8a53ada233f54ff7fc6ee02048e579b83a127ce79fc03906c35b5307beb18a3cf5021fe031ae6587448d4d60a082d73252fe2e2f4ae7f",
-       HashAlgorithm.SHA512SUM);
-    byteScalarList.add(htdByteScalar24);
-
-    HashTestData<? extends Object> htdByteScalar25 = new HashTestData<Byte>(
-       new Byte((byte)127),
-       "83acb6e67e50e31db6ed341dd2de1595",
-       HashAlgorithm.MD5SUM);
-    byteScalarList.add(htdByteScalar25);
-
-    HashTestData<? extends Object> htdByteScalar26 = new HashTestData<Byte>(
-       new Byte((byte)127),
-       "23833462f55515a900e016db2eb943fb474c19f6",
-       HashAlgorithm.SHA1SUM);
-    byteScalarList.add(htdByteScalar26);
-
-    HashTestData<? extends Object> htdByteScalar27 = new HashTestData<Byte>(
-       new Byte((byte)127),
-       "620bfdaa346b088fb49998d92f19a7eaf6bfc2fb0aee015753966da1028cb731",
-       HashAlgorithm.SHA256SUM);
-    byteScalarList.add(htdByteScalar27);
-
-    HashTestData<? extends Object> htdByteScalar28 = new HashTestData<Byte>(
-       new Byte((byte)127),
-       "23a8a9d42d150a471e8502ee2f4e822cb955e798882d698c5bd5aa01e43137cb566fefb1b06dced14b43c2e49758569d",
-       HashAlgorithm.SHA384SUM);
-    byteScalarList.add(htdByteScalar28);
-
-    HashTestData<? extends Object> htdByteScalar29 = new HashTestData<Byte>(
-       new Byte((byte)127),
-       "75eb69a43e3bbcff322ec624ae7511cf3ad99df84b90d48b2665c70dff548c4857d4446c1eb04535bf54daa96e2cf5c3d5203d1fb43bbf4d40301bab95ac7772",
-       HashAlgorithm.SHA512SUM);
-    byteScalarList.add(htdByteScalar29);
-
-    HashTestDataList<? extends Object> htdCharacterArray30 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x74, (char)0x68, (char)0x69, (char)0x73, (char)0x61, (char)0x62, (char)0x61, (char)0x64, (char)0x70, (char)0x61, (char)0x73, (char)0x73, (char)0x77, (char)0x6f, (char)0x72, (char)0x64}),
-       "90ef93e813a257be100cf3e7895d28fa",
-       HashAlgorithm.MD5SUM);
-    characterArrayList.add(htdCharacterArray30);
-
-    HashTestDataList<? extends Object> htdCharacterArray31 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x74, (char)0x68, (char)0x69, (char)0x73, (char)0x61, (char)0x62, (char)0x61, (char)0x64, (char)0x70, (char)0x61, (char)0x73, (char)0x73, (char)0x77, (char)0x6f, (char)0x72, (char)0x64}),
-       "135f111df26e69e0bcda9f06cc29692c12ef26c9",
-       HashAlgorithm.SHA1SUM);
-    characterArrayList.add(htdCharacterArray31);
-
-    HashTestDataList<? extends Object> htdCharacterArray32 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x74, (char)0x68, (char)0x69, (char)0x73, (char)0x61, (char)0x62, (char)0x61, (char)0x64, (char)0x70, (char)0x61, (char)0x73, (char)0x73, (char)0x77, (char)0x6f, (char)0x72, (char)0x64}),
-       "4a2758bb5c258409c33d3857654231aebe6a387320e9df135cf9b404ae1f9d1e",
-       HashAlgorithm.SHA256SUM);
-    characterArrayList.add(htdCharacterArray32);
-
-    HashTestDataList<? extends Object> htdCharacterArray33 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x74, (char)0x68, (char)0x69, (char)0x73, (char)0x61, (char)0x62, (char)0x61, (char)0x64, (char)0x70, (char)0x61, (char)0x73, (char)0x73, (char)0x77, (char)0x6f, (char)0x72, (char)0x64}),
-       "8528ba402fa7515ffdb7a63678c60b4d033b17b30b568454f06d6201449e7e48d4b0dc20b1c3c484c4a20fdebfeed181",
-       HashAlgorithm.SHA384SUM);
-    characterArrayList.add(htdCharacterArray33);
-
-    HashTestDataList<? extends Object> htdCharacterArray34 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x74, (char)0x68, (char)0x69, (char)0x73, (char)0x61, (char)0x62, (char)0x61, (char)0x64, (char)0x70, (char)0x61, (char)0x73, (char)0x73, (char)0x77, (char)0x6f, (char)0x72, (char)0x64}),
-       "e4691084180ca542b249163b9997209cc41dc11f1d0fec75be231d13ce7fbfa1d838ab93fb486773bc869076a238c6e7dae4c6e031fa8953f257af00f07a9dad",
-       HashAlgorithm.SHA512SUM);
-    characterArrayList.add(htdCharacterArray34);
-
-    HashTestDataList<? extends Object> htdCharacterArray35 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x0, (char)0x1, (char)0x2, (char)0x3, (char)0x4, (char)0x5, (char)0x6, (char)0x7, (char)0x8, (char)0x9, (char)0xa, (char)0xb, (char)0xc, (char)0xd, (char)0xe, (char)0xf, (char)0x10, (char)0x11, (char)0x12, (char)0x13, (char)0x14, (char)0x15, (char)0x16, (char)0x17, (char)0x18, (char)0x19, (char)0x1a, (char)0x1b, (char)0x1c, (char)0x1d, (char)0x1e, (char)0x1f, (char)0x20, (char)0x21, (char)0x22, (char)0x23, (char)0x24, (char)0x25, (char)0x26, (char)0x27, (char)0x28, (char)0x29, (char)0x2a, (char)0x2b, (char)0x2c, (char)0x2d, (char)0x2e, (char)0x2f, (char)0x30, (char)0x31, (char)0x32, (char)0x33, (char)0x34, (char)0x35, (char)0x36, (char)0x37, (char)0x38, (char)0x39, (char)0x3a, (char)0x3b, (char)0x3c, (char)0x3d, (char)0x3e, (char)0x3f, (char)0x40, (char)0x41, (char)0x42, (char)0x43, (char)0x44, (char)0x45, (char)0x46, (char)0x47, (char)0x48, (char)0x49, (char)0x4a, (char)0x4b, (char)0x4c, (char)0x4d, (char)0x4e, (char)0x4f, (char)0x50, (char)0x51, (char)0x52, (char)0x53, (char)0x54, (char)0x55, (char)0x56, (char)0x57, (char)0x58, (char)0x59, (char)0x5a, (char)0x5b, (char)0x5c, (char)0x5d, (char)0x5e, (char)0x5f, (char)0x60, (char)0x61, (char)0x62, (char)0x63, (char)0x64, (char)0x65, (char)0x66, (char)0x67, (char)0x68, (char)0x69, (char)0x6a, (char)0x6b, (char)0x6c, (char)0x6d, (char)0x6e, (char)0x6f, (char)0x70, (char)0x71, (char)0x72, (char)0x73, (char)0x74, (char)0x75, (char)0x76, (char)0x77, (char)0x78, (char)0x79, (char)0x7a, (char)0x7b, (char)0x7c, (char)0x7d, (char)0x7e, (char)0x7f, (char)0x80, (char)0x81, (char)0x82, (char)0x83, (char)0x84, (char)0x85, (char)0x86, (char)0x87, (char)0x88, (char)0x89, (char)0x8a, (char)0x8b, (char)0x8c, (char)0x8d, (char)0x8e, (char)0x8f, (char)0x90, (char)0x91, (char)0x92, (char)0x93, (char)0x94, (char)0x95, (char)0x96, (char)0x97, (char)0x98, (char)0x99, (char)0x9a, (char)0x9b, (char)0x9c, (char)0x9d, (char)0x9e, (char)0x9f, (char)0xa0, (char)0xa1, (char)0xa2, (char)0xa3, (char)0xa4, (char)0xa5, (char)0xa6, (char)0xa7, (char)0xa8, (char)0xa9, (char)0xaa, (char)0xab, (char)0xac, (char)0xad, (char)0xae, (char)0xaf, (char)0xb0, (char)0xb1, (char)0xb2, (char)0xb3, (char)0xb4, (char)0xb5, (char)0xb6, (char)0xb7, (char)0xb8, (char)0xb9, (char)0xba, (char)0xbb, (char)0xbc, (char)0xbd, (char)0xbe, (char)0xbf, (char)0xc0, (char)0xc1, (char)0xc2, (char)0xc3, (char)0xc4, (char)0xc5, (char)0xc6, (char)0xc7, (char)0xc8, (char)0xc9, (char)0xca, (char)0xcb, (char)0xcc, (char)0xcd, (char)0xce, (char)0xcf, (char)0xd0, (char)0xd1, (char)0xd2, (char)0xd3, (char)0xd4, (char)0xd5, (char)0xd6, (char)0xd7, (char)0xd8, (char)0xd9, (char)0xda, (char)0xdb, (char)0xdc, (char)0xdd, (char)0xde, (char)0xdf, (char)0xe0, (char)0xe1, (char)0xe2, (char)0xe3, (char)0xe4, (char)0xe5, (char)0xe6, (char)0xe7, (char)0xe8, (char)0xe9, (char)0xea, (char)0xeb, (char)0xec, (char)0xed, (char)0xee, (char)0xef, (char)0xf0, (char)0xf1, (char)0xf2, (char)0xf3, (char)0xf4, (char)0xf5, (char)0xf6, (char)0xf7, (char)0xf8, (char)0xf9, (char)0xfa, (char)0xfb, (char)0xfc, (char)0xfd, (char)0xfe, (char)0xff}),
-       "5de16c89fe23ff8baa8707e7710e4137",
-       HashAlgorithm.MD5SUM);
-    characterArrayList.add(htdCharacterArray35);
-
-    HashTestDataList<? extends Object> htdCharacterArray36 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x0, (char)0x1, (char)0x2, (char)0x3, (char)0x4, (char)0x5, (char)0x6, (char)0x7, (char)0x8, (char)0x9, (char)0xa, (char)0xb, (char)0xc, (char)0xd, (char)0xe, (char)0xf, (char)0x10, (char)0x11, (char)0x12, (char)0x13, (char)0x14, (char)0x15, (char)0x16, (char)0x17, (char)0x18, (char)0x19, (char)0x1a, (char)0x1b, (char)0x1c, (char)0x1d, (char)0x1e, (char)0x1f, (char)0x20, (char)0x21, (char)0x22, (char)0x23, (char)0x24, (char)0x25, (char)0x26, (char)0x27, (char)0x28, (char)0x29, (char)0x2a, (char)0x2b, (char)0x2c, (char)0x2d, (char)0x2e, (char)0x2f, (char)0x30, (char)0x31, (char)0x32, (char)0x33, (char)0x34, (char)0x35, (char)0x36, (char)0x37, (char)0x38, (char)0x39, (char)0x3a, (char)0x3b, (char)0x3c, (char)0x3d, (char)0x3e, (char)0x3f, (char)0x40, (char)0x41, (char)0x42, (char)0x43, (char)0x44, (char)0x45, (char)0x46, (char)0x47, (char)0x48, (char)0x49, (char)0x4a, (char)0x4b, (char)0x4c, (char)0x4d, (char)0x4e, (char)0x4f, (char)0x50, (char)0x51, (char)0x52, (char)0x53, (char)0x54, (char)0x55, (char)0x56, (char)0x57, (char)0x58, (char)0x59, (char)0x5a, (char)0x5b, (char)0x5c, (char)0x5d, (char)0x5e, (char)0x5f, (char)0x60, (char)0x61, (char)0x62, (char)0x63, (char)0x64, (char)0x65, (char)0x66, (char)0x67, (char)0x68, (char)0x69, (char)0x6a, (char)0x6b, (char)0x6c, (char)0x6d, (char)0x6e, (char)0x6f, (char)0x70, (char)0x71, (char)0x72, (char)0x73, (char)0x74, (char)0x75, (char)0x76, (char)0x77, (char)0x78, (char)0x79, (char)0x7a, (char)0x7b, (char)0x7c, (char)0x7d, (char)0x7e, (char)0x7f, (char)0x80, (char)0x81, (char)0x82, (char)0x83, (char)0x84, (char)0x85, (char)0x86, (char)0x87, (char)0x88, (char)0x89, (char)0x8a, (char)0x8b, (char)0x8c, (char)0x8d, (char)0x8e, (char)0x8f, (char)0x90, (char)0x91, (char)0x92, (char)0x93, (char)0x94, (char)0x95, (char)0x96, (char)0x97, (char)0x98, (char)0x99, (char)0x9a, (char)0x9b, (char)0x9c, (char)0x9d, (char)0x9e, (char)0x9f, (char)0xa0, (char)0xa1, (char)0xa2, (char)0xa3, (char)0xa4, (char)0xa5, (char)0xa6, (char)0xa7, (char)0xa8, (char)0xa9, (char)0xaa, (char)0xab, (char)0xac, (char)0xad, (char)0xae, (char)0xaf, (char)0xb0, (char)0xb1, (char)0xb2, (char)0xb3, (char)0xb4, (char)0xb5, (char)0xb6, (char)0xb7, (char)0xb8, (char)0xb9, (char)0xba, (char)0xbb, (char)0xbc, (char)0xbd, (char)0xbe, (char)0xbf, (char)0xc0, (char)0xc1, (char)0xc2, (char)0xc3, (char)0xc4, (char)0xc5, (char)0xc6, (char)0xc7, (char)0xc8, (char)0xc9, (char)0xca, (char)0xcb, (char)0xcc, (char)0xcd, (char)0xce, (char)0xcf, (char)0xd0, (char)0xd1, (char)0xd2, (char)0xd3, (char)0xd4, (char)0xd5, (char)0xd6, (char)0xd7, (char)0xd8, (char)0xd9, (char)0xda, (char)0xdb, (char)0xdc, (char)0xdd, (char)0xde, (char)0xdf, (char)0xe0, (char)0xe1, (char)0xe2, (char)0xe3, (char)0xe4, (char)0xe5, (char)0xe6, (char)0xe7, (char)0xe8, (char)0xe9, (char)0xea, (char)0xeb, (char)0xec, (char)0xed, (char)0xee, (char)0xef, (char)0xf0, (char)0xf1, (char)0xf2, (char)0xf3, (char)0xf4, (char)0xf5, (char)0xf6, (char)0xf7, (char)0xf8, (char)0xf9, (char)0xfa, (char)0xfb, (char)0xfc, (char)0xfd, (char)0xfe, (char)0xff}),
-       "194da35b4e9a9fe112ac3caec650133167b44dca",
-       HashAlgorithm.SHA1SUM);
-    characterArrayList.add(htdCharacterArray36);
-
-    HashTestDataList<? extends Object> htdCharacterArray37 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x0, (char)0x1, (char)0x2, (char)0x3, (char)0x4, (char)0x5, (char)0x6, (char)0x7, (char)0x8, (char)0x9, (char)0xa, (char)0xb, (char)0xc, (char)0xd, (char)0xe, (char)0xf, (char)0x10, (char)0x11, (char)0x12, (char)0x13, (char)0x14, (char)0x15, (char)0x16, (char)0x17, (char)0x18, (char)0x19, (char)0x1a, (char)0x1b, (char)0x1c, (char)0x1d, (char)0x1e, (char)0x1f, (char)0x20, (char)0x21, (char)0x22, (char)0x23, (char)0x24, (char)0x25, (char)0x26, (char)0x27, (char)0x28, (char)0x29, (char)0x2a, (char)0x2b, (char)0x2c, (char)0x2d, (char)0x2e, (char)0x2f, (char)0x30, (char)0x31, (char)0x32, (char)0x33, (char)0x34, (char)0x35, (char)0x36, (char)0x37, (char)0x38, (char)0x39, (char)0x3a, (char)0x3b, (char)0x3c, (char)0x3d, (char)0x3e, (char)0x3f, (char)0x40, (char)0x41, (char)0x42, (char)0x43, (char)0x44, (char)0x45, (char)0x46, (char)0x47, (char)0x48, (char)0x49, (char)0x4a, (char)0x4b, (char)0x4c, (char)0x4d, (char)0x4e, (char)0x4f, (char)0x50, (char)0x51, (char)0x52, (char)0x53, (char)0x54, (char)0x55, (char)0x56, (char)0x57, (char)0x58, (char)0x59, (char)0x5a, (char)0x5b, (char)0x5c, (char)0x5d, (char)0x5e, (char)0x5f, (char)0x60, (char)0x61, (char)0x62, (char)0x63, (char)0x64, (char)0x65, (char)0x66, (char)0x67, (char)0x68, (char)0x69, (char)0x6a, (char)0x6b, (char)0x6c, (char)0x6d, (char)0x6e, (char)0x6f, (char)0x70, (char)0x71, (char)0x72, (char)0x73, (char)0x74, (char)0x75, (char)0x76, (char)0x77, (char)0x78, (char)0x79, (char)0x7a, (char)0x7b, (char)0x7c, (char)0x7d, (char)0x7e, (char)0x7f, (char)0x80, (char)0x81, (char)0x82, (char)0x83, (char)0x84, (char)0x85, (char)0x86, (char)0x87, (char)0x88, (char)0x89, (char)0x8a, (char)0x8b, (char)0x8c, (char)0x8d, (char)0x8e, (char)0x8f, (char)0x90, (char)0x91, (char)0x92, (char)0x93, (char)0x94, (char)0x95, (char)0x96, (char)0x97, (char)0x98, (char)0x99, (char)0x9a, (char)0x9b, (char)0x9c, (char)0x9d, (char)0x9e, (char)0x9f, (char)0xa0, (char)0xa1, (char)0xa2, (char)0xa3, (char)0xa4, (char)0xa5, (char)0xa6, (char)0xa7, (char)0xa8, (char)0xa9, (char)0xaa, (char)0xab, (char)0xac, (char)0xad, (char)0xae, (char)0xaf, (char)0xb0, (char)0xb1, (char)0xb2, (char)0xb3, (char)0xb4, (char)0xb5, (char)0xb6, (char)0xb7, (char)0xb8, (char)0xb9, (char)0xba, (char)0xbb, (char)0xbc, (char)0xbd, (char)0xbe, (char)0xbf, (char)0xc0, (char)0xc1, (char)0xc2, (char)0xc3, (char)0xc4, (char)0xc5, (char)0xc6, (char)0xc7, (char)0xc8, (char)0xc9, (char)0xca, (char)0xcb, (char)0xcc, (char)0xcd, (char)0xce, (char)0xcf, (char)0xd0, (char)0xd1, (char)0xd2, (char)0xd3, (char)0xd4, (char)0xd5, (char)0xd6, (char)0xd7, (char)0xd8, (char)0xd9, (char)0xda, (char)0xdb, (char)0xdc, (char)0xdd, (char)0xde, (char)0xdf, (char)0xe0, (char)0xe1, (char)0xe2, (char)0xe3, (char)0xe4, (char)0xe5, (char)0xe6, (char)0xe7, (char)0xe8, (char)0xe9, (char)0xea, (char)0xeb, (char)0xec, (char)0xed, (char)0xee, (char)0xef, (char)0xf0, (char)0xf1, (char)0xf2, (char)0xf3, (char)0xf4, (char)0xf5, (char)0xf6, (char)0xf7, (char)0xf8, (char)0xf9, (char)0xfa, (char)0xfb, (char)0xfc, (char)0xfd, (char)0xfe, (char)0xff}),
-       "2a6fbc34dee6537ff0f147dece5e93e7dce8957b5dc930541233887ee76313cf",
-       HashAlgorithm.SHA256SUM);
-    characterArrayList.add(htdCharacterArray37);
-
-    HashTestDataList<? extends Object> htdCharacterArray38 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x0, (char)0x1, (char)0x2, (char)0x3, (char)0x4, (char)0x5, (char)0x6, (char)0x7, (char)0x8, (char)0x9, (char)0xa, (char)0xb, (char)0xc, (char)0xd, (char)0xe, (char)0xf, (char)0x10, (char)0x11, (char)0x12, (char)0x13, (char)0x14, (char)0x15, (char)0x16, (char)0x17, (char)0x18, (char)0x19, (char)0x1a, (char)0x1b, (char)0x1c, (char)0x1d, (char)0x1e, (char)0x1f, (char)0x20, (char)0x21, (char)0x22, (char)0x23, (char)0x24, (char)0x25, (char)0x26, (char)0x27, (char)0x28, (char)0x29, (char)0x2a, (char)0x2b, (char)0x2c, (char)0x2d, (char)0x2e, (char)0x2f, (char)0x30, (char)0x31, (char)0x32, (char)0x33, (char)0x34, (char)0x35, (char)0x36, (char)0x37, (char)0x38, (char)0x39, (char)0x3a, (char)0x3b, (char)0x3c, (char)0x3d, (char)0x3e, (char)0x3f, (char)0x40, (char)0x41, (char)0x42, (char)0x43, (char)0x44, (char)0x45, (char)0x46, (char)0x47, (char)0x48, (char)0x49, (char)0x4a, (char)0x4b, (char)0x4c, (char)0x4d, (char)0x4e, (char)0x4f, (char)0x50, (char)0x51, (char)0x52, (char)0x53, (char)0x54, (char)0x55, (char)0x56, (char)0x57, (char)0x58, (char)0x59, (char)0x5a, (char)0x5b, (char)0x5c, (char)0x5d, (char)0x5e, (char)0x5f, (char)0x60, (char)0x61, (char)0x62, (char)0x63, (char)0x64, (char)0x65, (char)0x66, (char)0x67, (char)0x68, (char)0x69, (char)0x6a, (char)0x6b, (char)0x6c, (char)0x6d, (char)0x6e, (char)0x6f, (char)0x70, (char)0x71, (char)0x72, (char)0x73, (char)0x74, (char)0x75, (char)0x76, (char)0x77, (char)0x78, (char)0x79, (char)0x7a, (char)0x7b, (char)0x7c, (char)0x7d, (char)0x7e, (char)0x7f, (char)0x80, (char)0x81, (char)0x82, (char)0x83, (char)0x84, (char)0x85, (char)0x86, (char)0x87, (char)0x88, (char)0x89, (char)0x8a, (char)0x8b, (char)0x8c, (char)0x8d, (char)0x8e, (char)0x8f, (char)0x90, (char)0x91, (char)0x92, (char)0x93, (char)0x94, (char)0x95, (char)0x96, (char)0x97, (char)0x98, (char)0x99, (char)0x9a, (char)0x9b, (char)0x9c, (char)0x9d, (char)0x9e, (char)0x9f, (char)0xa0, (char)0xa1, (char)0xa2, (char)0xa3, (char)0xa4, (char)0xa5, (char)0xa6, (char)0xa7, (char)0xa8, (char)0xa9, (char)0xaa, (char)0xab, (char)0xac, (char)0xad, (char)0xae, (char)0xaf, (char)0xb0, (char)0xb1, (char)0xb2, (char)0xb3, (char)0xb4, (char)0xb5, (char)0xb6, (char)0xb7, (char)0xb8, (char)0xb9, (char)0xba, (char)0xbb, (char)0xbc, (char)0xbd, (char)0xbe, (char)0xbf, (char)0xc0, (char)0xc1, (char)0xc2, (char)0xc3, (char)0xc4, (char)0xc5, (char)0xc6, (char)0xc7, (char)0xc8, (char)0xc9, (char)0xca, (char)0xcb, (char)0xcc, (char)0xcd, (char)0xce, (char)0xcf, (char)0xd0, (char)0xd1, (char)0xd2, (char)0xd3, (char)0xd4, (char)0xd5, (char)0xd6, (char)0xd7, (char)0xd8, (char)0xd9, (char)0xda, (char)0xdb, (char)0xdc, (char)0xdd, (char)0xde, (char)0xdf, (char)0xe0, (char)0xe1, (char)0xe2, (char)0xe3, (char)0xe4, (char)0xe5, (char)0xe6, (char)0xe7, (char)0xe8, (char)0xe9, (char)0xea, (char)0xeb, (char)0xec, (char)0xed, (char)0xee, (char)0xef, (char)0xf0, (char)0xf1, (char)0xf2, (char)0xf3, (char)0xf4, (char)0xf5, (char)0xf6, (char)0xf7, (char)0xf8, (char)0xf9, (char)0xfa, (char)0xfb, (char)0xfc, (char)0xfd, (char)0xfe, (char)0xff}),
-       "e0ab6d0f50ebad0a7fe41fbc033d27ba0c9067a71101191eef3b62c0256805d1a177326ba922f24cd90021e3d669c592",
-       HashAlgorithm.SHA384SUM);
-    characterArrayList.add(htdCharacterArray38);
-
-    HashTestDataList<? extends Object> htdCharacterArray39 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0x0, (char)0x1, (char)0x2, (char)0x3, (char)0x4, (char)0x5, (char)0x6, (char)0x7, (char)0x8, (char)0x9, (char)0xa, (char)0xb, (char)0xc, (char)0xd, (char)0xe, (char)0xf, (char)0x10, (char)0x11, (char)0x12, (char)0x13, (char)0x14, (char)0x15, (char)0x16, (char)0x17, (char)0x18, (char)0x19, (char)0x1a, (char)0x1b, (char)0x1c, (char)0x1d, (char)0x1e, (char)0x1f, (char)0x20, (char)0x21, (char)0x22, (char)0x23, (char)0x24, (char)0x25, (char)0x26, (char)0x27, (char)0x28, (char)0x29, (char)0x2a, (char)0x2b, (char)0x2c, (char)0x2d, (char)0x2e, (char)0x2f, (char)0x30, (char)0x31, (char)0x32, (char)0x33, (char)0x34, (char)0x35, (char)0x36, (char)0x37, (char)0x38, (char)0x39, (char)0x3a, (char)0x3b, (char)0x3c, (char)0x3d, (char)0x3e, (char)0x3f, (char)0x40, (char)0x41, (char)0x42, (char)0x43, (char)0x44, (char)0x45, (char)0x46, (char)0x47, (char)0x48, (char)0x49, (char)0x4a, (char)0x4b, (char)0x4c, (char)0x4d, (char)0x4e, (char)0x4f, (char)0x50, (char)0x51, (char)0x52, (char)0x53, (char)0x54, (char)0x55, (char)0x56, (char)0x57, (char)0x58, (char)0x59, (char)0x5a, (char)0x5b, (char)0x5c, (char)0x5d, (char)0x5e, (char)0x5f, (char)0x60, (char)0x61, (char)0x62, (char)0x63, (char)0x64, (char)0x65, (char)0x66, (char)0x67, (char)0x68, (char)0x69, (char)0x6a, (char)0x6b, (char)0x6c, (char)0x6d, (char)0x6e, (char)0x6f, (char)0x70, (char)0x71, (char)0x72, (char)0x73, (char)0x74, (char)0x75, (char)0x76, (char)0x77, (char)0x78, (char)0x79, (char)0x7a, (char)0x7b, (char)0x7c, (char)0x7d, (char)0x7e, (char)0x7f, (char)0x80, (char)0x81, (char)0x82, (char)0x83, (char)0x84, (char)0x85, (char)0x86, (char)0x87, (char)0x88, (char)0x89, (char)0x8a, (char)0x8b, (char)0x8c, (char)0x8d, (char)0x8e, (char)0x8f, (char)0x90, (char)0x91, (char)0x92, (char)0x93, (char)0x94, (char)0x95, (char)0x96, (char)0x97, (char)0x98, (char)0x99, (char)0x9a, (char)0x9b, (char)0x9c, (char)0x9d, (char)0x9e, (char)0x9f, (char)0xa0, (char)0xa1, (char)0xa2, (char)0xa3, (char)0xa4, (char)0xa5, (char)0xa6, (char)0xa7, (char)0xa8, (char)0xa9, (char)0xaa, (char)0xab, (char)0xac, (char)0xad, (char)0xae, (char)0xaf, (char)0xb0, (char)0xb1, (char)0xb2, (char)0xb3, (char)0xb4, (char)0xb5, (char)0xb6, (char)0xb7, (char)0xb8, (char)0xb9, (char)0xba, (char)0xbb, (char)0xbc, (char)0xbd, (char)0xbe, (char)0xbf, (char)0xc0, (char)0xc1, (char)0xc2, (char)0xc3, (char)0xc4, (char)0xc5, (char)0xc6, (char)0xc7, (char)0xc8, (char)0xc9, (char)0xca, (char)0xcb, (char)0xcc, (char)0xcd, (char)0xce, (char)0xcf, (char)0xd0, (char)0xd1, (char)0xd2, (char)0xd3, (char)0xd4, (char)0xd5, (char)0xd6, (char)0xd7, (char)0xd8, (char)0xd9, (char)0xda, (char)0xdb, (char)0xdc, (char)0xdd, (char)0xde, (char)0xdf, (char)0xe0, (char)0xe1, (char)0xe2, (char)0xe3, (char)0xe4, (char)0xe5, (char)0xe6, (char)0xe7, (char)0xe8, (char)0xe9, (char)0xea, (char)0xeb, (char)0xec, (char)0xed, (char)0xee, (char)0xef, (char)0xf0, (char)0xf1, (char)0xf2, (char)0xf3, (char)0xf4, (char)0xf5, (char)0xf6, (char)0xf7, (char)0xf8, (char)0xf9, (char)0xfa, (char)0xfb, (char)0xfc, (char)0xfd, (char)0xfe, (char)0xff}),
-       "b441a5748d763afece1529257e3da163423b029bfb846128528029aba5029d35869be9d2b42c2de65691a2bf9b28bc67067ae2edd373f6cbf2f9a47c7837239c",
-       HashAlgorithm.SHA512SUM);
-    characterArrayList.add(htdCharacterArray39);
-
-    HashTestDataList<? extends Object> htdCharacterArray40 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0xffff, (char)0xff7f, (char)0xfeff, (char)0xfe7f, (char)0xfdff, (char)0xfd7f, (char)0xfcff, (char)0xfc7f, (char)0xfbff, (char)0xfb7f, (char)0xfaff, (char)0xfa7f, (char)0xf9ff, (char)0xf97f, (char)0xf8ff, (char)0xf87f, (char)0xf7ff, (char)0xf77f, (char)0xf6ff, (char)0xf67f, (char)0xf5ff, (char)0xf57f, (char)0xf4ff, (char)0xf47f, (char)0xf3ff, (char)0xf37f, (char)0xf2ff, (char)0xf27f, (char)0xf1ff, (char)0xf17f, (char)0xf0ff, (char)0xf07f, (char)0xefff, (char)0xef7f, (char)0xeeff, (char)0xee7f, (char)0xedff, (char)0xed7f, (char)0xecff, (char)0xec7f, (char)0xebff, (char)0xeb7f, (char)0xeaff, (char)0xea7f, (char)0xe9ff, (char)0xe97f, (char)0xe8ff, (char)0xe87f, (char)0xe7ff, (char)0xe77f, (char)0xe6ff, (char)0xe67f, (char)0xe5ff, (char)0xe57f, (char)0xe4ff, (char)0xe47f, (char)0xe3ff, (char)0xe37f, (char)0xe2ff, (char)0xe27f, (char)0xe1ff, (char)0xe17f, (char)0xe0ff, (char)0xe07f, (char)0xdfff, (char)0xdf7f, (char)0xdeff, (char)0xde7f, (char)0xddff, (char)0xdd7f, (char)0xdcff, (char)0xdc7f, (char)0xdbff, (char)0xdb7f, (char)0xdaff, (char)0xda7f, (char)0xd9ff, (char)0xd97f, (char)0xd8ff, (char)0xd87f, (char)0xd7ff, (char)0xd77f, (char)0xd6ff, (char)0xd67f, (char)0xd5ff, (char)0xd57f, (char)0xd4ff, (char)0xd47f, (char)0xd3ff, (char)0xd37f, (char)0xd2ff, (char)0xd27f, (char)0xd1ff, (char)0xd17f, (char)0xd0ff, (char)0xd07f, (char)0xcfff, (char)0xcf7f, (char)0xceff, (char)0xce7f, (char)0xcdff, (char)0xcd7f, (char)0xccff, (char)0xcc7f, (char)0xcbff, (char)0xcb7f, (char)0xcaff, (char)0xca7f, (char)0xc9ff, (char)0xc97f, (char)0xc8ff, (char)0xc87f, (char)0xc7ff, (char)0xc77f, (char)0xc6ff, (char)0xc67f, (char)0xc5ff, (char)0xc57f, (char)0xc4ff, (char)0xc47f, (char)0xc3ff, (char)0xc37f, (char)0xc2ff, (char)0xc27f, (char)0xc1ff, (char)0xc17f, (char)0xc0ff, (char)0xc07f, (char)0xbfff, (char)0xbf7f, (char)0xbeff, (char)0xbe7f, (char)0xbdff, (char)0xbd7f, (char)0xbcff, (char)0xbc7f, (char)0xbbff, (char)0xbb7f, (char)0xbaff, (char)0xba7f, (char)0xb9ff, (char)0xb97f, (char)0xb8ff, (char)0xb87f, (char)0xb7ff, (char)0xb77f, (char)0xb6ff, (char)0xb67f, (char)0xb5ff, (char)0xb57f, (char)0xb4ff, (char)0xb47f, (char)0xb3ff, (char)0xb37f, (char)0xb2ff, (char)0xb27f, (char)0xb1ff, (char)0xb17f, (char)0xb0ff, (char)0xb07f, (char)0xafff, (char)0xaf7f, (char)0xaeff, (char)0xae7f, (char)0xadff, (char)0xad7f, (char)0xacff, (char)0xac7f, (char)0xabff, (char)0xab7f, (char)0xaaff, (char)0xaa7f, (char)0xa9ff, (char)0xa97f, (char)0xa8ff, (char)0xa87f, (char)0xa7ff, (char)0xa77f, (char)0xa6ff, (char)0xa67f, (char)0xa5ff, (char)0xa57f, (char)0xa4ff, (char)0xa47f, (char)0xa3ff, (char)0xa37f, (char)0xa2ff, (char)0xa27f, (char)0xa1ff, (char)0xa17f, (char)0xa0ff, (char)0xa07f, (char)0x9fff, (char)0x9f7f, (char)0x9eff, (char)0x9e7f, (char)0x9dff, (char)0x9d7f, (char)0x9cff, (char)0x9c7f, (char)0x9bff, (char)0x9b7f, (char)0x9aff, (char)0x9a7f, (char)0x99ff, (char)0x997f, (char)0x98ff, (char)0x987f, (char)0x97ff, (char)0x977f, (char)0x96ff, (char)0x967f, (char)0x95ff, (char)0x957f, (char)0x94ff, (char)0x947f, (char)0x93ff, (char)0x937f, (char)0x92ff, (char)0x927f, (char)0x91ff, (char)0x917f, (char)0x90ff, (char)0x907f, (char)0x8fff, (char)0x8f7f, (char)0x8eff, (char)0x8e7f, (char)0x8dff, (char)0x8d7f, (char)0x8cff, (char)0x8c7f, (char)0x8bff, (char)0x8b7f, (char)0x8aff, (char)0x8a7f, (char)0x89ff, (char)0x897f, (char)0x88ff, (char)0x887f, (char)0x87ff, (char)0x877f, (char)0x86ff, (char)0x867f, (char)0x85ff, (char)0x857f, (char)0x84ff, (char)0x847f, (char)0x83ff, (char)0x837f, (char)0x82ff, (char)0x827f, (char)0x81ff, (char)0x817f, (char)0x80ff, (char)0x807f, (char)0x7fff, (char)0x7f7f, (char)0x7eff, (char)0x7e7f, (char)0x7dff, (char)0x7d7f, (char)0x7cff, (char)0x7c7f, (char)0x7bff, (char)0x7b7f, (char)0x7aff, (char)0x7a7f, (char)0x79ff, (char)0x797f, (char)0x78ff, (char)0x787f, (char)0x77ff, (char)0x777f, (char)0x76ff, (char)0x767f, (char)0x75ff, (char)0x757f, (char)0x74ff, (char)0x747f, (char)0x73ff, (char)0x737f, (char)0x72ff, (char)0x727f, (char)0x71ff, (char)0x717f, (char)0x70ff, (char)0x707f, (char)0x6fff, (char)0x6f7f, (char)0x6eff, (char)0x6e7f, (char)0x6dff, (char)0x6d7f, (char)0x6cff, (char)0x6c7f, (char)0x6bff, (char)0x6b7f, (char)0x6aff, (char)0x6a7f, (char)0x69ff, (char)0x697f, (char)0x68ff, (char)0x687f, (char)0x67ff, (char)0x677f, (char)0x66ff, (char)0x667f, (char)0x65ff, (char)0x657f, (char)0x64ff, (char)0x647f, (char)0x63ff, (char)0x637f, (char)0x62ff, (char)0x627f, (char)0x61ff, (char)0x617f, (char)0x60ff, (char)0x607f, (char)0x5fff, (char)0x5f7f, (char)0x5eff, (char)0x5e7f, (char)0x5dff, (char)0x5d7f, (char)0x5cff, (char)0x5c7f, (char)0x5bff, (char)0x5b7f, (char)0x5aff, (char)0x5a7f, (char)0x59ff, (char)0x597f, (char)0x58ff, (char)0x587f, (char)0x57ff, (char)0x577f, (char)0x56ff, (char)0x567f, (char)0x55ff, (char)0x557f, (char)0x54ff, (char)0x547f, (char)0x53ff, (char)0x537f, (char)0x52ff, (char)0x527f, (char)0x51ff, (char)0x517f, (char)0x50ff, (char)0x507f, (char)0x4fff, (char)0x4f7f, (char)0x4eff, (char)0x4e7f, (char)0x4dff, (char)0x4d7f, (char)0x4cff, (char)0x4c7f, (char)0x4bff, (char)0x4b7f, (char)0x4aff, (char)0x4a7f, (char)0x49ff, (char)0x497f, (char)0x48ff, (char)0x487f, (char)0x47ff, (char)0x477f, (char)0x46ff, (char)0x467f, (char)0x45ff, (char)0x457f, (char)0x44ff, (char)0x447f, (char)0x43ff, (char)0x437f, (char)0x42ff, (char)0x427f, (char)0x41ff, (char)0x417f, (char)0x40ff, (char)0x407f, (char)0x3fff, (char)0x3f7f, (char)0x3eff, (char)0x3e7f, (char)0x3dff, (char)0x3d7f, (char)0x3cff, (char)0x3c7f, (char)0x3bff, (char)0x3b7f, (char)0x3aff, (char)0x3a7f, (char)0x39ff, (char)0x397f, (char)0x38ff, (char)0x387f, (char)0x37ff, (char)0x377f, (char)0x36ff, (char)0x367f, (char)0x35ff, (char)0x357f, (char)0x34ff, (char)0x347f, (char)0x33ff, (char)0x337f, (char)0x32ff, (char)0x327f, (char)0x31ff, (char)0x317f, (char)0x30ff, (char)0x307f, (char)0x2fff, (char)0x2f7f, (char)0x2eff, (char)0x2e7f, (char)0x2dff, (char)0x2d7f, (char)0x2cff, (char)0x2c7f, (char)0x2bff, (char)0x2b7f, (char)0x2aff, (char)0x2a7f, (char)0x29ff, (char)0x297f, (char)0x28ff, (char)0x287f, (char)0x27ff, (char)0x277f, (char)0x26ff, (char)0x267f, (char)0x25ff, (char)0x257f, (char)0x24ff, (char)0x247f, (char)0x23ff, (char)0x237f, (char)0x22ff, (char)0x227f, (char)0x21ff, (char)0x217f, (char)0x20ff, (char)0x207f, (char)0x1fff, (char)0x1f7f, (char)0x1eff, (char)0x1e7f, (char)0x1dff, (char)0x1d7f, (char)0x1cff, (char)0x1c7f, (char)0x1bff, (char)0x1b7f, (char)0x1aff, (char)0x1a7f, (char)0x19ff, (char)0x197f, (char)0x18ff, (char)0x187f, (char)0x17ff, (char)0x177f, (char)0x16ff, (char)0x167f, (char)0x15ff, (char)0x157f, (char)0x14ff, (char)0x147f, (char)0x13ff, (char)0x137f, (char)0x12ff, (char)0x127f, (char)0x11ff, (char)0x117f, (char)0x10ff, (char)0x107f, (char)0xfff, (char)0xf7f, (char)0xeff, (char)0xe7f, (char)0xdff, (char)0xd7f, (char)0xcff, (char)0xc7f, (char)0xbff, (char)0xb7f, (char)0xaff, (char)0xa7f, (char)0x9ff, (char)0x97f, (char)0x8ff, (char)0x87f, (char)0x7ff, (char)0x77f, (char)0x6ff, (char)0x67f, (char)0x5ff, (char)0x57f, (char)0x4ff, (char)0x47f, (char)0x3ff, (char)0x37f, (char)0x2ff, (char)0x27f, (char)0x1ff, (char)0x17f, (char)0xff, (char)0x7f}),
-       "111f5f2f210a90f2b8079fd49bdd611d",
-       HashAlgorithm.MD5SUM);
-    characterArrayList.add(htdCharacterArray40);
-
-    HashTestDataList<? extends Object> htdCharacterArray41 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0xffff, (char)0xff7f, (char)0xfeff, (char)0xfe7f, (char)0xfdff, (char)0xfd7f, (char)0xfcff, (char)0xfc7f, (char)0xfbff, (char)0xfb7f, (char)0xfaff, (char)0xfa7f, (char)0xf9ff, (char)0xf97f, (char)0xf8ff, (char)0xf87f, (char)0xf7ff, (char)0xf77f, (char)0xf6ff, (char)0xf67f, (char)0xf5ff, (char)0xf57f, (char)0xf4ff, (char)0xf47f, (char)0xf3ff, (char)0xf37f, (char)0xf2ff, (char)0xf27f, (char)0xf1ff, (char)0xf17f, (char)0xf0ff, (char)0xf07f, (char)0xefff, (char)0xef7f, (char)0xeeff, (char)0xee7f, (char)0xedff, (char)0xed7f, (char)0xecff, (char)0xec7f, (char)0xebff, (char)0xeb7f, (char)0xeaff, (char)0xea7f, (char)0xe9ff, (char)0xe97f, (char)0xe8ff, (char)0xe87f, (char)0xe7ff, (char)0xe77f, (char)0xe6ff, (char)0xe67f, (char)0xe5ff, (char)0xe57f, (char)0xe4ff, (char)0xe47f, (char)0xe3ff, (char)0xe37f, (char)0xe2ff, (char)0xe27f, (char)0xe1ff, (char)0xe17f, (char)0xe0ff, (char)0xe07f, (char)0xdfff, (char)0xdf7f, (char)0xdeff, (char)0xde7f, (char)0xddff, (char)0xdd7f, (char)0xdcff, (char)0xdc7f, (char)0xdbff, (char)0xdb7f, (char)0xdaff, (char)0xda7f, (char)0xd9ff, (char)0xd97f, (char)0xd8ff, (char)0xd87f, (char)0xd7ff, (char)0xd77f, (char)0xd6ff, (char)0xd67f, (char)0xd5ff, (char)0xd57f, (char)0xd4ff, (char)0xd47f, (char)0xd3ff, (char)0xd37f, (char)0xd2ff, (char)0xd27f, (char)0xd1ff, (char)0xd17f, (char)0xd0ff, (char)0xd07f, (char)0xcfff, (char)0xcf7f, (char)0xceff, (char)0xce7f, (char)0xcdff, (char)0xcd7f, (char)0xccff, (char)0xcc7f, (char)0xcbff, (char)0xcb7f, (char)0xcaff, (char)0xca7f, (char)0xc9ff, (char)0xc97f, (char)0xc8ff, (char)0xc87f, (char)0xc7ff, (char)0xc77f, (char)0xc6ff, (char)0xc67f, (char)0xc5ff, (char)0xc57f, (char)0xc4ff, (char)0xc47f, (char)0xc3ff, (char)0xc37f, (char)0xc2ff, (char)0xc27f, (char)0xc1ff, (char)0xc17f, (char)0xc0ff, (char)0xc07f, (char)0xbfff, (char)0xbf7f, (char)0xbeff, (char)0xbe7f, (char)0xbdff, (char)0xbd7f, (char)0xbcff, (char)0xbc7f, (char)0xbbff, (char)0xbb7f, (char)0xbaff, (char)0xba7f, (char)0xb9ff, (char)0xb97f, (char)0xb8ff, (char)0xb87f, (char)0xb7ff, (char)0xb77f, (char)0xb6ff, (char)0xb67f, (char)0xb5ff, (char)0xb57f, (char)0xb4ff, (char)0xb47f, (char)0xb3ff, (char)0xb37f, (char)0xb2ff, (char)0xb27f, (char)0xb1ff, (char)0xb17f, (char)0xb0ff, (char)0xb07f, (char)0xafff, (char)0xaf7f, (char)0xaeff, (char)0xae7f, (char)0xadff, (char)0xad7f, (char)0xacff, (char)0xac7f, (char)0xabff, (char)0xab7f, (char)0xaaff, (char)0xaa7f, (char)0xa9ff, (char)0xa97f, (char)0xa8ff, (char)0xa87f, (char)0xa7ff, (char)0xa77f, (char)0xa6ff, (char)0xa67f, (char)0xa5ff, (char)0xa57f, (char)0xa4ff, (char)0xa47f, (char)0xa3ff, (char)0xa37f, (char)0xa2ff, (char)0xa27f, (char)0xa1ff, (char)0xa17f, (char)0xa0ff, (char)0xa07f, (char)0x9fff, (char)0x9f7f, (char)0x9eff, (char)0x9e7f, (char)0x9dff, (char)0x9d7f, (char)0x9cff, (char)0x9c7f, (char)0x9bff, (char)0x9b7f, (char)0x9aff, (char)0x9a7f, (char)0x99ff, (char)0x997f, (char)0x98ff, (char)0x987f, (char)0x97ff, (char)0x977f, (char)0x96ff, (char)0x967f, (char)0x95ff, (char)0x957f, (char)0x94ff, (char)0x947f, (char)0x93ff, (char)0x937f, (char)0x92ff, (char)0x927f, (char)0x91ff, (char)0x917f, (char)0x90ff, (char)0x907f, (char)0x8fff, (char)0x8f7f, (char)0x8eff, (char)0x8e7f, (char)0x8dff, (char)0x8d7f, (char)0x8cff, (char)0x8c7f, (char)0x8bff, (char)0x8b7f, (char)0x8aff, (char)0x8a7f, (char)0x89ff, (char)0x897f, (char)0x88ff, (char)0x887f, (char)0x87ff, (char)0x877f, (char)0x86ff, (char)0x867f, (char)0x85ff, (char)0x857f, (char)0x84ff, (char)0x847f, (char)0x83ff, (char)0x837f, (char)0x82ff, (char)0x827f, (char)0x81ff, (char)0x817f, (char)0x80ff, (char)0x807f, (char)0x7fff, (char)0x7f7f, (char)0x7eff, (char)0x7e7f, (char)0x7dff, (char)0x7d7f, (char)0x7cff, (char)0x7c7f, (char)0x7bff, (char)0x7b7f, (char)0x7aff, (char)0x7a7f, (char)0x79ff, (char)0x797f, (char)0x78ff, (char)0x787f, (char)0x77ff, (char)0x777f, (char)0x76ff, (char)0x767f, (char)0x75ff, (char)0x757f, (char)0x74ff, (char)0x747f, (char)0x73ff, (char)0x737f, (char)0x72ff, (char)0x727f, (char)0x71ff, (char)0x717f, (char)0x70ff, (char)0x707f, (char)0x6fff, (char)0x6f7f, (char)0x6eff, (char)0x6e7f, (char)0x6dff, (char)0x6d7f, (char)0x6cff, (char)0x6c7f, (char)0x6bff, (char)0x6b7f, (char)0x6aff, (char)0x6a7f, (char)0x69ff, (char)0x697f, (char)0x68ff, (char)0x687f, (char)0x67ff, (char)0x677f, (char)0x66ff, (char)0x667f, (char)0x65ff, (char)0x657f, (char)0x64ff, (char)0x647f, (char)0x63ff, (char)0x637f, (char)0x62ff, (char)0x627f, (char)0x61ff, (char)0x617f, (char)0x60ff, (char)0x607f, (char)0x5fff, (char)0x5f7f, (char)0x5eff, (char)0x5e7f, (char)0x5dff, (char)0x5d7f, (char)0x5cff, (char)0x5c7f, (char)0x5bff, (char)0x5b7f, (char)0x5aff, (char)0x5a7f, (char)0x59ff, (char)0x597f, (char)0x58ff, (char)0x587f, (char)0x57ff, (char)0x577f, (char)0x56ff, (char)0x567f, (char)0x55ff, (char)0x557f, (char)0x54ff, (char)0x547f, (char)0x53ff, (char)0x537f, (char)0x52ff, (char)0x527f, (char)0x51ff, (char)0x517f, (char)0x50ff, (char)0x507f, (char)0x4fff, (char)0x4f7f, (char)0x4eff, (char)0x4e7f, (char)0x4dff, (char)0x4d7f, (char)0x4cff, (char)0x4c7f, (char)0x4bff, (char)0x4b7f, (char)0x4aff, (char)0x4a7f, (char)0x49ff, (char)0x497f, (char)0x48ff, (char)0x487f, (char)0x47ff, (char)0x477f, (char)0x46ff, (char)0x467f, (char)0x45ff, (char)0x457f, (char)0x44ff, (char)0x447f, (char)0x43ff, (char)0x437f, (char)0x42ff, (char)0x427f, (char)0x41ff, (char)0x417f, (char)0x40ff, (char)0x407f, (char)0x3fff, (char)0x3f7f, (char)0x3eff, (char)0x3e7f, (char)0x3dff, (char)0x3d7f, (char)0x3cff, (char)0x3c7f, (char)0x3bff, (char)0x3b7f, (char)0x3aff, (char)0x3a7f, (char)0x39ff, (char)0x397f, (char)0x38ff, (char)0x387f, (char)0x37ff, (char)0x377f, (char)0x36ff, (char)0x367f, (char)0x35ff, (char)0x357f, (char)0x34ff, (char)0x347f, (char)0x33ff, (char)0x337f, (char)0x32ff, (char)0x327f, (char)0x31ff, (char)0x317f, (char)0x30ff, (char)0x307f, (char)0x2fff, (char)0x2f7f, (char)0x2eff, (char)0x2e7f, (char)0x2dff, (char)0x2d7f, (char)0x2cff, (char)0x2c7f, (char)0x2bff, (char)0x2b7f, (char)0x2aff, (char)0x2a7f, (char)0x29ff, (char)0x297f, (char)0x28ff, (char)0x287f, (char)0x27ff, (char)0x277f, (char)0x26ff, (char)0x267f, (char)0x25ff, (char)0x257f, (char)0x24ff, (char)0x247f, (char)0x23ff, (char)0x237f, (char)0x22ff, (char)0x227f, (char)0x21ff, (char)0x217f, (char)0x20ff, (char)0x207f, (char)0x1fff, (char)0x1f7f, (char)0x1eff, (char)0x1e7f, (char)0x1dff, (char)0x1d7f, (char)0x1cff, (char)0x1c7f, (char)0x1bff, (char)0x1b7f, (char)0x1aff, (char)0x1a7f, (char)0x19ff, (char)0x197f, (char)0x18ff, (char)0x187f, (char)0x17ff, (char)0x177f, (char)0x16ff, (char)0x167f, (char)0x15ff, (char)0x157f, (char)0x14ff, (char)0x147f, (char)0x13ff, (char)0x137f, (char)0x12ff, (char)0x127f, (char)0x11ff, (char)0x117f, (char)0x10ff, (char)0x107f, (char)0xfff, (char)0xf7f, (char)0xeff, (char)0xe7f, (char)0xdff, (char)0xd7f, (char)0xcff, (char)0xc7f, (char)0xbff, (char)0xb7f, (char)0xaff, (char)0xa7f, (char)0x9ff, (char)0x97f, (char)0x8ff, (char)0x87f, (char)0x7ff, (char)0x77f, (char)0x6ff, (char)0x67f, (char)0x5ff, (char)0x57f, (char)0x4ff, (char)0x47f, (char)0x3ff, (char)0x37f, (char)0x2ff, (char)0x27f, (char)0x1ff, (char)0x17f, (char)0xff, (char)0x7f}),
-       "4b6c78355314bddebc11aeb44741f6dbba56b677",
-       HashAlgorithm.SHA1SUM);
-    characterArrayList.add(htdCharacterArray41);
-
-    HashTestDataList<? extends Object> htdCharacterArray42 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0xffff, (char)0xff7f, (char)0xfeff, (char)0xfe7f, (char)0xfdff, (char)0xfd7f, (char)0xfcff, (char)0xfc7f, (char)0xfbff, (char)0xfb7f, (char)0xfaff, (char)0xfa7f, (char)0xf9ff, (char)0xf97f, (char)0xf8ff, (char)0xf87f, (char)0xf7ff, (char)0xf77f, (char)0xf6ff, (char)0xf67f, (char)0xf5ff, (char)0xf57f, (char)0xf4ff, (char)0xf47f, (char)0xf3ff, (char)0xf37f, (char)0xf2ff, (char)0xf27f, (char)0xf1ff, (char)0xf17f, (char)0xf0ff, (char)0xf07f, (char)0xefff, (char)0xef7f, (char)0xeeff, (char)0xee7f, (char)0xedff, (char)0xed7f, (char)0xecff, (char)0xec7f, (char)0xebff, (char)0xeb7f, (char)0xeaff, (char)0xea7f, (char)0xe9ff, (char)0xe97f, (char)0xe8ff, (char)0xe87f, (char)0xe7ff, (char)0xe77f, (char)0xe6ff, (char)0xe67f, (char)0xe5ff, (char)0xe57f, (char)0xe4ff, (char)0xe47f, (char)0xe3ff, (char)0xe37f, (char)0xe2ff, (char)0xe27f, (char)0xe1ff, (char)0xe17f, (char)0xe0ff, (char)0xe07f, (char)0xdfff, (char)0xdf7f, (char)0xdeff, (char)0xde7f, (char)0xddff, (char)0xdd7f, (char)0xdcff, (char)0xdc7f, (char)0xdbff, (char)0xdb7f, (char)0xdaff, (char)0xda7f, (char)0xd9ff, (char)0xd97f, (char)0xd8ff, (char)0xd87f, (char)0xd7ff, (char)0xd77f, (char)0xd6ff, (char)0xd67f, (char)0xd5ff, (char)0xd57f, (char)0xd4ff, (char)0xd47f, (char)0xd3ff, (char)0xd37f, (char)0xd2ff, (char)0xd27f, (char)0xd1ff, (char)0xd17f, (char)0xd0ff, (char)0xd07f, (char)0xcfff, (char)0xcf7f, (char)0xceff, (char)0xce7f, (char)0xcdff, (char)0xcd7f, (char)0xccff, (char)0xcc7f, (char)0xcbff, (char)0xcb7f, (char)0xcaff, (char)0xca7f, (char)0xc9ff, (char)0xc97f, (char)0xc8ff, (char)0xc87f, (char)0xc7ff, (char)0xc77f, (char)0xc6ff, (char)0xc67f, (char)0xc5ff, (char)0xc57f, (char)0xc4ff, (char)0xc47f, (char)0xc3ff, (char)0xc37f, (char)0xc2ff, (char)0xc27f, (char)0xc1ff, (char)0xc17f, (char)0xc0ff, (char)0xc07f, (char)0xbfff, (char)0xbf7f, (char)0xbeff, (char)0xbe7f, (char)0xbdff, (char)0xbd7f, (char)0xbcff, (char)0xbc7f, (char)0xbbff, (char)0xbb7f, (char)0xbaff, (char)0xba7f, (char)0xb9ff, (char)0xb97f, (char)0xb8ff, (char)0xb87f, (char)0xb7ff, (char)0xb77f, (char)0xb6ff, (char)0xb67f, (char)0xb5ff, (char)0xb57f, (char)0xb4ff, (char)0xb47f, (char)0xb3ff, (char)0xb37f, (char)0xb2ff, (char)0xb27f, (char)0xb1ff, (char)0xb17f, (char)0xb0ff, (char)0xb07f, (char)0xafff, (char)0xaf7f, (char)0xaeff, (char)0xae7f, (char)0xadff, (char)0xad7f, (char)0xacff, (char)0xac7f, (char)0xabff, (char)0xab7f, (char)0xaaff, (char)0xaa7f, (char)0xa9ff, (char)0xa97f, (char)0xa8ff, (char)0xa87f, (char)0xa7ff, (char)0xa77f, (char)0xa6ff, (char)0xa67f, (char)0xa5ff, (char)0xa57f, (char)0xa4ff, (char)0xa47f, (char)0xa3ff, (char)0xa37f, (char)0xa2ff, (char)0xa27f, (char)0xa1ff, (char)0xa17f, (char)0xa0ff, (char)0xa07f, (char)0x9fff, (char)0x9f7f, (char)0x9eff, (char)0x9e7f, (char)0x9dff, (char)0x9d7f, (char)0x9cff, (char)0x9c7f, (char)0x9bff, (char)0x9b7f, (char)0x9aff, (char)0x9a7f, (char)0x99ff, (char)0x997f, (char)0x98ff, (char)0x987f, (char)0x97ff, (char)0x977f, (char)0x96ff, (char)0x967f, (char)0x95ff, (char)0x957f, (char)0x94ff, (char)0x947f, (char)0x93ff, (char)0x937f, (char)0x92ff, (char)0x927f, (char)0x91ff, (char)0x917f, (char)0x90ff, (char)0x907f, (char)0x8fff, (char)0x8f7f, (char)0x8eff, (char)0x8e7f, (char)0x8dff, (char)0x8d7f, (char)0x8cff, (char)0x8c7f, (char)0x8bff, (char)0x8b7f, (char)0x8aff, (char)0x8a7f, (char)0x89ff, (char)0x897f, (char)0x88ff, (char)0x887f, (char)0x87ff, (char)0x877f, (char)0x86ff, (char)0x867f, (char)0x85ff, (char)0x857f, (char)0x84ff, (char)0x847f, (char)0x83ff, (char)0x837f, (char)0x82ff, (char)0x827f, (char)0x81ff, (char)0x817f, (char)0x80ff, (char)0x807f, (char)0x7fff, (char)0x7f7f, (char)0x7eff, (char)0x7e7f, (char)0x7dff, (char)0x7d7f, (char)0x7cff, (char)0x7c7f, (char)0x7bff, (char)0x7b7f, (char)0x7aff, (char)0x7a7f, (char)0x79ff, (char)0x797f, (char)0x78ff, (char)0x787f, (char)0x77ff, (char)0x777f, (char)0x76ff, (char)0x767f, (char)0x75ff, (char)0x757f, (char)0x74ff, (char)0x747f, (char)0x73ff, (char)0x737f, (char)0x72ff, (char)0x727f, (char)0x71ff, (char)0x717f, (char)0x70ff, (char)0x707f, (char)0x6fff, (char)0x6f7f, (char)0x6eff, (char)0x6e7f, (char)0x6dff, (char)0x6d7f, (char)0x6cff, (char)0x6c7f, (char)0x6bff, (char)0x6b7f, (char)0x6aff, (char)0x6a7f, (char)0x69ff, (char)0x697f, (char)0x68ff, (char)0x687f, (char)0x67ff, (char)0x677f, (char)0x66ff, (char)0x667f, (char)0x65ff, (char)0x657f, (char)0x64ff, (char)0x647f, (char)0x63ff, (char)0x637f, (char)0x62ff, (char)0x627f, (char)0x61ff, (char)0x617f, (char)0x60ff, (char)0x607f, (char)0x5fff, (char)0x5f7f, (char)0x5eff, (char)0x5e7f, (char)0x5dff, (char)0x5d7f, (char)0x5cff, (char)0x5c7f, (char)0x5bff, (char)0x5b7f, (char)0x5aff, (char)0x5a7f, (char)0x59ff, (char)0x597f, (char)0x58ff, (char)0x587f, (char)0x57ff, (char)0x577f, (char)0x56ff, (char)0x567f, (char)0x55ff, (char)0x557f, (char)0x54ff, (char)0x547f, (char)0x53ff, (char)0x537f, (char)0x52ff, (char)0x527f, (char)0x51ff, (char)0x517f, (char)0x50ff, (char)0x507f, (char)0x4fff, (char)0x4f7f, (char)0x4eff, (char)0x4e7f, (char)0x4dff, (char)0x4d7f, (char)0x4cff, (char)0x4c7f, (char)0x4bff, (char)0x4b7f, (char)0x4aff, (char)0x4a7f, (char)0x49ff, (char)0x497f, (char)0x48ff, (char)0x487f, (char)0x47ff, (char)0x477f, (char)0x46ff, (char)0x467f, (char)0x45ff, (char)0x457f, (char)0x44ff, (char)0x447f, (char)0x43ff, (char)0x437f, (char)0x42ff, (char)0x427f, (char)0x41ff, (char)0x417f, (char)0x40ff, (char)0x407f, (char)0x3fff, (char)0x3f7f, (char)0x3eff, (char)0x3e7f, (char)0x3dff, (char)0x3d7f, (char)0x3cff, (char)0x3c7f, (char)0x3bff, (char)0x3b7f, (char)0x3aff, (char)0x3a7f, (char)0x39ff, (char)0x397f, (char)0x38ff, (char)0x387f, (char)0x37ff, (char)0x377f, (char)0x36ff, (char)0x367f, (char)0x35ff, (char)0x357f, (char)0x34ff, (char)0x347f, (char)0x33ff, (char)0x337f, (char)0x32ff, (char)0x327f, (char)0x31ff, (char)0x317f, (char)0x30ff, (char)0x307f, (char)0x2fff, (char)0x2f7f, (char)0x2eff, (char)0x2e7f, (char)0x2dff, (char)0x2d7f, (char)0x2cff, (char)0x2c7f, (char)0x2bff, (char)0x2b7f, (char)0x2aff, (char)0x2a7f, (char)0x29ff, (char)0x297f, (char)0x28ff, (char)0x287f, (char)0x27ff, (char)0x277f, (char)0x26ff, (char)0x267f, (char)0x25ff, (char)0x257f, (char)0x24ff, (char)0x247f, (char)0x23ff, (char)0x237f, (char)0x22ff, (char)0x227f, (char)0x21ff, (char)0x217f, (char)0x20ff, (char)0x207f, (char)0x1fff, (char)0x1f7f, (char)0x1eff, (char)0x1e7f, (char)0x1dff, (char)0x1d7f, (char)0x1cff, (char)0x1c7f, (char)0x1bff, (char)0x1b7f, (char)0x1aff, (char)0x1a7f, (char)0x19ff, (char)0x197f, (char)0x18ff, (char)0x187f, (char)0x17ff, (char)0x177f, (char)0x16ff, (char)0x167f, (char)0x15ff, (char)0x157f, (char)0x14ff, (char)0x147f, (char)0x13ff, (char)0x137f, (char)0x12ff, (char)0x127f, (char)0x11ff, (char)0x117f, (char)0x10ff, (char)0x107f, (char)0xfff, (char)0xf7f, (char)0xeff, (char)0xe7f, (char)0xdff, (char)0xd7f, (char)0xcff, (char)0xc7f, (char)0xbff, (char)0xb7f, (char)0xaff, (char)0xa7f, (char)0x9ff, (char)0x97f, (char)0x8ff, (char)0x87f, (char)0x7ff, (char)0x77f, (char)0x6ff, (char)0x67f, (char)0x5ff, (char)0x57f, (char)0x4ff, (char)0x47f, (char)0x3ff, (char)0x37f, (char)0x2ff, (char)0x27f, (char)0x1ff, (char)0x17f, (char)0xff, (char)0x7f}),
-       "f6fe67dfd36e32d137c159313e6ca342ed3e4c4a461e071f9c3d88dae19a8c5f",
-       HashAlgorithm.SHA256SUM);
-    characterArrayList.add(htdCharacterArray42);
-
-    HashTestDataList<? extends Object> htdCharacterArray43 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0xffff, (char)0xff7f, (char)0xfeff, (char)0xfe7f, (char)0xfdff, (char)0xfd7f, (char)0xfcff, (char)0xfc7f, (char)0xfbff, (char)0xfb7f, (char)0xfaff, (char)0xfa7f, (char)0xf9ff, (char)0xf97f, (char)0xf8ff, (char)0xf87f, (char)0xf7ff, (char)0xf77f, (char)0xf6ff, (char)0xf67f, (char)0xf5ff, (char)0xf57f, (char)0xf4ff, (char)0xf47f, (char)0xf3ff, (char)0xf37f, (char)0xf2ff, (char)0xf27f, (char)0xf1ff, (char)0xf17f, (char)0xf0ff, (char)0xf07f, (char)0xefff, (char)0xef7f, (char)0xeeff, (char)0xee7f, (char)0xedff, (char)0xed7f, (char)0xecff, (char)0xec7f, (char)0xebff, (char)0xeb7f, (char)0xeaff, (char)0xea7f, (char)0xe9ff, (char)0xe97f, (char)0xe8ff, (char)0xe87f, (char)0xe7ff, (char)0xe77f, (char)0xe6ff, (char)0xe67f, (char)0xe5ff, (char)0xe57f, (char)0xe4ff, (char)0xe47f, (char)0xe3ff, (char)0xe37f, (char)0xe2ff, (char)0xe27f, (char)0xe1ff, (char)0xe17f, (char)0xe0ff, (char)0xe07f, (char)0xdfff, (char)0xdf7f, (char)0xdeff, (char)0xde7f, (char)0xddff, (char)0xdd7f, (char)0xdcff, (char)0xdc7f, (char)0xdbff, (char)0xdb7f, (char)0xdaff, (char)0xda7f, (char)0xd9ff, (char)0xd97f, (char)0xd8ff, (char)0xd87f, (char)0xd7ff, (char)0xd77f, (char)0xd6ff, (char)0xd67f, (char)0xd5ff, (char)0xd57f, (char)0xd4ff, (char)0xd47f, (char)0xd3ff, (char)0xd37f, (char)0xd2ff, (char)0xd27f, (char)0xd1ff, (char)0xd17f, (char)0xd0ff, (char)0xd07f, (char)0xcfff, (char)0xcf7f, (char)0xceff, (char)0xce7f, (char)0xcdff, (char)0xcd7f, (char)0xccff, (char)0xcc7f, (char)0xcbff, (char)0xcb7f, (char)0xcaff, (char)0xca7f, (char)0xc9ff, (char)0xc97f, (char)0xc8ff, (char)0xc87f, (char)0xc7ff, (char)0xc77f, (char)0xc6ff, (char)0xc67f, (char)0xc5ff, (char)0xc57f, (char)0xc4ff, (char)0xc47f, (char)0xc3ff, (char)0xc37f, (char)0xc2ff, (char)0xc27f, (char)0xc1ff, (char)0xc17f, (char)0xc0ff, (char)0xc07f, (char)0xbfff, (char)0xbf7f, (char)0xbeff, (char)0xbe7f, (char)0xbdff, (char)0xbd7f, (char)0xbcff, (char)0xbc7f, (char)0xbbff, (char)0xbb7f, (char)0xbaff, (char)0xba7f, (char)0xb9ff, (char)0xb97f, (char)0xb8ff, (char)0xb87f, (char)0xb7ff, (char)0xb77f, (char)0xb6ff, (char)0xb67f, (char)0xb5ff, (char)0xb57f, (char)0xb4ff, (char)0xb47f, (char)0xb3ff, (char)0xb37f, (char)0xb2ff, (char)0xb27f, (char)0xb1ff, (char)0xb17f, (char)0xb0ff, (char)0xb07f, (char)0xafff, (char)0xaf7f, (char)0xaeff, (char)0xae7f, (char)0xadff, (char)0xad7f, (char)0xacff, (char)0xac7f, (char)0xabff, (char)0xab7f, (char)0xaaff, (char)0xaa7f, (char)0xa9ff, (char)0xa97f, (char)0xa8ff, (char)0xa87f, (char)0xa7ff, (char)0xa77f, (char)0xa6ff, (char)0xa67f, (char)0xa5ff, (char)0xa57f, (char)0xa4ff, (char)0xa47f, (char)0xa3ff, (char)0xa37f, (char)0xa2ff, (char)0xa27f, (char)0xa1ff, (char)0xa17f, (char)0xa0ff, (char)0xa07f, (char)0x9fff, (char)0x9f7f, (char)0x9eff, (char)0x9e7f, (char)0x9dff, (char)0x9d7f, (char)0x9cff, (char)0x9c7f, (char)0x9bff, (char)0x9b7f, (char)0x9aff, (char)0x9a7f, (char)0x99ff, (char)0x997f, (char)0x98ff, (char)0x987f, (char)0x97ff, (char)0x977f, (char)0x96ff, (char)0x967f, (char)0x95ff, (char)0x957f, (char)0x94ff, (char)0x947f, (char)0x93ff, (char)0x937f, (char)0x92ff, (char)0x927f, (char)0x91ff, (char)0x917f, (char)0x90ff, (char)0x907f, (char)0x8fff, (char)0x8f7f, (char)0x8eff, (char)0x8e7f, (char)0x8dff, (char)0x8d7f, (char)0x8cff, (char)0x8c7f, (char)0x8bff, (char)0x8b7f, (char)0x8aff, (char)0x8a7f, (char)0x89ff, (char)0x897f, (char)0x88ff, (char)0x887f, (char)0x87ff, (char)0x877f, (char)0x86ff, (char)0x867f, (char)0x85ff, (char)0x857f, (char)0x84ff, (char)0x847f, (char)0x83ff, (char)0x837f, (char)0x82ff, (char)0x827f, (char)0x81ff, (char)0x817f, (char)0x80ff, (char)0x807f, (char)0x7fff, (char)0x7f7f, (char)0x7eff, (char)0x7e7f, (char)0x7dff, (char)0x7d7f, (char)0x7cff, (char)0x7c7f, (char)0x7bff, (char)0x7b7f, (char)0x7aff, (char)0x7a7f, (char)0x79ff, (char)0x797f, (char)0x78ff, (char)0x787f, (char)0x77ff, (char)0x777f, (char)0x76ff, (char)0x767f, (char)0x75ff, (char)0x757f, (char)0x74ff, (char)0x747f, (char)0x73ff, (char)0x737f, (char)0x72ff, (char)0x727f, (char)0x71ff, (char)0x717f, (char)0x70ff, (char)0x707f, (char)0x6fff, (char)0x6f7f, (char)0x6eff, (char)0x6e7f, (char)0x6dff, (char)0x6d7f, (char)0x6cff, (char)0x6c7f, (char)0x6bff, (char)0x6b7f, (char)0x6aff, (char)0x6a7f, (char)0x69ff, (char)0x697f, (char)0x68ff, (char)0x687f, (char)0x67ff, (char)0x677f, (char)0x66ff, (char)0x667f, (char)0x65ff, (char)0x657f, (char)0x64ff, (char)0x647f, (char)0x63ff, (char)0x637f, (char)0x62ff, (char)0x627f, (char)0x61ff, (char)0x617f, (char)0x60ff, (char)0x607f, (char)0x5fff, (char)0x5f7f, (char)0x5eff, (char)0x5e7f, (char)0x5dff, (char)0x5d7f, (char)0x5cff, (char)0x5c7f, (char)0x5bff, (char)0x5b7f, (char)0x5aff, (char)0x5a7f, (char)0x59ff, (char)0x597f, (char)0x58ff, (char)0x587f, (char)0x57ff, (char)0x577f, (char)0x56ff, (char)0x567f, (char)0x55ff, (char)0x557f, (char)0x54ff, (char)0x547f, (char)0x53ff, (char)0x537f, (char)0x52ff, (char)0x527f, (char)0x51ff, (char)0x517f, (char)0x50ff, (char)0x507f, (char)0x4fff, (char)0x4f7f, (char)0x4eff, (char)0x4e7f, (char)0x4dff, (char)0x4d7f, (char)0x4cff, (char)0x4c7f, (char)0x4bff, (char)0x4b7f, (char)0x4aff, (char)0x4a7f, (char)0x49ff, (char)0x497f, (char)0x48ff, (char)0x487f, (char)0x47ff, (char)0x477f, (char)0x46ff, (char)0x467f, (char)0x45ff, (char)0x457f, (char)0x44ff, (char)0x447f, (char)0x43ff, (char)0x437f, (char)0x42ff, (char)0x427f, (char)0x41ff, (char)0x417f, (char)0x40ff, (char)0x407f, (char)0x3fff, (char)0x3f7f, (char)0x3eff, (char)0x3e7f, (char)0x3dff, (char)0x3d7f, (char)0x3cff, (char)0x3c7f, (char)0x3bff, (char)0x3b7f, (char)0x3aff, (char)0x3a7f, (char)0x39ff, (char)0x397f, (char)0x38ff, (char)0x387f, (char)0x37ff, (char)0x377f, (char)0x36ff, (char)0x367f, (char)0x35ff, (char)0x357f, (char)0x34ff, (char)0x347f, (char)0x33ff, (char)0x337f, (char)0x32ff, (char)0x327f, (char)0x31ff, (char)0x317f, (char)0x30ff, (char)0x307f, (char)0x2fff, (char)0x2f7f, (char)0x2eff, (char)0x2e7f, (char)0x2dff, (char)0x2d7f, (char)0x2cff, (char)0x2c7f, (char)0x2bff, (char)0x2b7f, (char)0x2aff, (char)0x2a7f, (char)0x29ff, (char)0x297f, (char)0x28ff, (char)0x287f, (char)0x27ff, (char)0x277f, (char)0x26ff, (char)0x267f, (char)0x25ff, (char)0x257f, (char)0x24ff, (char)0x247f, (char)0x23ff, (char)0x237f, (char)0x22ff, (char)0x227f, (char)0x21ff, (char)0x217f, (char)0x20ff, (char)0x207f, (char)0x1fff, (char)0x1f7f, (char)0x1eff, (char)0x1e7f, (char)0x1dff, (char)0x1d7f, (char)0x1cff, (char)0x1c7f, (char)0x1bff, (char)0x1b7f, (char)0x1aff, (char)0x1a7f, (char)0x19ff, (char)0x197f, (char)0x18ff, (char)0x187f, (char)0x17ff, (char)0x177f, (char)0x16ff, (char)0x167f, (char)0x15ff, (char)0x157f, (char)0x14ff, (char)0x147f, (char)0x13ff, (char)0x137f, (char)0x12ff, (char)0x127f, (char)0x11ff, (char)0x117f, (char)0x10ff, (char)0x107f, (char)0xfff, (char)0xf7f, (char)0xeff, (char)0xe7f, (char)0xdff, (char)0xd7f, (char)0xcff, (char)0xc7f, (char)0xbff, (char)0xb7f, (char)0xaff, (char)0xa7f, (char)0x9ff, (char)0x97f, (char)0x8ff, (char)0x87f, (char)0x7ff, (char)0x77f, (char)0x6ff, (char)0x67f, (char)0x5ff, (char)0x57f, (char)0x4ff, (char)0x47f, (char)0x3ff, (char)0x37f, (char)0x2ff, (char)0x27f, (char)0x1ff, (char)0x17f, (char)0xff, (char)0x7f}),
-       "dd310f54ec3e6368037db86e1d5eb414fa64dc5755cd55f78a0bf9e270fdee2345465b033e2acb465439bed1fe6efc02",
-       HashAlgorithm.SHA384SUM);
-    characterArrayList.add(htdCharacterArray43);
-
-    HashTestDataList<? extends Object> htdCharacterArray44 = new HashTestDataList<Character>(
-       Arrays.asList(new Character[] {(char)0xffff, (char)0xff7f, (char)0xfeff, (char)0xfe7f, (char)0xfdff, (char)0xfd7f, (char)0xfcff, (char)0xfc7f, (char)0xfbff, (char)0xfb7f, (char)0xfaff, (char)0xfa7f, (char)0xf9ff, (char)0xf97f, (char)0xf8ff, (char)0xf87f, (char)0xf7ff, (char)0xf77f, (char)0xf6ff, (char)0xf67f, (char)0xf5ff, (char)0xf57f, (char)0xf4ff, (char)0xf47f, (char)0xf3ff, (char)0xf37f, (char)0xf2ff, (char)0xf27f, (char)0xf1ff, (char)0xf17f, (char)0xf0ff, (char)0xf07f, (char)0xefff, (char)0xef7f, (char)0xeeff, (char)0xee7f, (char)0xedff, (char)0xed7f, (char)0xecff, (char)0xec7f, (char)0xebff, (char)0xeb7f, (char)0xeaff, (char)0xea7f, (char)0xe9ff, (char)0xe97f, (char)0xe8ff, (char)0xe87f, (char)0xe7ff, (char)0xe77f, (char)0xe6ff, (char)0xe67f, (char)0xe5ff, (char)0xe57f, (char)0xe4ff, (char)0xe47f, (char)0xe3ff, (char)0xe37f, (char)0xe2ff, (char)0xe27f, (char)0xe1ff, (char)0xe17f, (char)0xe0ff, (char)0xe07f, (char)0xdfff, (char)0xdf7f, (char)0xdeff, (char)0xde7f, (char)0xddff, (char)0xdd7f, (char)0xdcff, (char)0xdc7f, (char)0xdbff, (char)0xdb7f, (char)0xdaff, (char)0xda7f, (char)0xd9ff, (char)0xd97f, (char)0xd8ff, (char)0xd87f, (char)0xd7ff, (char)0xd77f, (char)0xd6ff, (char)0xd67f, (char)0xd5ff, (char)0xd57f, (char)0xd4ff, (char)0xd47f, (char)0xd3ff, (char)0xd37f, (char)0xd2ff, (char)0xd27f, (char)0xd1ff, (char)0xd17f, (char)0xd0ff, (char)0xd07f, (char)0xcfff, (char)0xcf7f, (char)0xceff, (char)0xce7f, (char)0xcdff, (char)0xcd7f, (char)0xccff, (char)0xcc7f, (char)0xcbff, (char)0xcb7f, (char)0xcaff, (char)0xca7f, (char)0xc9ff, (char)0xc97f, (char)0xc8ff, (char)0xc87f, (char)0xc7ff, (char)0xc77f, (char)0xc6ff, (char)0xc67f, (char)0xc5ff, (char)0xc57f, (char)0xc4ff, (char)0xc47f, (char)0xc3ff, (char)0xc37f, (char)0xc2ff, (char)0xc27f, (char)0xc1ff, (char)0xc17f, (char)0xc0ff, (char)0xc07f, (char)0xbfff, (char)0xbf7f, (char)0xbeff, (char)0xbe7f, (char)0xbdff, (char)0xbd7f, (char)0xbcff, (char)0xbc7f, (char)0xbbff, (char)0xbb7f, (char)0xbaff, (char)0xba7f, (char)0xb9ff, (char)0xb97f, (char)0xb8ff, (char)0xb87f, (char)0xb7ff, (char)0xb77f, (char)0xb6ff, (char)0xb67f, (char)0xb5ff, (char)0xb57f, (char)0xb4ff, (char)0xb47f, (char)0xb3ff, (char)0xb37f, (char)0xb2ff, (char)0xb27f, (char)0xb1ff, (char)0xb17f, (char)0xb0ff, (char)0xb07f, (char)0xafff, (char)0xaf7f, (char)0xaeff, (char)0xae7f, (char)0xadff, (char)0xad7f, (char)0xacff, (char)0xac7f, (char)0xabff, (char)0xab7f, (char)0xaaff, (char)0xaa7f, (char)0xa9ff, (char)0xa97f, (char)0xa8ff, (char)0xa87f, (char)0xa7ff, (char)0xa77f, (char)0xa6ff, (char)0xa67f, (char)0xa5ff, (char)0xa57f, (char)0xa4ff, (char)0xa47f, (char)0xa3ff, (char)0xa37f, (char)0xa2ff, (char)0xa27f, (char)0xa1ff, (char)0xa17f, (char)0xa0ff, (char)0xa07f, (char)0x9fff, (char)0x9f7f, (char)0x9eff, (char)0x9e7f, (char)0x9dff, (char)0x9d7f, (char)0x9cff, (char)0x9c7f, (char)0x9bff, (char)0x9b7f, (char)0x9aff, (char)0x9a7f, (char)0x99ff, (char)0x997f, (char)0x98ff, (char)0x987f, (char)0x97ff, (char)0x977f, (char)0x96ff, (char)0x967f, (char)0x95ff, (char)0x957f, (char)0x94ff, (char)0x947f, (char)0x93ff, (char)0x937f, (char)0x92ff, (char)0x927f, (char)0x91ff, (char)0x917f, (char)0x90ff, (char)0x907f, (char)0x8fff, (char)0x8f7f, (char)0x8eff, (char)0x8e7f, (char)0x8dff, (char)0x8d7f, (char)0x8cff, (char)0x8c7f, (char)0x8bff, (char)0x8b7f, (char)0x8aff, (char)0x8a7f, (char)0x89ff, (char)0x897f, (char)0x88ff, (char)0x887f, (char)0x87ff, (char)0x877f, (char)0x86ff, (char)0x867f, (char)0x85ff, (char)0x857f, (char)0x84ff, (char)0x847f, (char)0x83ff, (char)0x837f, (char)0x82ff, (char)0x827f, (char)0x81ff, (char)0x817f, (char)0x80ff, (char)0x807f, (char)0x7fff, (char)0x7f7f, (char)0x7eff, (char)0x7e7f, (char)0x7dff, (char)0x7d7f, (char)0x7cff, (char)0x7c7f, (char)0x7bff, (char)0x7b7f, (char)0x7aff, (char)0x7a7f, (char)0x79ff, (char)0x797f, (char)0x78ff, (char)0x787f, (char)0x77ff, (char)0x777f, (char)0x76ff, (char)0x767f, (char)0x75ff, (char)0x757f, (char)0x74ff, (char)0x747f, (char)0x73ff, (char)0x737f, (char)0x72ff, (char)0x727f, (char)0x71ff, (char)0x717f, (char)0x70ff, (char)0x707f, (char)0x6fff, (char)0x6f7f, (char)0x6eff, (char)0x6e7f, (char)0x6dff, (char)0x6d7f, (char)0x6cff, (char)0x6c7f, (char)0x6bff, (char)0x6b7f, (char)0x6aff, (char)0x6a7f, (char)0x69ff, (char)0x697f, (char)0x68ff, (char)0x687f, (char)0x67ff, (char)0x677f, (char)0x66ff, (char)0x667f, (char)0x65ff, (char)0x657f, (char)0x64ff, (char)0x647f, (char)0x63ff, (char)0x637f, (char)0x62ff, (char)0x627f, (char)0x61ff, (char)0x617f, (char)0x60ff, (char)0x607f, (char)0x5fff, (char)0x5f7f, (char)0x5eff, (char)0x5e7f, (char)0x5dff, (char)0x5d7f, (char)0x5cff, (char)0x5c7f, (char)0x5bff, (char)0x5b7f, (char)0x5aff, (char)0x5a7f, (char)0x59ff, (char)0x597f, (char)0x58ff, (char)0x587f, (char)0x57ff, (char)0x577f, (char)0x56ff, (char)0x567f, (char)0x55ff, (char)0x557f, (char)0x54ff, (char)0x547f, (char)0x53ff, (char)0x537f, (char)0x52ff, (char)0x527f, (char)0x51ff, (char)0x517f, (char)0x50ff, (char)0x507f, (char)0x4fff, (char)0x4f7f, (char)0x4eff, (char)0x4e7f, (char)0x4dff, (char)0x4d7f, (char)0x4cff, (char)0x4c7f, (char)0x4bff, (char)0x4b7f, (char)0x4aff, (char)0x4a7f, (char)0x49ff, (char)0x497f, (char)0x48ff, (char)0x487f, (char)0x47ff, (char)0x477f, (char)0x46ff, (char)0x467f, (char)0x45ff, (char)0x457f, (char)0x44ff, (char)0x447f, (char)0x43ff, (char)0x437f, (char)0x42ff, (char)0x427f, (char)0x41ff, (char)0x417f, (char)0x40ff, (char)0x407f, (char)0x3fff, (char)0x3f7f, (char)0x3eff, (char)0x3e7f, (char)0x3dff, (char)0x3d7f, (char)0x3cff, (char)0x3c7f, (char)0x3bff, (char)0x3b7f, (char)0x3aff, (char)0x3a7f, (char)0x39ff, (char)0x397f, (char)0x38ff, (char)0x387f, (char)0x37ff, (char)0x377f, (char)0x36ff, (char)0x367f, (char)0x35ff, (char)0x357f, (char)0x34ff, (char)0x347f, (char)0x33ff, (char)0x337f, (char)0x32ff, (char)0x327f, (char)0x31ff, (char)0x317f, (char)0x30ff, (char)0x307f, (char)0x2fff, (char)0x2f7f, (char)0x2eff, (char)0x2e7f, (char)0x2dff, (char)0x2d7f, (char)0x2cff, (char)0x2c7f, (char)0x2bff, (char)0x2b7f, (char)0x2aff, (char)0x2a7f, (char)0x29ff, (char)0x297f, (char)0x28ff, (char)0x287f, (char)0x27ff, (char)0x277f, (char)0x26ff, (char)0x267f, (char)0x25ff, (char)0x257f, (char)0x24ff, (char)0x247f, (char)0x23ff, (char)0x237f, (char)0x22ff, (char)0x227f, (char)0x21ff, (char)0x217f, (char)0x20ff, (char)0x207f, (char)0x1fff, (char)0x1f7f, (char)0x1eff, (char)0x1e7f, (char)0x1dff, (char)0x1d7f, (char)0x1cff, (char)0x1c7f, (char)0x1bff, (char)0x1b7f, (char)0x1aff, (char)0x1a7f, (char)0x19ff, (char)0x197f, (char)0x18ff, (char)0x187f, (char)0x17ff, (char)0x177f, (char)0x16ff, (char)0x167f, (char)0x15ff, (char)0x157f, (char)0x14ff, (char)0x147f, (char)0x13ff, (char)0x137f, (char)0x12ff, (char)0x127f, (char)0x11ff, (char)0x117f, (char)0x10ff, (char)0x107f, (char)0xfff, (char)0xf7f, (char)0xeff, (char)0xe7f, (char)0xdff, (char)0xd7f, (char)0xcff, (char)0xc7f, (char)0xbff, (char)0xb7f, (char)0xaff, (char)0xa7f, (char)0x9ff, (char)0x97f, (char)0x8ff, (char)0x87f, (char)0x7ff, (char)0x77f, (char)0x6ff, (char)0x67f, (char)0x5ff, (char)0x57f, (char)0x4ff, (char)0x47f, (char)0x3ff, (char)0x37f, (char)0x2ff, (char)0x27f, (char)0x1ff, (char)0x17f, (char)0xff, (char)0x7f}),
-       "5d1aa95922b1fd713b05abd86a02cd36fa819baca801eaae2a49723ed92da16abd72c228d94322f6fabe80622483383bbebe8e6b19f6b34e64d94a019ddb2d11",
-       HashAlgorithm.SHA512SUM);
-    characterArrayList.add(htdCharacterArray44);
-
-    HashTestData<? extends Object> htdCharacterScalar45 = new HashTestData<Character>(
-       new Character((char)0x61),
-       "760f753576f2955b0074758acb4d5fa6",
-       HashAlgorithm.MD5SUM);
-    characterScalarList.add(htdCharacterScalar45);
-
-    HashTestData<? extends Object> htdCharacterScalar46 = new HashTestData<Character>(
-       new Character((char)0x61),
-       "3106600e0327ca77371f2526df794ed84322585c",
-       HashAlgorithm.SHA1SUM);
-    characterScalarList.add(htdCharacterScalar46);
-
-    HashTestData<? extends Object> htdCharacterScalar47 = new HashTestData<Character>(
-       new Character((char)0x61),
-       "022a6979e6dab7aa5ae4c3e5e45f7e977112a7e63593820dbec1ec738a24f93c",
-       HashAlgorithm.SHA256SUM);
-    characterScalarList.add(htdCharacterScalar47);
-
-    HashTestData<? extends Object> htdCharacterScalar48 = new HashTestData<Character>(
-       new Character((char)0x61),
-       "f5077c4b6e328b21e2f21192776daf9660ceaeaf40a1796b58bd9500b36aff2cb5acd79d2789f891541818315233ff6c",
-       HashAlgorithm.SHA384SUM);
-    characterScalarList.add(htdCharacterScalar48);
-
-    HashTestData<? extends Object> htdCharacterScalar49 = new HashTestData<Character>(
-       new Character((char)0x61),
-       "031ab9ff5962e81139a6900216945fc584ab186aeb1bf3498c661b976a7393af94b6bcc9784f7e8cb75b071de60f9fda06d44ddd561e53e3343857eea2089217",
-       HashAlgorithm.SHA512SUM);
-    characterScalarList.add(htdCharacterScalar49);
-
-    HashTestData<? extends Object> htdCharacterScalar50 = new HashTestData<Character>(
-       new Character((char)0x42),
-       "4d75a03f5a52413121b887ac25ad410f",
-       HashAlgorithm.MD5SUM);
-    characterScalarList.add(htdCharacterScalar50);
-
-    HashTestData<? extends Object> htdCharacterScalar51 = new HashTestData<Character>(
-       new Character((char)0x42),
-       "60a923c61fa5b9d9cbae3dfc1af19dbf52723cbc",
-       HashAlgorithm.SHA1SUM);
-    characterScalarList.add(htdCharacterScalar51);
-
-    HashTestData<? extends Object> htdCharacterScalar52 = new HashTestData<Character>(
-       new Character((char)0x42),
-       "87afe6086fe4571e37657e76281301f189c75ebae1d2eaafb56d578067a1d95e",
-       HashAlgorithm.SHA256SUM);
-    characterScalarList.add(htdCharacterScalar52);
-
-    HashTestData<? extends Object> htdCharacterScalar53 = new HashTestData<Character>(
-       new Character((char)0x42),
-       "a09f464cdc62a6cbf58d9fb7b689e16a3ff9609761defcdf5082059a1f8333166a9b287e545180bc138f374e604413b8",
-       HashAlgorithm.SHA384SUM);
-    characterScalarList.add(htdCharacterScalar53);
-
-    HashTestData<? extends Object> htdCharacterScalar54 = new HashTestData<Character>(
-       new Character((char)0x42),
-       "3bf8ba18e8d0bc73b73a79e69913d4d2fc165e82461d2fd4e0ac4d834cba71ff487ebc4af6e22d677172145368e2ddb1e718da6abea9802f4be8b94788555403",
-       HashAlgorithm.SHA512SUM);
-    characterScalarList.add(htdCharacterScalar54);
-
-    HashTestData<? extends Object> htdCharacterScalar55 = new HashTestData<Character>(
-       new Character((char)0x46),
-       "8e4f8cdcd7dccbc9654c9f6601c43383",
-       HashAlgorithm.MD5SUM);
-    characterScalarList.add(htdCharacterScalar55);
-
-    HashTestData<? extends Object> htdCharacterScalar56 = new HashTestData<Character>(
-       new Character((char)0x46),
-       "beb59e97091dd2f1ada25fea1abf7a70ac3ada78",
-       HashAlgorithm.SHA1SUM);
-    characterScalarList.add(htdCharacterScalar56);
-
-    HashTestData<? extends Object> htdCharacterScalar57 = new HashTestData<Character>(
-       new Character((char)0x46),
-       "c02b4bb4ab96197a9a5a4537d8b87f27c1c8f3f9572d215c505c5f3339ee4399",
-       HashAlgorithm.SHA256SUM);
-    characterScalarList.add(htdCharacterScalar57);
-
-    HashTestData<? extends Object> htdCharacterScalar58 = new HashTestData<Character>(
-       new Character((char)0x46),
-       "40d1c6bb7bed464e594804da93208967363c3f5fb1cc5998899f4de9ae847824622df0425b1c79e524df5ff75cd8fcb0",
-       HashAlgorithm.SHA384SUM);
-    characterScalarList.add(htdCharacterScalar58);
-
-    HashTestData<? extends Object> htdCharacterScalar59 = new HashTestData<Character>(
-       new Character((char)0x46),
-       "b4de823055d00bc12cd78fe1aaf74ee6062195b2629f49a25915a39c64be1900182e73be1a97cd2754ef4f2eb2ba42a8e1e952ea652d49bef5d87b363708dd9f",
-       HashAlgorithm.SHA512SUM);
-    characterScalarList.add(htdCharacterScalar59);
-
-    HashTestData<? extends Object> htdCharacterScalar60 = new HashTestData<Character>(
-       new Character((char)0x23),
-       "319ef1e811eff76cf85e5d8db0e79e55",
-       HashAlgorithm.MD5SUM);
-    characterScalarList.add(htdCharacterScalar60);
-
-    HashTestData<? extends Object> htdCharacterScalar61 = new HashTestData<Character>(
-       new Character((char)0x23),
-       "1b3ed51c2762e1a6e3630cf9017b40b880490ccb",
-       HashAlgorithm.SHA1SUM);
-    characterScalarList.add(htdCharacterScalar61);
-
-    HashTestData<? extends Object> htdCharacterScalar62 = new HashTestData<Character>(
-       new Character((char)0x23),
-       "43799a4d50e0cb19f37f6ce22b5cbcbf6954f13e9bb4604dca4104ae844374a4",
-       HashAlgorithm.SHA256SUM);
-    characterScalarList.add(htdCharacterScalar62);
-
-    HashTestData<? extends Object> htdCharacterScalar63 = new HashTestData<Character>(
-       new Character((char)0x23),
-       "a58240d9c21d9b3605fe679f379328e3bbf73ed7b8292396c189026256444ea6fc9c0993ea9beb482048ac662d22dad3",
-       HashAlgorithm.SHA384SUM);
-    characterScalarList.add(htdCharacterScalar63);
-
-    HashTestData<? extends Object> htdCharacterScalar64 = new HashTestData<Character>(
-       new Character((char)0x23),
-       "c9a6c7647397b538b487cfad8a06db1a42052652e0e9adae490e19965d786ec75b1d26fa3da2fa4c79d544b9f4c6b3759004aa99ac193e1a0a42df320d1ef71c",
-       HashAlgorithm.SHA512SUM);
-    characterScalarList.add(htdCharacterScalar64);
-
-    HashTestData<? extends Object> htdCharacterScalar65 = new HashTestData<Character>(
-       new Character((char)0x7e),
-       "d9597743233abcfa9332c376f0762b29",
-       HashAlgorithm.MD5SUM);
-    characterScalarList.add(htdCharacterScalar65);
-
-    HashTestData<? extends Object> htdCharacterScalar66 = new HashTestData<Character>(
-       new Character((char)0x7e),
-       "410100893e276b8bbb6c917fe8e60309d41bcf3d",
-       HashAlgorithm.SHA1SUM);
-    characterScalarList.add(htdCharacterScalar66);
-
-    HashTestData<? extends Object> htdCharacterScalar67 = new HashTestData<Character>(
-       new Character((char)0x7e),
-       "0d1abbe3b9da7a48d463edb0a844f3a102dcf7fdea35f9c771d885027b31b322",
-       HashAlgorithm.SHA256SUM);
-    characterScalarList.add(htdCharacterScalar67);
-
-    HashTestData<? extends Object> htdCharacterScalar68 = new HashTestData<Character>(
-       new Character((char)0x7e),
-       "2a40ba47817768e0e65b7942a3c1296180e2f6937853a5f74c0e5028aa4c9b9b1ed846cab2451b81400cc1adc2668a9a",
-       HashAlgorithm.SHA384SUM);
-    characterScalarList.add(htdCharacterScalar68);
-
-    HashTestData<? extends Object> htdCharacterScalar69 = new HashTestData<Character>(
-       new Character((char)0x7e),
-       "f08a7590ffa50860c2c045fd005404f5909275991729542df04d9e2d674277530f498540133d7f78d0ca514206ef7a4d4060f8101a2ce173f641cdf746ddb4a2",
-       HashAlgorithm.SHA512SUM);
-    characterScalarList.add(htdCharacterScalar69);
-
-    HashTestData<? extends Object> htdDoubleScalar70 = new HashTestData<Double>(
-       new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
-       "fa5ad9a8557e5a84cf23e52d3d3adf77",
-       HashAlgorithm.MD5SUM);
-    doubleScalarList.add(htdDoubleScalar70);
-
-    HashTestData<? extends Object> htdDoubleScalar71 = new HashTestData<Double>(
-       new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
-       "cb473678976f425d6ec1339838f11011007ad27d",
-       HashAlgorithm.SHA1SUM);
-    doubleScalarList.add(htdDoubleScalar71);
-
-    HashTestData<? extends Object> htdDoubleScalar72 = new HashTestData<Double>(
-       new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
-       "cd2662154e6d76b2b2b92e70c0cac3ccf534f9b74eb5b89819ec509083d00a50",
-       HashAlgorithm.SHA256SUM);
-    doubleScalarList.add(htdDoubleScalar72);
-
-    HashTestData<? extends Object> htdDoubleScalar73 = new HashTestData<Double>(
-       new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
-       "30f61d4b94e1d74e6a751248ff2007f715a16cd214365fcef3e5751664a568475eccd842d1396aa5cfa83f5b9d20c586",
-       HashAlgorithm.SHA384SUM);
-    doubleScalarList.add(htdDoubleScalar73);
-
-    HashTestData<? extends Object> htdDoubleScalar74 = new HashTestData<Double>(
-       new Double(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004940656458412465441765687928682213723650598026143247644255856825006755072702087518652998363616359923797965646954457177309266567103559397963987747960107818781263007131903114045278458171678489821036887186360569987307230500063874091535649843873124733972731696151400317153853980741262385655911710266585566867681870395603106249319452715914924553293054565444011274801297099995419319894090804165633245247571478690147267801593552386115501348035264934720193790268107107491703332226844753335720832431936092382893458368060106011506169809753078342277318329247904982524730776375927247874656084778203734469699533647017972677717585125660551199131504891101451037862738167250955837389733598993664809941164205702637090279242767544565229087538682506419718265533447265625D),
-       "df9c478c05321087b50a1d239b4aab290e9b793252758e706e24312aed21c29072285e436a20c3c6227f99b73638f0414fba5835586fee4e19231c1ec56d58ee",
-       HashAlgorithm.SHA512SUM);
-    doubleScalarList.add(htdDoubleScalar74);
-
-    HashTestData<? extends Object> htdDoubleScalar75 = new HashTestData<Double>(
-       new Double(-9082741083.082347869873046875D),
-       "dc7faa0a5bf8b674a3c4e1b5310dc1ba",
-       HashAlgorithm.MD5SUM);
-    doubleScalarList.add(htdDoubleScalar75);
-
-    HashTestData<? extends Object> htdDoubleScalar76 = new HashTestData<Double>(
-       new Double(-9082741083.082347869873046875D),
-       "c1dd4e92a9d3d7fa37e63eeefca6e860be95b267",
-       HashAlgorithm.SHA1SUM);
-    doubleScalarList.add(htdDoubleScalar76);
-
-    HashTestData<? extends Object> htdDoubleScalar77 = new HashTestData<Double>(
-       new Double(-9082741083.082347869873046875D),
-       "3df1fd4a93261d17725ac8de0bb2ebd696aff3128f5d2dd50056c668dd85602f",
-       HashAlgorithm.SHA256SUM);
-    doubleScalarList.add(htdDoubleScalar77);
-
-    HashTestData<? extends Object> htdDoubleScalar78 = new HashTestData<Double>(
-       new Double(-9082741083.082347869873046875D),
-       "53f499c6caeb86e4eee58502739f2211f548b2489f239254eccb3620f62f9df42bd75d08b948dbe3a5ca58e26d74bd8b",
-       HashAlgorithm.SHA384SUM);
-    doubleScalarList.add(htdDoubleScalar78);
-
-    HashTestData<? extends Object> htdDoubleScalar79 = new HashTestData<Double>(
-       new Double(-9082741083.082347869873046875D),
-       "cde564e5ac0d45ff2cd18b9e3cd4966055147ac515eac88f291cdfc8bcf306d0f6c2ae96986538ed2b1fc63febd82f2911504908cb291c0c8492866bda36ee94",
-       HashAlgorithm.SHA512SUM);
-    doubleScalarList.add(htdDoubleScalar79);
-
-    HashTestData<? extends Object> htdDoubleScalar80 = new HashTestData<Double>(
-       new Double(0D),
-       "7dea362b3fac8e00956a4952a3d4f474",
-       HashAlgorithm.MD5SUM);
-    doubleScalarList.add(htdDoubleScalar80);
-
-    HashTestData<? extends Object> htdDoubleScalar81 = new HashTestData<Double>(
-       new Double(0D),
-       "05fe405753166f125559e7c9ac558654f107c7e9",
-       HashAlgorithm.SHA1SUM);
-    doubleScalarList.add(htdDoubleScalar81);
-
-    HashTestData<? extends Object> htdDoubleScalar82 = new HashTestData<Double>(
-       new Double(0D),
-       "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
-       HashAlgorithm.SHA256SUM);
-    doubleScalarList.add(htdDoubleScalar82);
-
-    HashTestData<? extends Object> htdDoubleScalar83 = new HashTestData<Double>(
-       new Double(0D),
-       "7c2db09d310ece0b36d50c86e4c3e6641684948cd6fc03262b0d0ed91a6cfbc3cd5affd396c1f85fd0a109b103364b19",
-       HashAlgorithm.SHA384SUM);
-    doubleScalarList.add(htdDoubleScalar83);
-
-    HashTestData<? extends Object> htdDoubleScalar84 = new HashTestData<Double>(
-       new Double(0D),
-       "1b7409ccf0d5a34d3a77eaabfa9fe27427655be9297127ee9522aa1bf4046d4f945983678169cb1a7348edcac47ef0d9e2c924130e5bcc5f0d94937852c42f1b",
-       HashAlgorithm.SHA512SUM);
-    doubleScalarList.add(htdDoubleScalar84);
-
-    HashTestData<? extends Object> htdDoubleScalar85 = new HashTestData<Double>(
-       new Double(2340823.987567239440977573394775390625D),
-       "8ab253d62f66616e56db1aaab36dfa20",
-       HashAlgorithm.MD5SUM);
-    doubleScalarList.add(htdDoubleScalar85);
-
-    HashTestData<? extends Object> htdDoubleScalar86 = new HashTestData<Double>(
-       new Double(2340823.987567239440977573394775390625D),
-       "60946c8abe83f1c8b821ae4778d5f20d0f74af47",
-       HashAlgorithm.SHA1SUM);
-    doubleScalarList.add(htdDoubleScalar86);
-
-    HashTestData<? extends Object> htdDoubleScalar87 = new HashTestData<Double>(
-       new Double(2340823.987567239440977573394775390625D),
-       "483796405e84729b3d69c31d1f26169fcac8f879a208fe8632dc6b07bde6dec2",
-       HashAlgorithm.SHA256SUM);
-    doubleScalarList.add(htdDoubleScalar87);
-
-    HashTestData<? extends Object> htdDoubleScalar88 = new HashTestData<Double>(
-       new Double(2340823.987567239440977573394775390625D),
-       "643cb86c20dc8188440310107bd5aa00e068d95a8ad57000511e557d8eccd0ca683ea56ee367a6b5623b9750dd929040",
-       HashAlgorithm.SHA384SUM);
-    doubleScalarList.add(htdDoubleScalar88);
-
-    HashTestData<? extends Object> htdDoubleScalar89 = new HashTestData<Double>(
-       new Double(2340823.987567239440977573394775390625D),
-       "96a8470592598bccc51b87b667cf83809ab02a985484dfffa9f323220890fcb666aa8788f97e4eb3a7121482e77c97a4d6d2b231bc3505dc5111af2970321711",
-       HashAlgorithm.SHA512SUM);
-    doubleScalarList.add(htdDoubleScalar89);
-
-    HashTestData<? extends Object> htdDoubleScalar90 = new HashTestData<Double>(
-       new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
-       "5801bdc2d76b6ea9b7091a5026caf731",
-       HashAlgorithm.MD5SUM);
-    doubleScalarList.add(htdDoubleScalar90);
-
-    HashTestData<? extends Object> htdDoubleScalar91 = new HashTestData<Double>(
-       new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
-       "de1e67a299928343dd050a52fde96feb3f1f3028",
-       HashAlgorithm.SHA1SUM);
-    doubleScalarList.add(htdDoubleScalar91);
-
-    HashTestData<? extends Object> htdDoubleScalar92 = new HashTestData<Double>(
-       new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
-       "88dc7b5696598bb5bb3b0a3100300db6fa58d87cac4cee380462588cf04b9015",
-       HashAlgorithm.SHA256SUM);
-    doubleScalarList.add(htdDoubleScalar92);
-
-    HashTestData<? extends Object> htdDoubleScalar93 = new HashTestData<Double>(
-       new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
-       "0e085d3e63f1e57034cbf71da947eecba416699d4e9f706fcddf85b310523a95049053aa684c927c82fb684fdf932b86",
-       HashAlgorithm.SHA384SUM);
-    doubleScalarList.add(htdDoubleScalar93);
-
-    HashTestData<? extends Object> htdDoubleScalar94 = new HashTestData<Double>(
-       new Double(179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368D),
-       "526471b4812bebe071cd31917871e6ab85f14614e70ddd8f0b3fba5b20c494bfad238df229b83fb9610e44cc316c3e7d9f681c9ec5d89e11096b329772dab8de",
-       HashAlgorithm.SHA512SUM);
-    doubleScalarList.add(htdDoubleScalar94);
-
-    HashTestData<? extends Object> htdFloatScalar95 = new HashTestData<Float>(
-       new Float(0.0000000000000000000000000000000000000000000014F),
-       "f1450306517624a57eafbbf8ed995985",
-       HashAlgorithm.MD5SUM);
-    floatScalarList.add(htdFloatScalar95);
-
-    HashTestData<? extends Object> htdFloatScalar96 = new HashTestData<Float>(
-       new Float(0.0000000000000000000000000000000000000000000014F),
-       "479e04f3d12d112b5c04c9ee67e4b1e6e201ea4e",
-       HashAlgorithm.SHA1SUM);
-    floatScalarList.add(htdFloatScalar96);
-
-    HashTestData<? extends Object> htdFloatScalar97 = new HashTestData<Float>(
-       new Float(0.0000000000000000000000000000000000000000000014F),
-       "b40711a88c7039756fb8a73827eabe2c0fe5a0346ca7e0a104adc0fc764f528d",
-       HashAlgorithm.SHA256SUM);
-    floatScalarList.add(htdFloatScalar97);
-
-    HashTestData<? extends Object> htdFloatScalar98 = new HashTestData<Float>(
-       new Float(0.0000000000000000000000000000000000000000000014F),
-       "14d0dce7a18d3ff1fb2d2d575d0d0137a9f6a5b12eb046887bd46e94e0f615adfce9f086700c27ed4feceb5da50cc162",
-       HashAlgorithm.SHA384SUM);
-    floatScalarList.add(htdFloatScalar98);
-
-    HashTestData<? extends Object> htdFloatScalar99 = new HashTestData<Float>(
-       new Float(0.0000000000000000000000000000000000000000000014F),
-       "57c365278e08f99674dd24f08425b17c71b0511dea3b5ffa474deeb26d64cb993ebda4650583b29cba6307d7f4dbb42ca11b093de2b8ecab16ff52445401facf",
-       HashAlgorithm.SHA512SUM);
-    floatScalarList.add(htdFloatScalar99);
-
-    HashTestData<? extends Object> htdFloatScalar100 = new HashTestData<Float>(
-       new Float(-234.72346F),
-       "94937552c204754f10ebeedaf526a2c2",
-       HashAlgorithm.MD5SUM);
-    floatScalarList.add(htdFloatScalar100);
-
-    HashTestData<? extends Object> htdFloatScalar101 = new HashTestData<Float>(
-       new Float(-234.72346F),
-       "a18736c490eb0a515288b52f13f16bc95e836ce1",
-       HashAlgorithm.SHA1SUM);
-    floatScalarList.add(htdFloatScalar101);
-
-    HashTestData<? extends Object> htdFloatScalar102 = new HashTestData<Float>(
-       new Float(-234.72346F),
-       "99e6966e86d37fcc84a3c84b1a91ed9700a9322c85ea358556e9b84f5a5a1777",
-       HashAlgorithm.SHA256SUM);
-    floatScalarList.add(htdFloatScalar102);
-
-    HashTestData<? extends Object> htdFloatScalar103 = new HashTestData<Float>(
-       new Float(-234.72346F),
-       "582072ceb705186aaf1062b30ca4d06b73cedc0a60dc4bd1ae439d6c8d2e7cb5d70c63c63b92b5d9091a4dcbdb46598b",
-       HashAlgorithm.SHA384SUM);
-    floatScalarList.add(htdFloatScalar103);
-
-    HashTestData<? extends Object> htdFloatScalar104 = new HashTestData<Float>(
-       new Float(-234.72346F),
-       "5d8b5ab07a368b21d4217a8c541c3400961df4fef763702fea9445db601d3f615376da8e5862a552a650fbef92ee792ba98ba1788c5d7bf2012385314d95cf25",
-       HashAlgorithm.SHA512SUM);
-    floatScalarList.add(htdFloatScalar104);
-
-    HashTestData<? extends Object> htdFloatScalar105 = new HashTestData<Float>(
-       new Float(0.0F),
-       "f1d3ff8443297732862df21dc4e57262",
-       HashAlgorithm.MD5SUM);
-    floatScalarList.add(htdFloatScalar105);
-
-    HashTestData<? extends Object> htdFloatScalar106 = new HashTestData<Float>(
-       new Float(0.0F),
-       "9069ca78e7450a285173431b3e52c5c25299e473",
-       HashAlgorithm.SHA1SUM);
-    floatScalarList.add(htdFloatScalar106);
-
-    HashTestData<? extends Object> htdFloatScalar107 = new HashTestData<Float>(
-       new Float(0.0F),
-       "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
-       HashAlgorithm.SHA256SUM);
-    floatScalarList.add(htdFloatScalar107);
-
-    HashTestData<? extends Object> htdFloatScalar108 = new HashTestData<Float>(
-       new Float(0.0F),
-       "394341b7182cd227c5c6b07ef8000cdfd86136c4292b8e576573ad7ed9ae41019f5818b4b971c9effc60e1ad9f1289f0",
-       HashAlgorithm.SHA384SUM);
-    floatScalarList.add(htdFloatScalar108);
-
-    HashTestData<? extends Object> htdFloatScalar109 = new HashTestData<Float>(
-       new Float(0.0F),
-       "ec2d57691d9b2d40182ac565032054b7d784ba96b18bcb5be0bb4e70e3fb041eff582c8af66ee50256539f2181d7f9e53627c0189da7e75a4d5ef10ea93b20b3",
-       HashAlgorithm.SHA512SUM);
-    floatScalarList.add(htdFloatScalar109);
-
-    HashTestData<? extends Object> htdFloatScalar110 = new HashTestData<Float>(
-       new Float(232864336F),
-       "2fb5625c3ce85f4eb455922e58f6ee00",
-       HashAlgorithm.MD5SUM);
-    floatScalarList.add(htdFloatScalar110);
-
-    HashTestData<? extends Object> htdFloatScalar111 = new HashTestData<Float>(
-       new Float(232864336F),
-       "f040bce0098f185bfdf7e5d88bc8672c6221efb9",
-       HashAlgorithm.SHA1SUM);
-    floatScalarList.add(htdFloatScalar111);
-
-    HashTestData<? extends Object> htdFloatScalar112 = new HashTestData<Float>(
-       new Float(232864336F),
-       "7d1cb40ede9f14400187af650e6e893fcb6ad0f6441d0b86aa2e7e546209c2c1",
-       HashAlgorithm.SHA256SUM);
-    floatScalarList.add(htdFloatScalar112);
-
-    HashTestData<? extends Object> htdFloatScalar113 = new HashTestData<Float>(
-       new Float(232864336F),
-       "92e993e2a75940bffbb822c7b1a6b3de824c5745098d95066903f72bf09ba201f9e2dc087343bdc1b943d1f0c22ac938",
-       HashAlgorithm.SHA384SUM);
-    floatScalarList.add(htdFloatScalar113);
-
-    HashTestData<? extends Object> htdFloatScalar114 = new HashTestData<Float>(
-       new Float(232864336F),
-       "d2ff719782d4fd0c4269a18dffbff2b757092370e4f2cdad5f966b2f7bdd70cf89fe0d42255fa903927a6beeaa1d9487c1d8d462bb9f7dd58710257bf8986183",
-       HashAlgorithm.SHA512SUM);
-    floatScalarList.add(htdFloatScalar114);
-
-    HashTestData<? extends Object> htdFloatScalar115 = new HashTestData<Float>(
-       new Float(340282350000000000000000000000000000000F),
-       "8a18aeed5caff58aa370b52e36dcbc3f",
-       HashAlgorithm.MD5SUM);
-    floatScalarList.add(htdFloatScalar115);
-
-    HashTestData<? extends Object> htdFloatScalar116 = new HashTestData<Float>(
-       new Float(340282350000000000000000000000000000000F),
-       "26ae45cabd7d1bd5ea3d6511d0fdbf5f196f8ad5",
-       HashAlgorithm.SHA1SUM);
-    floatScalarList.add(htdFloatScalar116);
-
-    HashTestData<? extends Object> htdFloatScalar117 = new HashTestData<Float>(
-       new Float(340282350000000000000000000000000000000F),
-       "dde5bcff31e3b2e6085239af1da9827447d0705e8500092ab6bdf699d819c231",
-       HashAlgorithm.SHA256SUM);
-    floatScalarList.add(htdFloatScalar117);
-
-    HashTestData<? extends Object> htdFloatScalar118 = new HashTestData<Float>(
-       new Float(340282350000000000000000000000000000000F),
-       "abcb3e56775ccb74b66bea7c00e18dbffae54f4d4a3ca2bb7707694a289575b0f9c18624724c4372e4b778f56cf3824f",
-       HashAlgorithm.SHA384SUM);
-    floatScalarList.add(htdFloatScalar118);
-
-    HashTestData<? extends Object> htdFloatScalar119 = new HashTestData<Float>(
-       new Float(340282350000000000000000000000000000000F),
-       "6a1319fcbf8e4c0150d8d12ef4a76e3aa75a14da4aa0838dbe564f64b01bf6c037f40787d2ebf837843f7489d07f1704d9f9b43c74dec3b15dfc0ccf9c77be4b",
-       HashAlgorithm.SHA512SUM);
-    floatScalarList.add(htdFloatScalar119);
-
-    HashTestData<? extends Object> htdIntegerScalar120 = new HashTestData<Integer>(
-       new Integer(-2147483648),
-       "b879f7666e5b73c7de7ebc4032b52f70",
-       HashAlgorithm.MD5SUM);
-    integerScalarList.add(htdIntegerScalar120);
-
-    HashTestData<? extends Object> htdIntegerScalar121 = new HashTestData<Integer>(
-       new Integer(-2147483648),
-       "e1798367d1b1ed54425e99f790a986c1fe939414",
-       HashAlgorithm.SHA1SUM);
-    integerScalarList.add(htdIntegerScalar121);
-
-    HashTestData<? extends Object> htdIntegerScalar122 = new HashTestData<Integer>(
-       new Integer(-2147483648),
-       "50c8ba3a6170f0a2fb6736ece8a603576ef6309a35e810911599bc6211b554a9",
-       HashAlgorithm.SHA256SUM);
-    integerScalarList.add(htdIntegerScalar122);
-
-    HashTestData<? extends Object> htdIntegerScalar123 = new HashTestData<Integer>(
-       new Integer(-2147483648),
-       "f73a245ff6d0800421050e6281160c5d74919caebfc86d02e11bcdc2a60ec391fa9c3a9e688c820ec83abbd258ddafd7",
-       HashAlgorithm.SHA384SUM);
-    integerScalarList.add(htdIntegerScalar123);
-
-    HashTestData<? extends Object> htdIntegerScalar124 = new HashTestData<Integer>(
-       new Integer(-2147483648),
-       "df45732659aad83aae5edfc59bab32796c708eb61e9be97ab94abbf7616d9b3a36fba7c84aedcfe1857b54edb41e169b1959d7d7d69d8349a38d516947172ce0",
-       HashAlgorithm.SHA512SUM);
-    integerScalarList.add(htdIntegerScalar124);
-
-    HashTestData<? extends Object> htdIntegerScalar125 = new HashTestData<Integer>(
-       new Integer(-256),
-       "ec106a8574ce7e60014e79363c9e6a2b",
-       HashAlgorithm.MD5SUM);
-    integerScalarList.add(htdIntegerScalar125);
-
-    HashTestData<? extends Object> htdIntegerScalar126 = new HashTestData<Integer>(
-       new Integer(-256),
-       "04336836571352041fc1a2dda7cc73d3d23c4c57",
-       HashAlgorithm.SHA1SUM);
-    integerScalarList.add(htdIntegerScalar126);
-
-    HashTestData<? extends Object> htdIntegerScalar127 = new HashTestData<Integer>(
-       new Integer(-256),
-       "6fc6f4524161c3ae0d316812d7088e3fcd372023edaea2d7821093be40ae1060",
-       HashAlgorithm.SHA256SUM);
-    integerScalarList.add(htdIntegerScalar127);
-
-    HashTestData<? extends Object> htdIntegerScalar128 = new HashTestData<Integer>(
-       new Integer(-256),
-       "801b6ed11c4e6a3c000c0f72626f4f90e6fcc9427cf09cc30a64b2593c052d022ff1fbfb64c17a6d6e94a1c55b80b23c",
-       HashAlgorithm.SHA384SUM);
-    integerScalarList.add(htdIntegerScalar128);
-
-    HashTestData<? extends Object> htdIntegerScalar129 = new HashTestData<Integer>(
-       new Integer(-256),
-       "bf5b46831db754c12cb535378d5e99ffa432bccf91b22d5c071ebb4ed7601b9fb237ac18913a2443e36c8341cda59a468055163ed90a4f2e46575149388213f2",
-       HashAlgorithm.SHA512SUM);
-    integerScalarList.add(htdIntegerScalar129);
-
-    HashTestData<? extends Object> htdIntegerScalar130 = new HashTestData<Integer>(
-       new Integer(0),
-       "f1d3ff8443297732862df21dc4e57262",
-       HashAlgorithm.MD5SUM);
-    integerScalarList.add(htdIntegerScalar130);
-
-    HashTestData<? extends Object> htdIntegerScalar131 = new HashTestData<Integer>(
-       new Integer(0),
-       "9069ca78e7450a285173431b3e52c5c25299e473",
-       HashAlgorithm.SHA1SUM);
-    integerScalarList.add(htdIntegerScalar131);
-
-    HashTestData<? extends Object> htdIntegerScalar132 = new HashTestData<Integer>(
-       new Integer(0),
-       "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
-       HashAlgorithm.SHA256SUM);
-    integerScalarList.add(htdIntegerScalar132);
-
-    HashTestData<? extends Object> htdIntegerScalar133 = new HashTestData<Integer>(
-       new Integer(0),
-       "394341b7182cd227c5c6b07ef8000cdfd86136c4292b8e576573ad7ed9ae41019f5818b4b971c9effc60e1ad9f1289f0",
-       HashAlgorithm.SHA384SUM);
-    integerScalarList.add(htdIntegerScalar133);
-
-    HashTestData<? extends Object> htdIntegerScalar134 = new HashTestData<Integer>(
-       new Integer(0),
-       "ec2d57691d9b2d40182ac565032054b7d784ba96b18bcb5be0bb4e70e3fb041eff582c8af66ee50256539f2181d7f9e53627c0189da7e75a4d5ef10ea93b20b3",
-       HashAlgorithm.SHA512SUM);
-    integerScalarList.add(htdIntegerScalar134);
-
-    HashTestData<? extends Object> htdIntegerScalar135 = new HashTestData<Integer>(
-       new Integer(191867248),
-       "2f89c71363913e17de4f22e0e98b734b",
-       HashAlgorithm.MD5SUM);
-    integerScalarList.add(htdIntegerScalar135);
-
-    HashTestData<? extends Object> htdIntegerScalar136 = new HashTestData<Integer>(
-       new Integer(191867248),
-       "82831ff840c298fc2b30b12c3da184a59534d72f",
-       HashAlgorithm.SHA1SUM);
-    integerScalarList.add(htdIntegerScalar136);
-
-    HashTestData<? extends Object> htdIntegerScalar137 = new HashTestData<Integer>(
-       new Integer(191867248),
-       "adba58157aac85217c63c5474e5cf01c3945e205c0db70b0e052121cd13e321b",
-       HashAlgorithm.SHA256SUM);
-    integerScalarList.add(htdIntegerScalar137);
-
-    HashTestData<? extends Object> htdIntegerScalar138 = new HashTestData<Integer>(
-       new Integer(191867248),
-       "8857c706444d30f5760b5e77abec54b0ce369a9cbdd150dde82d964e312771adccfaec2ae27d68f5bbbe3e7eb590491e",
-       HashAlgorithm.SHA384SUM);
-    integerScalarList.add(htdIntegerScalar138);
-
-    HashTestData<? extends Object> htdIntegerScalar139 = new HashTestData<Integer>(
-       new Integer(191867248),
-       "a2e602e9ddf65216af4cf5d7b898fd61f223d030338a9acca316b7bfd344decf98c090ceb49c0f7663d723ccce510fc38fd3e1bba94e5466e8de729cffd41b6a",
-       HashAlgorithm.SHA512SUM);
-    integerScalarList.add(htdIntegerScalar139);
-
-    HashTestData<? extends Object> htdIntegerScalar140 = new HashTestData<Integer>(
-       new Integer(2147483647),
-       "37497ad6a0c4f123cd1a39278afc6869",
-       HashAlgorithm.MD5SUM);
-    integerScalarList.add(htdIntegerScalar140);
-
-    HashTestData<? extends Object> htdIntegerScalar141 = new HashTestData<Integer>(
-       new Integer(2147483647),
-       "6c28217eecdb75ac5378d20243029696f5e633a1",
-       HashAlgorithm.SHA1SUM);
-    integerScalarList.add(htdIntegerScalar141);
-
-    HashTestData<? extends Object> htdIntegerScalar142 = new HashTestData<Integer>(
-       new Integer(2147483647),
-       "24ae0d93f1af72addc019182fae1ab44547a1e84758785745f4358373eab1960",
-       HashAlgorithm.SHA256SUM);
-    integerScalarList.add(htdIntegerScalar142);
-
-    HashTestData<? extends Object> htdIntegerScalar143 = new HashTestData<Integer>(
-       new Integer(2147483647),
-       "75d155cd3e36b9c5c385002cf4953ae2e044e0f2012d01010be8ac8f30a092b5d893506394767cb02ff0613eb613c2e6",
-       HashAlgorithm.SHA384SUM);
-    integerScalarList.add(htdIntegerScalar143);
-
-    HashTestData<? extends Object> htdIntegerScalar144 = new HashTestData<Integer>(
-       new Integer(2147483647),
-       "645df4e5231da736306efcda918a07c530c97bcc51f7eceb297b8396214c3036a9d08f70e44637ca8558597ca61d59e89f99583004dddcc2b01854b2a0e0566e",
-       HashAlgorithm.SHA512SUM);
-    integerScalarList.add(htdIntegerScalar144);
-
-    HashTestData<? extends Object> htdLongScalar145 = new HashTestData<Long>(
-       new Long(-9223372036854775808L),
-       "54409ea540dc450d53a86133d867c772",
-       HashAlgorithm.MD5SUM);
-    longScalarList.add(htdLongScalar145);
-
-    HashTestData<? extends Object> htdLongScalar146 = new HashTestData<Long>(
-       new Long(-9223372036854775808L),
-       "e19f8c6041fd6c4202c739fa01baf61235724b1e",
-       HashAlgorithm.SHA1SUM);
-    longScalarList.add(htdLongScalar146);
-
-    HashTestData<? extends Object> htdLongScalar147 = new HashTestData<Long>(
-       new Long(-9223372036854775808L),
-       "b1b0bee5378188f5250138bcce25855f2617f9c55b20b9628e13d367c47404a9",
-       HashAlgorithm.SHA256SUM);
-    longScalarList.add(htdLongScalar147);
-
-    HashTestData<? extends Object> htdLongScalar148 = new HashTestData<Long>(
-       new Long(-9223372036854775808L),
-       "f10c2ce06a3ba0b7944e8bcfb4d3f3ef03ab131a5e5ca3fa2c306ab76e7f5eab3005e3e9d0ad72a26d4360fb7eb11798",
-       HashAlgorithm.SHA384SUM);
-    longScalarList.add(htdLongScalar148);
-
-    HashTestData<? extends Object> htdLongScalar149 = new HashTestData<Long>(
-       new Long(-9223372036854775808L),
-       "268c793058acb875e8eb1e613aff64ef78487ab8bb95baa2877647a3f7c1a326f8db76c51c19c05fbe428a75ff93edd077089d6f1bac26b1af2764f0f9783149",
-       HashAlgorithm.SHA512SUM);
-    longScalarList.add(htdLongScalar149);
-
-    HashTestData<? extends Object> htdLongScalar150 = new HashTestData<Long>(
-       new Long(-36028797018963968L),
-       "8c64b2b91eaedcae7dfda9b43ca4f62b",
-       HashAlgorithm.MD5SUM);
-    longScalarList.add(htdLongScalar150);
-
-    HashTestData<? extends Object> htdLongScalar151 = new HashTestData<Long>(
-       new Long(-36028797018963968L),
-       "101201ec9be0c94da1aabacf9050452d531db7b6",
-       HashAlgorithm.SHA1SUM);
-    longScalarList.add(htdLongScalar151);
-
-    HashTestData<? extends Object> htdLongScalar152 = new HashTestData<Long>(
-       new Long(-36028797018963968L),
-       "006ce6768bf58dcecb91e0b0957b7e71adbb24e2fafd6e0762fc3b51daae8c65",
-       HashAlgorithm.SHA256SUM);
-    longScalarList.add(htdLongScalar152);
-
-    HashTestData<? extends Object> htdLongScalar153 = new HashTestData<Long>(
-       new Long(-36028797018963968L),
-       "8963d18e89e6463da925a55e1508cfe020e7d1f6b38ee2331e4ad2795ce4f9a8b48a005d85c820ee3db7f150dbe869c7",
-       HashAlgorithm.SHA384SUM);
-    longScalarList.add(htdLongScalar153);
-
-    HashTestData<? extends Object> htdLongScalar154 = new HashTestData<Long>(
-       new Long(-36028797018963968L),
-       "46db6a85707d1394778a41b054941701e3cfd93ec390fe7f156565d916981ca1dfe9d3dbbe1c2f380881c96aa1b9f2bbe6b567303c6fa3633ca0431df3ba81a9",
-       HashAlgorithm.SHA512SUM);
-    longScalarList.add(htdLongScalar154);
-
-    HashTestData<? extends Object> htdLongScalar155 = new HashTestData<Long>(
-       new Long(0L),
-       "7dea362b3fac8e00956a4952a3d4f474",
-       HashAlgorithm.MD5SUM);
-    longScalarList.add(htdLongScalar155);
-
-    HashTestData<? extends Object> htdLongScalar156 = new HashTestData<Long>(
-       new Long(0L),
-       "05fe405753166f125559e7c9ac558654f107c7e9",
-       HashAlgorithm.SHA1SUM);
-    longScalarList.add(htdLongScalar156);
-
-    HashTestData<? extends Object> htdLongScalar157 = new HashTestData<Long>(
-       new Long(0L),
-       "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
-       HashAlgorithm.SHA256SUM);
-    longScalarList.add(htdLongScalar157);
-
-    HashTestData<? extends Object> htdLongScalar158 = new HashTestData<Long>(
-       new Long(0L),
-       "7c2db09d310ece0b36d50c86e4c3e6641684948cd6fc03262b0d0ed91a6cfbc3cd5affd396c1f85fd0a109b103364b19",
-       HashAlgorithm.SHA384SUM);
-    longScalarList.add(htdLongScalar158);
-
-    HashTestData<? extends Object> htdLongScalar159 = new HashTestData<Long>(
-       new Long(0L),
-       "1b7409ccf0d5a34d3a77eaabfa9fe27427655be9297127ee9522aa1bf4046d4f945983678169cb1a7348edcac47ef0d9e2c924130e5bcc5f0d94937852c42f1b",
-       HashAlgorithm.SHA512SUM);
-    longScalarList.add(htdLongScalar159);
-
-    HashTestData<? extends Object> htdLongScalar160 = new HashTestData<Long>(
-       new Long(2305843009213693952L),
-       "beb49121e6b2d95eb429c1641ae31f64",
-       HashAlgorithm.MD5SUM);
-    longScalarList.add(htdLongScalar160);
-
-    HashTestData<? extends Object> htdLongScalar161 = new HashTestData<Long>(
-       new Long(2305843009213693952L),
-       "0aa60933f90adb707f898d201ff9ec9abf6cb156",
-       HashAlgorithm.SHA1SUM);
-    longScalarList.add(htdLongScalar161);
-
-    HashTestData<? extends Object> htdLongScalar162 = new HashTestData<Long>(
-       new Long(2305843009213693952L),
-       "9d4ac218fb54041e3a70a8e14db1ea1af9f570f4842b4702ef9323f1ad8f0ec4",
-       HashAlgorithm.SHA256SUM);
-    longScalarList.add(htdLongScalar162);
-
-    HashTestData<? extends Object> htdLongScalar163 = new HashTestData<Long>(
-       new Long(2305843009213693952L),
-       "222060d2f13d5736702c122971e7aef8b1417c704014fe161a08da9a94bb563c248aeb06b35a48334c82a156997574da",
-       HashAlgorithm.SHA384SUM);
-    longScalarList.add(htdLongScalar163);
-
-    HashTestData<? extends Object> htdLongScalar164 = new HashTestData<Long>(
-       new Long(2305843009213693952L),
-       "52b0c754e4d2e495544ddfea552df85fb3127fcf6e54f7aacb57e3e6a20be5821d8e707eedb2c22b39b3222ff489d289c9ffb3a85ff8fd6f645a86c8a5a2b1ec",
-       HashAlgorithm.SHA512SUM);
-    longScalarList.add(htdLongScalar164);
-
-    HashTestData<? extends Object> htdLongScalar165 = new HashTestData<Long>(
-       new Long(9223372036854775807L),
-       "bd5f6598b2d2cd7f130ba3e152116ff7",
-       HashAlgorithm.MD5SUM);
-    longScalarList.add(htdLongScalar165);
-
-    HashTestData<? extends Object> htdLongScalar166 = new HashTestData<Long>(
-       new Long(9223372036854775807L),
-       "bf7f9f8d6e0a3426aef3f0ce773e69e85821efc7",
-       HashAlgorithm.SHA1SUM);
-    longScalarList.add(htdLongScalar166);
-
-    HashTestData<? extends Object> htdLongScalar167 = new HashTestData<Long>(
-       new Long(9223372036854775807L),
-       "c624eebf5b9282431fc4e19c3c707a012275e198d3a077dcd36a7b74e4a804ad",
-       HashAlgorithm.SHA256SUM);
-    longScalarList.add(htdLongScalar167);
-
-    HashTestData<? extends Object> htdLongScalar168 = new HashTestData<Long>(
-       new Long(9223372036854775807L),
-       "ddfe5a9e0659c196434c9d1b8a098cda10c8ce89d4c160374cf781847a5b143d4ab889651516e201cd89f2d5416afbda",
-       HashAlgorithm.SHA384SUM);
-    longScalarList.add(htdLongScalar168);
-
-    HashTestData<? extends Object> htdLongScalar169 = new HashTestData<Long>(
-       new Long(9223372036854775807L),
-       "f48eaadddca1083f42f340f4ad0ab5bf7e50d9f7b6fec01807e12cef9bb0c014506c6393155095bf4ea4963f409b8db58fb17f0f2c5887824b53aa7cc69dc8b3",
-       HashAlgorithm.SHA512SUM);
-    longScalarList.add(htdLongScalar169);
-
-    HashTestDataList<? extends Object> htdShortArray170 = new HashTestDataList<Short>(
-       Arrays.asList(new Short[] {(short)-32768, (short)32767}),
-       "6758381fb0556eded523a9831775508f",
-       HashAlgorithm.MD5SUM);
-    shortArrayList.add(htdShortArray170);
-
-    HashTestDataList<? extends Object> htdShortArray171 = new HashTestDataList<Short>(
-       Arrays.asList(new Short[] {(short)-32768, (short)32767}),
-       "0d2672d04bb9914980b17d25546d13cbc4a5ff60",
-       HashAlgorithm.SHA1SUM);
-    shortArrayList.add(htdShortArray171);
-
-    HashTestDataList<? extends Object> htdShortArray172 = new HashTestDataList<Short>(
-       Arrays.asList(new Short[] {(short)-32768, (short)32767}),
-       "a1b5fba9e77302abab810e15fa3270268f11f465aef1c6b08a1b15401e7354ff",
-       HashAlgorithm.SHA256SUM);
-    shortArrayList.add(htdShortArray172);
-
-    HashTestDataList<? extends Object> htdShortArray173 = new HashTestDataList<Short>(
-       Arrays.asList(new Short[] {(short)-32768, (short)32767}),
-       "2eea3fa8c5433d25742a9acbdadd73d698a1b9445575b91a0b000fa379ba0011bbe2bdfa1ef9462b794bce6904723d95",
-       HashAlgorithm.SHA384SUM);
-    shortArrayList.add(htdShortArray173);
-
-    HashTestDataList<? extends Object> htdShortArray174 = new HashTestDataList<Short>(
-       Arrays.asList(new Short[] {(short)-32768, (short)32767}),
-       "36ebf989c342ca4f5b018a83fe88983d8bc49b86639ce655ecfa6452d1085a76059973b6efa38fdc3484ae0d4613dacfaa228bf7ff285a1e4f5838b85db69791",
-       HashAlgorithm.SHA512SUM);
-    shortArrayList.add(htdShortArray174);
-
-    HashTestData<? extends Object> htdShortScalar175 = new HashTestData<Short>(
-       new Short((short)-32768),
-       "fc609b43cb8595a9a832cbc2591ed83a",
-       HashAlgorithm.MD5SUM);
-    shortScalarList.add(htdShortScalar175);
-
-    HashTestData<? extends Object> htdShortScalar176 = new HashTestData<Short>(
-       new Short((short)-32768),
-       "62439f3a4ecafdb281b9fcbfeda62bcb70d11b1e",
-       HashAlgorithm.SHA1SUM);
-    shortScalarList.add(htdShortScalar176);
-
-    HashTestData<? extends Object> htdShortScalar177 = new HashTestData<Short>(
-       new Short((short)-32768),
-       "8509b81230019d2ad970d970f791dfbdc8caf54f5c594fcd327cef9feed206c1",
-       HashAlgorithm.SHA256SUM);
-    shortScalarList.add(htdShortScalar177);
-
-    HashTestData<? extends Object> htdShortScalar178 = new HashTestData<Short>(
-       new Short((short)-32768),
-       "29235c2fee6c8ef1a7cc772d557258f17a10a7ba3051dd1406f7c8391ac32614d305151b551ca53a3779ed7fd3d9f672",
-       HashAlgorithm.SHA384SUM);
-    shortScalarList.add(htdShortScalar178);
-
-    HashTestData<? extends Object> htdShortScalar179 = new HashTestData<Short>(
-       new Short((short)-32768),
-       "680f1814dfb81bbb8e376ce1f71b502a1051d55200874a737eae8cf918cf1db5f5276c1eeca7357161c21852ee8cc9d951c0f837f6a5c435505227496cdf6215",
-       HashAlgorithm.SHA512SUM);
-    shortScalarList.add(htdShortScalar179);
-
-    HashTestData<? extends Object> htdShortScalar180 = new HashTestData<Short>(
-       new Short((short)-647),
-       "a46bf4a8432d0e44b5781ace34b4d2f0",
-       HashAlgorithm.MD5SUM);
-    shortScalarList.add(htdShortScalar180);
-
-    HashTestData<? extends Object> htdShortScalar181 = new HashTestData<Short>(
-       new Short((short)-647),
-       "c6cc7667dfd9577caf720144c53dd6fdde6f8a5e",
-       HashAlgorithm.SHA1SUM);
-    shortScalarList.add(htdShortScalar181);
-
-    HashTestData<? extends Object> htdShortScalar182 = new HashTestData<Short>(
-       new Short((short)-647),
-       "875a84d2628abfbe1b34c40f1a211005c32953a86537522a49bb1e581e0f902a",
-       HashAlgorithm.SHA256SUM);
-    shortScalarList.add(htdShortScalar182);
-
-    HashTestData<? extends Object> htdShortScalar183 = new HashTestData<Short>(
-       new Short((short)-647),
-       "bab4d6aace6343f78770f399e67e46a1c6a3d8832d09822344b3a52e6d180969ef1f36e15a09abb4761363cbfb707390",
-       HashAlgorithm.SHA384SUM);
-    shortScalarList.add(htdShortScalar183);
-
-    HashTestData<? extends Object> htdShortScalar184 = new HashTestData<Short>(
-       new Short((short)-647),
-       "550828c1a538c3ebebfc54b293faa9cdad47ca1a930ac58def85bf3fa33832dfe07a14a10e5bb8e25b2957315056dfb66f75dd43f4ba7f292e9a05796e4bfaea",
-       HashAlgorithm.SHA512SUM);
-    shortScalarList.add(htdShortScalar184);
-
-    HashTestData<? extends Object> htdShortScalar185 = new HashTestData<Short>(
-       new Short((short)0),
-       "c4103f122d27677c9db144cae1394a66",
-       HashAlgorithm.MD5SUM);
-    shortScalarList.add(htdShortScalar185);
-
-    HashTestData<? extends Object> htdShortScalar186 = new HashTestData<Short>(
-       new Short((short)0),
-       "1489f923c4dca729178b3e3233458550d8dddf29",
-       HashAlgorithm.SHA1SUM);
-    shortScalarList.add(htdShortScalar186);
-
-    HashTestData<? extends Object> htdShortScalar187 = new HashTestData<Short>(
-       new Short((short)0),
-       "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
-       HashAlgorithm.SHA256SUM);
-    shortScalarList.add(htdShortScalar187);
-
-    HashTestData<? extends Object> htdShortScalar188 = new HashTestData<Short>(
-       new Short((short)0),
-       "1dd6f7b457ad880d840d41c961283bab688e94e4b59359ea45686581e90feccea3c624b1226113f824f315eb60ae0a7c",
-       HashAlgorithm.SHA384SUM);
-    shortScalarList.add(htdShortScalar188);
-
-    HashTestData<? extends Object> htdShortScalar189 = new HashTestData<Short>(
-       new Short((short)0),
-       "5ea71dc6d0b4f57bf39aadd07c208c35f06cd2bac5fde210397f70de11d439c62ec1cdf3183758865fd387fcea0bada2f6c37a4a17851dd1d78fefe6f204ee54",
-       HashAlgorithm.SHA512SUM);
-    shortScalarList.add(htdShortScalar189);
-
-    HashTestData<? extends Object> htdShortScalar190 = new HashTestData<Short>(
-       new Short((short)6487),
-       "dd7c52d1136976161a74b7dc86309171",
-       HashAlgorithm.MD5SUM);
-    shortScalarList.add(htdShortScalar190);
-
-    HashTestData<? extends Object> htdShortScalar191 = new HashTestData<Short>(
-       new Short((short)6487),
-       "eb90ea60766c9430209c0f6fa99d91202aa438d1",
-       HashAlgorithm.SHA1SUM);
-    shortScalarList.add(htdShortScalar191);
-
-    HashTestData<? extends Object> htdShortScalar192 = new HashTestData<Short>(
-       new Short((short)6487),
-       "3e5b30da27e48bcdff090fbfc3d8ccb9d069ffa4d0b4ae8c775db6b1e1438bb0",
-       HashAlgorithm.SHA256SUM);
-    shortScalarList.add(htdShortScalar192);
-
-    HashTestData<? extends Object> htdShortScalar193 = new HashTestData<Short>(
-       new Short((short)6487),
-       "a93693c005ca95a44da9ef59dd42dc46bb8c58eda34b6fe79d65393c89de302cc1667766eb7ebbe7948aa4dbda70469f",
-       HashAlgorithm.SHA384SUM);
-    shortScalarList.add(htdShortScalar193);
-
-    HashTestData<? extends Object> htdShortScalar194 = new HashTestData<Short>(
-       new Short((short)6487),
-       "69b6b378f2cbe707c5eec063f1c9ad380bd95511d23f4ecc1c181037f8ad67ca2e5d0fe6886dad9f961ccf6420aec367860eaa1a92a2150c9ac8e252cdbaa263",
-       HashAlgorithm.SHA512SUM);
-    shortScalarList.add(htdShortScalar194);
-
-    HashTestData<? extends Object> htdShortScalar195 = new HashTestData<Short>(
-       new Short((short)32767),
-       "b8114a9c9a26c5680be3c4d89073bde1",
-       HashAlgorithm.MD5SUM);
-    shortScalarList.add(htdShortScalar195);
-
-    HashTestData<? extends Object> htdShortScalar196 = new HashTestData<Short>(
-       new Short((short)32767),
-       "eb99f41f6592620287cfc309b2ddb3aa605643dc",
-       HashAlgorithm.SHA1SUM);
-    shortScalarList.add(htdShortScalar196);
-
-    HashTestData<? extends Object> htdShortScalar197 = new HashTestData<Short>(
-       new Short((short)32767),
-       "fc5c2283015b212d975b85e56b2a75aac4b50bd5aba30cbe74f62857c380bd47",
-       HashAlgorithm.SHA256SUM);
-    shortScalarList.add(htdShortScalar197);
-
-    HashTestData<? extends Object> htdShortScalar198 = new HashTestData<Short>(
-       new Short((short)32767),
-       "4888c35519cec1aef5ec0510324ddbbdeefcb907ebd77b4dacef80dbbf5087a7ed17e7474f54a7933c941ef39fbda394",
-       HashAlgorithm.SHA384SUM);
-    shortScalarList.add(htdShortScalar198);
-
-    HashTestData<? extends Object> htdShortScalar199 = new HashTestData<Short>(
-       new Short((short)32767),
-       "59590271d7fa0ce4bf3e48b59e312ecd42ef17df855e77e5ed6b0d286e71add38cd236a88913c4ccc0e001e2459cccd4262dbbd9c55726eb4eec708ab8ceed85",
-       HashAlgorithm.SHA512SUM);
-    shortScalarList.add(htdShortScalar199);
-
-    HashTestData<? extends Object> htdStringScalar200 = new HashTestData<String>(
-       new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
-       "bde7a553e49ab8b21bb0284813934097",
-       HashAlgorithm.MD5SUM);
-    stringScalarList.add(htdStringScalar200);
-
-    HashTestData<? extends Object> htdStringScalar201 = new HashTestData<String>(
-       new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
-       "a28b2c3824d27adaa6bee513c2e64cde41299f2e",
-       HashAlgorithm.SHA1SUM);
-    stringScalarList.add(htdStringScalar201);
-
-    HashTestData<? extends Object> htdStringScalar202 = new HashTestData<String>(
-       new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
-       "fc517e23108da33c97836a1453720a36e3f407f443f519c454322313604c7e71",
-       HashAlgorithm.SHA256SUM);
-    stringScalarList.add(htdStringScalar202);
-
-    HashTestData<? extends Object> htdStringScalar203 = new HashTestData<String>(
-       new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
-       "ab98b182d1ec418798ad4e56a21966a41f1aa620dd60d8f2a6ad459cffce548371e15e28e2489f9ab6dcf1f71c49bb4e",
-       HashAlgorithm.SHA384SUM);
-    stringScalarList.add(htdStringScalar203);
-
-    HashTestData<? extends Object> htdStringScalar204 = new HashTestData<String>(
-       new String("Here is a String that is human readable.  It is a lot easier to read than the random Strings that are in this test data set, no?"),
-       "7dd8fbb380e9622e6b61eb57aa665d0320eae3f2ad43ae2db9ed8852e7f0c71478dc8baedbbe551dc0d2ac6ab4b11e4d5b05c459f4bcb9f45e191496d2823198",
-       HashAlgorithm.SHA512SUM);
-    stringScalarList.add(htdStringScalar204);
-
-    HashTestData<? extends Object> htdStringScalar205 = new HashTestData<String>(
-       new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
-       "c98f8e5e7556e0d5ebedf37621a1890a",
-       HashAlgorithm.MD5SUM);
-    stringScalarList.add(htdStringScalar205);
-
-    HashTestData<? extends Object> htdStringScalar206 = new HashTestData<String>(
-       new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
-       "facc65d7a8f976c713015ee75c54b03395bfc779",
-       HashAlgorithm.SHA1SUM);
-    stringScalarList.add(htdStringScalar206);
-
-    HashTestData<? extends Object> htdStringScalar207 = new HashTestData<String>(
-       new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
-       "4bfc103bbdb5e30be37bfdd6d96da483c2628d77b5ec29b908a2b31b8df9d182",
-       HashAlgorithm.SHA256SUM);
-    stringScalarList.add(htdStringScalar207);
-
-    HashTestData<? extends Object> htdStringScalar208 = new HashTestData<String>(
-       new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
-       "3fa214843bce9a3e5c4c3935eb52c3d84e3f9ebe3f3d714ea629900f7172b707a4993e671277033cbb13b77f8abf1eb7",
-       HashAlgorithm.SHA384SUM);
-    stringScalarList.add(htdStringScalar208);
-
-    HashTestData<? extends Object> htdStringScalar209 = new HashTestData<String>(
-       new String("%[jG8IuFkuz:2>P8OFHs2[#n)w&KrlXzNy:c2bzg#vGuB6(e9sW$wxr3+AmS]>]AZJA5TZs)l5CYy)<qR!4WQ>#IE&f076N:joF(*lT6E1t$Tr%P<3R$:h#N<YpnQnrh"),
-       "d99ab54d06d9980119518d8b7e88fb2e35df089bc0693f8006ef7024d50d8dec26d973e0092634f0f365129b3a1fca42c1288596adc172ad225c57fbf1f0658a",
-       HashAlgorithm.SHA512SUM);
-    stringScalarList.add(htdStringScalar209);
-
-    HashTestData<? extends Object> htdStringScalar210 = new HashTestData<String>(
-       new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
-       "5ea3850467fe128706c2dc159316e2b7",
-       HashAlgorithm.MD5SUM);
-    stringScalarList.add(htdStringScalar210);
-
-    HashTestData<? extends Object> htdStringScalar211 = new HashTestData<String>(
-       new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
-       "73e83a22999a0ceaa47a306f358a5cceb8099751",
-       HashAlgorithm.SHA1SUM);
-    stringScalarList.add(htdStringScalar211);
-
-    HashTestData<? extends Object> htdStringScalar212 = new HashTestData<String>(
-       new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
-       "81cde82f5d533a6bb1566ff07c512ed963fc3a369e0621173db411d9c22b049f",
-       HashAlgorithm.SHA256SUM);
-    stringScalarList.add(htdStringScalar212);
-
-    HashTestData<? extends Object> htdStringScalar213 = new HashTestData<String>(
-       new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
-       "ab12e9621f0f22871bb197db434bc4688d965da3db9715978413d3c5627428d951a0829b9b40d9b9f5b537846c61d87c",
-       HashAlgorithm.SHA384SUM);
-    stringScalarList.add(htdStringScalar213);
-
-    HashTestData<? extends Object> htdStringScalar214 = new HashTestData<String>(
-       new String("J!^ktjn@^N1_f33>cJ:iBTR2nH7Q0uaSs35^O0n)%V)MKC[5RBpD_aU%A>VPfFjv8xr+o>!f2<(bqnFKxyhQ<N]fAa52pF>6Hm1G5%[h+vHfomJ)qg)GgoO_v9$#&EL2"),
-       "feedbbd563f3a1122311e5e4978753c4bded49cb0f52e7641c3271e7b33600d6d17c132ac0390e6ab9ce7f6e3da12158dd0a89c106066670642fd0111f121c9c",
-       HashAlgorithm.SHA512SUM);
-    stringScalarList.add(htdStringScalar214);
-
-    HashTestData<? extends Object> htdStringScalar215 = new HashTestData<String>(
-       new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
-       "d90d48cd75e78b04bc5c54534ae813f4",
-       HashAlgorithm.MD5SUM);
-    stringScalarList.add(htdStringScalar215);
-
-    HashTestData<? extends Object> htdStringScalar216 = new HashTestData<String>(
-       new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
-       "8a6af4b0bc5a35764ce4052bb49a20f475993fa0",
-       HashAlgorithm.SHA1SUM);
-    stringScalarList.add(htdStringScalar216);
-
-    HashTestData<? extends Object> htdStringScalar217 = new HashTestData<String>(
-       new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
-       "0b31e7f4d6c0a5df1d49a3c740e1dbdcb08733ff5f6a890708be5bb2987e3961",
-       HashAlgorithm.SHA256SUM);
-    stringScalarList.add(htdStringScalar217);
-
-    HashTestData<? extends Object> htdStringScalar218 = new HashTestData<String>(
-       new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
-       "35a3eb15cd3a111df7c78ad527153a98e08a6a471724db209e64205964e2ae89dea4353393de183135b92f8d4401f65d",
-       HashAlgorithm.SHA384SUM);
-    stringScalarList.add(htdStringScalar218);
-
-    HashTestData<? extends Object> htdStringScalar219 = new HashTestData<String>(
-       new String("V(mzH*!7PoBIgwpft#YX_K[xvo0^Pt33WxVQZVlVu!!JZ!TJ+*h!ePpjt??MPG*mHFpEzKBy:OHBK0DX6jCq%N18sT@X!&Lv$q4E%]>204S$IH[4wXJTYB$jYyfWOG4n"),
-       "a2453fbf0e527261c4db3908c5757d1de46619049720143eb52dc37386d65e96677933a0cfb4c38f66d9cb7f2ce9ea03de2723b86fd08f9e8b06bb6774a19dfe",
-       HashAlgorithm.SHA512SUM);
-    stringScalarList.add(htdStringScalar219);
-
-    HashTestData<? extends Object> htdStringScalar220 = new HashTestData<String>(
-       new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
-       "6a6b0f178c44ed36401fcb520f84e01b",
-       HashAlgorithm.MD5SUM);
-    stringScalarList.add(htdStringScalar220);
-
-    HashTestData<? extends Object> htdStringScalar221 = new HashTestData<String>(
-       new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
-       "7304ad2c2d61f8dca57e3cc8deeb11012d5ac022",
-       HashAlgorithm.SHA1SUM);
-    stringScalarList.add(htdStringScalar221);
-
-    HashTestData<? extends Object> htdStringScalar222 = new HashTestData<String>(
-       new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
-       "4491f528df58c3315d0bc94705c44462282d31ebb7839a5e907885c6ea8f171e",
-       HashAlgorithm.SHA256SUM);
-    stringScalarList.add(htdStringScalar222);
-
-    HashTestData<? extends Object> htdStringScalar223 = new HashTestData<String>(
-       new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
-       "32b2b4ba6df7edae9fce96745af027230d0674ddfa8dce23b2ef8cda41640bda61b7fb9ae8112b12f9796f66183e7d20",
-       HashAlgorithm.SHA384SUM);
-    stringScalarList.add(htdStringScalar223);
-
-    HashTestData<? extends Object> htdStringScalar224 = new HashTestData<String>(
-       new String("UcPj*cFKrY*^AboKOQ1[>3s%_?b$H0^]C_]eSVt:_$G6arXFDabp>KF[e_58#<EJ0mYt)@89$2o^e!zRgl@ewfyY1iY5zelcFXYhzStD9?*cnplpp8_l(L(A@rKB7^am"),
-       "ebb5f5d89c974cbae4b8119d48644428a445b22d112cdc3f3d6796ea9102f4b6056c15035e6a3bb0dddf0e5ed025a566421963cdfb16f49af4b5aec71a3fcd80",
-       HashAlgorithm.SHA512SUM);
-    stringScalarList.add(htdStringScalar224);
+      testDataListMap.put(HashGenerator.DataType.INTEGER_ARRAY, integerArrayList);
+      testDataListMap.put(HashGenerator.DataType.LONG_ARRAY, longArrayList);
+      testDataListMap.put(HashGenerator.DataType.FLOAT_ARRAY, floatArrayList);
+      testDataListMap.put(HashGenerator.DataType.DOUBLE_ARRAY, doubleArrayList);
+      testDataListMap.put(HashGenerator.DataType.STRING_ARRAY, stringArrayList);
+   }
+
+   /*
+    * ----------------------------------------------------------------------
+    * All of the code for each of the following test data struct instances
+    * are dynamically generated by the gen_hashes.sh script in the
+    * src/test/resources directory.  See the README.md for full details.
+    */
+
+   private void addScalarTestData() {
+
+   }
+
+   private void addArrayTestData() {
+
+
+HashTestDataList<? extends Object> htdByteArray0 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
+   "e028df60a85e8e467918e1e0a0e8cdd5",
+   HashAlgorithm.MD5SUM);
+byteArrayList.add(htdByteArray0);
+
+HashTestDataList<? extends Object> htdByteArray1 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
+   "850e8361212d577c695f87feee4ab24c6d89d936",
+   HashAlgorithm.SHA1SUM);
+byteArrayList.add(htdByteArray1);
+
+HashTestDataList<? extends Object> htdByteArray2 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
+   "c095be74975eaba646090a1233190185bd4af7b1f02a94081b0a3775baf359e5",
+   HashAlgorithm.SHA256SUM);
+byteArrayList.add(htdByteArray2);
+
+HashTestDataList<? extends Object> htdByteArray3 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
+   "adeb75f0d1e0273d3c1ba1362f72866ddb74d0284d53ecf2ccdb8e106a02a59e855bd4eeaa94deaedb60ea14cebc18af",
+   HashAlgorithm.SHA384SUM);
+byteArrayList.add(htdByteArray3);
+
+HashTestDataList<? extends Object> htdByteArray4 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)0, (byte)2, (byte)7}),
+   "29a5a17e2bf50e51e41f53838a0133c4b3369e5e43d084047155f06956b23790f1194a0b2c4e519d5385a455ab462b510930be52c2ce3209e995a9687aa074b3",
+   HashAlgorithm.SHA512SUM);
+byteArrayList.add(htdByteArray4);
+
+HashTestDataList<? extends Object> htdByteArray5 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)-127, (byte)-126, (byte)-125, (byte)-124, (byte)-123, (byte)-122, (byte)-121, (byte)-120, (byte)-119, (byte)-118, (byte)-117, (byte)-116, (byte)-115, (byte)-114, (byte)-113, (byte)-112, (byte)-111, (byte)-110, (byte)-109, (byte)-108, (byte)-107, (byte)-106, (byte)-105, (byte)-104, (byte)-103, (byte)-102, (byte)-101, (byte)-100, (byte)-99, (byte)-98, (byte)-97, (byte)-96, (byte)-95, (byte)-94, (byte)-93, (byte)-92, (byte)-91, (byte)-90, (byte)-89, (byte)-88, (byte)-87, (byte)-86, (byte)-85, (byte)-84, (byte)-83, (byte)-82, (byte)-81, (byte)-80, (byte)-79, (byte)-78, (byte)-77, (byte)-76, (byte)-75, (byte)-74, (byte)-73, (byte)-72, (byte)-71, (byte)-70, (byte)-69, (byte)-68, (byte)-67, (byte)-66, (byte)-65, (byte)-64, (byte)-63, (byte)-62, (byte)-61, (byte)-60, (byte)-59, (byte)-58, (byte)-57, (byte)-56, (byte)-55, (byte)-54, (byte)-53, (byte)-52, (byte)-51, (byte)-50, (byte)-49, (byte)-48, (byte)-47, (byte)-46, (byte)-45, (byte)-44, (byte)-43, (byte)-42, (byte)-41, (byte)-40, (byte)-39, (byte)-38, (byte)-37, (byte)-36, (byte)-35, (byte)-34, (byte)-33, (byte)-32, (byte)-31, (byte)-30, (byte)-29, (byte)-28, (byte)-27, (byte)-26, (byte)-25, (byte)-24, (byte)-23, (byte)-22, (byte)-21, (byte)-20, (byte)-19, (byte)-18, (byte)-17, (byte)-16, (byte)-15, (byte)-14, (byte)-13, (byte)-12, (byte)-11, (byte)-10, (byte)-9, (byte)-8, (byte)-7, (byte)-6, (byte)-5, (byte)-4, (byte)-3, (byte)-2, (byte)-1, (byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5, (byte)6, (byte)7, (byte)8, (byte)9, (byte)10, (byte)11, (byte)12, (byte)13, (byte)14, (byte)15, (byte)16, (byte)17, (byte)18, (byte)19, (byte)20, (byte)21, (byte)22, (byte)23, (byte)24, (byte)25, (byte)26, (byte)27, (byte)28, (byte)29, (byte)30, (byte)31, (byte)32, (byte)33, (byte)34, (byte)35, (byte)36, (byte)37, (byte)38, (byte)39, (byte)40, (byte)41, (byte)42, (byte)43, (byte)44, (byte)45, (byte)46, (byte)47, (byte)48, (byte)49, (byte)50, (byte)51, (byte)52, (byte)53, (byte)54, (byte)55, (byte)56, (byte)57, (byte)58, (byte)59, (byte)60, (byte)61, (byte)62, (byte)63, (byte)64, (byte)65, (byte)66, (byte)67, (byte)68, (byte)69, (byte)70, (byte)71, (byte)72, (byte)73, (byte)74, (byte)75, (byte)76, (byte)77, (byte)78, (byte)79, (byte)80, (byte)81, (byte)82, (byte)83, (byte)84, (byte)85, (byte)86, (byte)87, (byte)88, (byte)89, (byte)90, (byte)91, (byte)92, (byte)93, (byte)94, (byte)95, (byte)96, (byte)97, (byte)98, (byte)99, (byte)100, (byte)101, (byte)102, (byte)103, (byte)104, (byte)105, (byte)106, (byte)107, (byte)108, (byte)109, (byte)110, (byte)111, (byte)112, (byte)113, (byte)114, (byte)115, (byte)116, (byte)117, (byte)118, (byte)119, (byte)120, (byte)121, (byte)122, (byte)123, (byte)124, (byte)125, (byte)126, (byte)127}),
+   "03f9522e6aa992641525359b6c67cb55",
+   HashAlgorithm.MD5SUM);
+byteArrayList.add(htdByteArray5);
+
+HashTestDataList<? extends Object> htdByteArray6 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)-127, (byte)-126, (byte)-125, (byte)-124, (byte)-123, (byte)-122, (byte)-121, (byte)-120, (byte)-119, (byte)-118, (byte)-117, (byte)-116, (byte)-115, (byte)-114, (byte)-113, (byte)-112, (byte)-111, (byte)-110, (byte)-109, (byte)-108, (byte)-107, (byte)-106, (byte)-105, (byte)-104, (byte)-103, (byte)-102, (byte)-101, (byte)-100, (byte)-99, (byte)-98, (byte)-97, (byte)-96, (byte)-95, (byte)-94, (byte)-93, (byte)-92, (byte)-91, (byte)-90, (byte)-89, (byte)-88, (byte)-87, (byte)-86, (byte)-85, (byte)-84, (byte)-83, (byte)-82, (byte)-81, (byte)-80, (byte)-79, (byte)-78, (byte)-77, (byte)-76, (byte)-75, (byte)-74, (byte)-73, (byte)-72, (byte)-71, (byte)-70, (byte)-69, (byte)-68, (byte)-67, (byte)-66, (byte)-65, (byte)-64, (byte)-63, (byte)-62, (byte)-61, (byte)-60, (byte)-59, (byte)-58, (byte)-57, (byte)-56, (byte)-55, (byte)-54, (byte)-53, (byte)-52, (byte)-51, (byte)-50, (byte)-49, (byte)-48, (byte)-47, (byte)-46, (byte)-45, (byte)-44, (byte)-43, (byte)-42, (byte)-41, (byte)-40, (byte)-39, (byte)-38, (byte)-37, (byte)-36, (byte)-35, (byte)-34, (byte)-33, (byte)-32, (byte)-31, (byte)-30, (byte)-29, (byte)-28, (byte)-27, (byte)-26, (byte)-25, (byte)-24, (byte)-23, (byte)-22, (byte)-21, (byte)-20, (byte)-19, (byte)-18, (byte)-17, (byte)-16, (byte)-15, (byte)-14, (byte)-13, (byte)-12, (byte)-11, (byte)-10, (byte)-9, (byte)-8, (byte)-7, (byte)-6, (byte)-5, (byte)-4, (byte)-3, (byte)-2, (byte)-1, (byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5, (byte)6, (byte)7, (byte)8, (byte)9, (byte)10, (byte)11, (byte)12, (byte)13, (byte)14, (byte)15, (byte)16, (byte)17, (byte)18, (byte)19, (byte)20, (byte)21, (byte)22, (byte)23, (byte)24, (byte)25, (byte)26, (byte)27, (byte)28, (byte)29, (byte)30, (byte)31, (byte)32, (byte)33, (byte)34, (byte)35, (byte)36, (byte)37, (byte)38, (byte)39, (byte)40, (byte)41, (byte)42, (byte)43, (byte)44, (byte)45, (byte)46, (byte)47, (byte)48, (byte)49, (byte)50, (byte)51, (byte)52, (byte)53, (byte)54, (byte)55, (byte)56, (byte)57, (byte)58, (byte)59, (byte)60, (byte)61, (byte)62, (byte)63, (byte)64, (byte)65, (byte)66, (byte)67, (byte)68, (byte)69, (byte)70, (byte)71, (byte)72, (byte)73, (byte)74, (byte)75, (byte)76, (byte)77, (byte)78, (byte)79, (byte)80, (byte)81, (byte)82, (byte)83, (byte)84, (byte)85, (byte)86, (byte)87, (byte)88, (byte)89, (byte)90, (byte)91, (byte)92, (byte)93, (byte)94, (byte)95, (byte)96, (byte)97, (byte)98, (byte)99, (byte)100, (byte)101, (byte)102, (byte)103, (byte)104, (byte)105, (byte)106, (byte)107, (byte)108, (byte)109, (byte)110, (byte)111, (byte)112, (byte)113, (byte)114, (byte)115, (byte)116, (byte)117, (byte)118, (byte)119, (byte)120, (byte)121, (byte)122, (byte)123, (byte)124, (byte)125, (byte)126, (byte)127}),
+   "eb38c997fb698b7e65330d45cbc28435f5e96bb8",
+   HashAlgorithm.SHA1SUM);
+byteArrayList.add(htdByteArray6);
+
+HashTestDataList<? extends Object> htdByteArray7 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)-127, (byte)-126, (byte)-125, (byte)-124, (byte)-123, (byte)-122, (byte)-121, (byte)-120, (byte)-119, (byte)-118, (byte)-117, (byte)-116, (byte)-115, (byte)-114, (byte)-113, (byte)-112, (byte)-111, (byte)-110, (byte)-109, (byte)-108, (byte)-107, (byte)-106, (byte)-105, (byte)-104, (byte)-103, (byte)-102, (byte)-101, (byte)-100, (byte)-99, (byte)-98, (byte)-97, (byte)-96, (byte)-95, (byte)-94, (byte)-93, (byte)-92, (byte)-91, (byte)-90, (byte)-89, (byte)-88, (byte)-87, (byte)-86, (byte)-85, (byte)-84, (byte)-83, (byte)-82, (byte)-81, (byte)-80, (byte)-79, (byte)-78, (byte)-77, (byte)-76, (byte)-75, (byte)-74, (byte)-73, (byte)-72, (byte)-71, (byte)-70, (byte)-69, (byte)-68, (byte)-67, (byte)-66, (byte)-65, (byte)-64, (byte)-63, (byte)-62, (byte)-61, (byte)-60, (byte)-59, (byte)-58, (byte)-57, (byte)-56, (byte)-55, (byte)-54, (byte)-53, (byte)-52, (byte)-51, (byte)-50, (byte)-49, (byte)-48, (byte)-47, (byte)-46, (byte)-45, (byte)-44, (byte)-43, (byte)-42, (byte)-41, (byte)-40, (byte)-39, (byte)-38, (byte)-37, (byte)-36, (byte)-35, (byte)-34, (byte)-33, (byte)-32, (byte)-31, (byte)-30, (byte)-29, (byte)-28, (byte)-27, (byte)-26, (byte)-25, (byte)-24, (byte)-23, (byte)-22, (byte)-21, (byte)-20, (byte)-19, (byte)-18, (byte)-17, (byte)-16, (byte)-15, (byte)-14, (byte)-13, (byte)-12, (byte)-11, (byte)-10, (byte)-9, (byte)-8, (byte)-7, (byte)-6, (byte)-5, (byte)-4, (byte)-3, (byte)-2, (byte)-1, (byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5, (byte)6, (byte)7, (byte)8, (byte)9, (byte)10, (byte)11, (byte)12, (byte)13, (byte)14, (byte)15, (byte)16, (byte)17, (byte)18, (byte)19, (byte)20, (byte)21, (byte)22, (byte)23, (byte)24, (byte)25, (byte)26, (byte)27, (byte)28, (byte)29, (byte)30, (byte)31, (byte)32, (byte)33, (byte)34, (byte)35, (byte)36, (byte)37, (byte)38, (byte)39, (byte)40, (byte)41, (byte)42, (byte)43, (byte)44, (byte)45, (byte)46, (byte)47, (byte)48, (byte)49, (byte)50, (byte)51, (byte)52, (byte)53, (byte)54, (byte)55, (byte)56, (byte)57, (byte)58, (byte)59, (byte)60, (byte)61, (byte)62, (byte)63, (byte)64, (byte)65, (byte)66, (byte)67, (byte)68, (byte)69, (byte)70, (byte)71, (byte)72, (byte)73, (byte)74, (byte)75, (byte)76, (byte)77, (byte)78, (byte)79, (byte)80, (byte)81, (byte)82, (byte)83, (byte)84, (byte)85, (byte)86, (byte)87, (byte)88, (byte)89, (byte)90, (byte)91, (byte)92, (byte)93, (byte)94, (byte)95, (byte)96, (byte)97, (byte)98, (byte)99, (byte)100, (byte)101, (byte)102, (byte)103, (byte)104, (byte)105, (byte)106, (byte)107, (byte)108, (byte)109, (byte)110, (byte)111, (byte)112, (byte)113, (byte)114, (byte)115, (byte)116, (byte)117, (byte)118, (byte)119, (byte)120, (byte)121, (byte)122, (byte)123, (byte)124, (byte)125, (byte)126, (byte)127}),
+   "2bae3a9530e35152c19d73f13f6c0e22cb92f22ce8aa895796711f52b8f7f516",
+   HashAlgorithm.SHA256SUM);
+byteArrayList.add(htdByteArray7);
+
+HashTestDataList<? extends Object> htdByteArray8 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)-127, (byte)-126, (byte)-125, (byte)-124, (byte)-123, (byte)-122, (byte)-121, (byte)-120, (byte)-119, (byte)-118, (byte)-117, (byte)-116, (byte)-115, (byte)-114, (byte)-113, (byte)-112, (byte)-111, (byte)-110, (byte)-109, (byte)-108, (byte)-107, (byte)-106, (byte)-105, (byte)-104, (byte)-103, (byte)-102, (byte)-101, (byte)-100, (byte)-99, (byte)-98, (byte)-97, (byte)-96, (byte)-95, (byte)-94, (byte)-93, (byte)-92, (byte)-91, (byte)-90, (byte)-89, (byte)-88, (byte)-87, (byte)-86, (byte)-85, (byte)-84, (byte)-83, (byte)-82, (byte)-81, (byte)-80, (byte)-79, (byte)-78, (byte)-77, (byte)-76, (byte)-75, (byte)-74, (byte)-73, (byte)-72, (byte)-71, (byte)-70, (byte)-69, (byte)-68, (byte)-67, (byte)-66, (byte)-65, (byte)-64, (byte)-63, (byte)-62, (byte)-61, (byte)-60, (byte)-59, (byte)-58, (byte)-57, (byte)-56, (byte)-55, (byte)-54, (byte)-53, (byte)-52, (byte)-51, (byte)-50, (byte)-49, (byte)-48, (byte)-47, (byte)-46, (byte)-45, (byte)-44, (byte)-43, (byte)-42, (byte)-41, (byte)-40, (byte)-39, (byte)-38, (byte)-37, (byte)-36, (byte)-35, (byte)-34, (byte)-33, (byte)-32, (byte)-31, (byte)-30, (byte)-29, (byte)-28, (byte)-27, (byte)-26, (byte)-25, (byte)-24, (byte)-23, (byte)-22, (byte)-21, (byte)-20, (byte)-19, (byte)-18, (byte)-17, (byte)-16, (byte)-15, (byte)-14, (byte)-13, (byte)-12, (byte)-11, (byte)-10, (byte)-9, (byte)-8, (byte)-7, (byte)-6, (byte)-5, (byte)-4, (byte)-3, (byte)-2, (byte)-1, (byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5, (byte)6, (byte)7, (byte)8, (byte)9, (byte)10, (byte)11, (byte)12, (byte)13, (byte)14, (byte)15, (byte)16, (byte)17, (byte)18, (byte)19, (byte)20, (byte)21, (byte)22, (byte)23, (byte)24, (byte)25, (byte)26, (byte)27, (byte)28, (byte)29, (byte)30, (byte)31, (byte)32, (byte)33, (byte)34, (byte)35, (byte)36, (byte)37, (byte)38, (byte)39, (byte)40, (byte)41, (byte)42, (byte)43, (byte)44, (byte)45, (byte)46, (byte)47, (byte)48, (byte)49, (byte)50, (byte)51, (byte)52, (byte)53, (byte)54, (byte)55, (byte)56, (byte)57, (byte)58, (byte)59, (byte)60, (byte)61, (byte)62, (byte)63, (byte)64, (byte)65, (byte)66, (byte)67, (byte)68, (byte)69, (byte)70, (byte)71, (byte)72, (byte)73, (byte)74, (byte)75, (byte)76, (byte)77, (byte)78, (byte)79, (byte)80, (byte)81, (byte)82, (byte)83, (byte)84, (byte)85, (byte)86, (byte)87, (byte)88, (byte)89, (byte)90, (byte)91, (byte)92, (byte)93, (byte)94, (byte)95, (byte)96, (byte)97, (byte)98, (byte)99, (byte)100, (byte)101, (byte)102, (byte)103, (byte)104, (byte)105, (byte)106, (byte)107, (byte)108, (byte)109, (byte)110, (byte)111, (byte)112, (byte)113, (byte)114, (byte)115, (byte)116, (byte)117, (byte)118, (byte)119, (byte)120, (byte)121, (byte)122, (byte)123, (byte)124, (byte)125, (byte)126, (byte)127}),
+   "a7902aa7f28885d54c4dadbff0f721cd5532b1e56e6f7a4bb2baad0229e576da5902c1bf0cc809fa3efa6e6476e62696",
+   HashAlgorithm.SHA384SUM);
+byteArrayList.add(htdByteArray8);
+
+HashTestDataList<? extends Object> htdByteArray9 = new HashTestDataList<Byte>(
+   Arrays.asList(new Byte[] {(byte)-128, (byte)-127, (byte)-126, (byte)-125, (byte)-124, (byte)-123, (byte)-122, (byte)-121, (byte)-120, (byte)-119, (byte)-118, (byte)-117, (byte)-116, (byte)-115, (byte)-114, (byte)-113, (byte)-112, (byte)-111, (byte)-110, (byte)-109, (byte)-108, (byte)-107, (byte)-106, (byte)-105, (byte)-104, (byte)-103, (byte)-102, (byte)-101, (byte)-100, (byte)-99, (byte)-98, (byte)-97, (byte)-96, (byte)-95, (byte)-94, (byte)-93, (byte)-92, (byte)-91, (byte)-90, (byte)-89, (byte)-88, (byte)-87, (byte)-86, (byte)-85, (byte)-84, (byte)-83, (byte)-82, (byte)-81, (byte)-80, (byte)-79, (byte)-78, (byte)-77, (byte)-76, (byte)-75, (byte)-74, (byte)-73, (byte)-72, (byte)-71, (byte)-70, (byte)-69, (byte)-68, (byte)-67, (byte)-66, (byte)-65, (byte)-64, (byte)-63, (byte)-62, (byte)-61, (byte)-60, (byte)-59, (byte)-58, (byte)-57, (byte)-56, (byte)-55, (byte)-54, (byte)-53, (byte)-52, (byte)-51, (byte)-50, (byte)-49, (byte)-48, (byte)-47, (byte)-46, (byte)-45, (byte)-44, (byte)-43, (byte)-42, (byte)-41, (byte)-40, (byte)-39, (byte)-38, (byte)-37, (byte)-36, (byte)-35, (byte)-34, (byte)-33, (byte)-32, (byte)-31, (byte)-30, (byte)-29, (byte)-28, (byte)-27, (byte)-26, (byte)-25, (byte)-24, (byte)-23, (byte)-22, (byte)-21, (byte)-20, (byte)-19, (byte)-18, (byte)-17, (byte)-16, (byte)-15, (byte)-14, (byte)-13, (byte)-12, (byte)-11, (byte)-10, (byte)-9, (byte)-8, (byte)-7, (byte)-6, (byte)-5, (byte)-4, (byte)-3, (byte)-2, (byte)-1, (byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5, (byte)6, (byte)7, (byte)8, (byte)9, (byte)10, (byte)11, (byte)12, (byte)13, (byte)14, (byte)15, (byte)16, (byte)17, (byte)18, (byte)19, (byte)20, (byte)21, (byte)22, (byte)23, (byte)24, (byte)25, (byte)26, (byte)27, (byte)28, (byte)29, (byte)30, (byte)31, (byte)32, (byte)33, (byte)34, (byte)35, (byte)36, (byte)37, (byte)38, (byte)39, (byte)40, (byte)41, (byte)42, (byte)43, (byte)44, (byte)45, (byte)46, (byte)47, (byte)48, (byte)49, (byte)50, (byte)51, (byte)52, (byte)53, (byte)54, (byte)55, (byte)56, (byte)57, (byte)58, (byte)59, (byte)60, (byte)61, (byte)62, (byte)63, (byte)64, (byte)65, (byte)66, (byte)67, (byte)68, (byte)69, (byte)70, (byte)71, (byte)72, (byte)73, (byte)74, (byte)75, (byte)76, (byte)77, (byte)78, (byte)79, (byte)80, (byte)81, (byte)82, (byte)83, (byte)84, (byte)85, (byte)86, (byte)87, (byte)88, (byte)89, (byte)90, (byte)91, (byte)92, (byte)93, (byte)94, (byte)95, (byte)96, (byte)97, (byte)98, (byte)99, (byte)100, (byte)101, (byte)102, (byte)103, (byte)104, (byte)105, (byte)106, (byte)107, (byte)108, (byte)109, (byte)110, (byte)111, (byte)112, (byte)113, (byte)114, (byte)115, (byte)116, (byte)117, (byte)118, (byte)119, (byte)120, (byte)121, (byte)122, (byte)123, (byte)124, (byte)125, (byte)126, (byte)127}),
+   "f91a8584486a5f167ca103e390444e52fd294e10d43af7bd94402876954ae9b1d0ec65ab9aaf47a7ab7f8733a8d111c038ff78d1238e3aa32b58e9b63767f7d3",
+   HashAlgorithm.SHA512SUM);
+byteArrayList.add(htdByteArray9);
 
    }
 }
