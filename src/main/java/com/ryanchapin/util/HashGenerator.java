@@ -418,12 +418,14 @@ public class HashGenerator {
    public static String createHash(byte input, HashAlgorithm hashAlgorithm)
       throws NoSuchAlgorithmException, IllegalArgumentException
    {
-      checkHashAlgoInput(hashAlgorithm);
-      byte[] byteArray = new byte[] {input};
+      Supplier<ByteBuffer> bufferSupplier = () -> {
+         ByteBuffer byteBuffer = ByteBuffer.allocate(1);
+         byteBuffer.put(input);
+         return byteBuffer;
+      };
 
-      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
-      clearByteArray(byteArray);
-      return retVal;
+      return createHash(bufferSupplier,
+         createByteArrayFunction(1), hashAlgorithm);
    }
 
    /**
@@ -442,6 +444,7 @@ public class HashGenerator {
    public String createHash(byte input)
       throws NoSuchAlgorithmException, IllegalStateException
    {
+      // LEFT OFF:  Need to continue converting function
       checkHashAlgoField();
       byte[] byteArray = getByteArray(DataType.BYTE, 1);
       byteArray[0] = input;
@@ -469,16 +472,14 @@ public class HashGenerator {
    public static String createHash(char input, HashAlgorithm hashAlgorithm)
        throws NoSuchAlgorithmException, IllegalStateException
    {
-     Supplier<ByteBuffer> bufferSupplier = () -> {
-       ByteBuffer byteBuffer = ByteBuffer.allocate(CHAR_BYTES_SIZE);
-       byteBuffer.putChar(input);
-       return byteBuffer;
-     };
+      Supplier<ByteBuffer> bufferSupplier = () -> {
+         ByteBuffer byteBuffer = ByteBuffer.allocate(CHAR_BYTES_SIZE);
+         byteBuffer.putChar(input);
+         return byteBuffer;
+      };
 
-     return createHash(
-        bufferSupplier,
-        createByteArrayFunction(CHAR_BYTES_SIZE),
-        hashAlgorithm);
+      return createHash(bufferSupplier,
+         createByteArrayFunction(CHAR_BYTES_SIZE), hashAlgorithm);
    }
 
    /**
@@ -497,16 +498,16 @@ public class HashGenerator {
    public String createHash(char input)
        throws NoSuchAlgorithmException, IllegalStateException
    {
-     Supplier<ByteBuffer> bufferSupplier = () -> {
-       ByteBuffer byteBuffer = getByteBuffer(DataType.CHARACTER, CHAR_BYTES_SIZE);
-       byteBuffer.putChar(input);
-       return byteBuffer;
-     };
+      Supplier<ByteBuffer> bufferSupplier = () -> {
+         ByteBuffer byteBuffer =
+            getByteBuffer(DataType.CHARACTER, CHAR_BYTES_SIZE);
+         byteBuffer.putChar(input);
+         return byteBuffer;
+      };
 
-     return createHash(
-        bufferSupplier,
-        createByteArrayFunction(DataType.CHARACTER, CHAR_BYTES_SIZE),
-        DataType.CHARACTER);
+      return createHash(bufferSupplier,
+         createByteArrayFunction(DataType.CHARACTER, CHAR_BYTES_SIZE),
+         DataType.CHARACTER);
    }
 
 
