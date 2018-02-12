@@ -22,7 +22,7 @@ DEFAULT_OUTPUT_PATH_PARENT_DIR=/var/tmp
 # Binary data files extension
 BIN_FILE_EXT=".bin"
 
-# Text data files extensin
+# Text data files extension
 TXT_FILE_EXT=".txt"
 
 # Array of hash commands to run
@@ -39,11 +39,6 @@ JAVA_PKG=com.ryanchapin.util
 
 # Java source class name
 JAVA_CLASS_NAME=TestDataGenerator
-
-# Hashes outfile
-# CODE_OUTFILE=generated_test_data.java
-CODE_OUTFILE_SCALAR=generated_test_data_scalar.java
-CODE_OUTFILE_ARRAY=generated_test_data_array.java
 
 CODE_OUT_FILE_NAME_PREFIX="TestData"
 
@@ -116,24 +111,24 @@ eval set -- "$PARSED_OPTIONS"
 while true; do
    case "$1" in
       -o)
-         OUTPUT_PATH_PARENT_DIR=$2
-         shift 2
-         ;;
+          OUTPUT_PATH_PARENT_DIR=$2
+          shift 2
+          ;;
 
       -h)
-         HELP=1
-         shift
-         ;;
+          HELP=1
+          shift
+          ;;
 
       -v)
-         VERBOSE=1
-         shift
-         ;;
+          VERBOSE=1
+          shift
+          ;;
 
       --)
-         shift
-         break
-         ;;
+          shift
+          break
+          ;;
    esac
 done
 
@@ -164,12 +159,10 @@ fi
 # #############################################################################
 #
 # Create the output directory
-NOW=$(date +%Y-%d-%m_%H%M%S_%N)
-output_dir=$OUTPUT_PATH_PARENT_DIR/gen_hashes_output_$NOW
+now=$(date +%Y-%d-%m_%H%M%S_%N)
+output_dir=$OUTPUT_PATH_PARENT_DIR/gen_hashes_output_$now
 tmp_dir=$output_dir/tmp
 code_output_file=$output_dir/$CODE_OUTFILE
-code_output_file_scalar=$output_dir/$CODE_OUTFILE_SCALAR
-code_output_file_array=$output_dir/$CODE_OUTFILE_ARRAY
 ddt "tmp_dir = $tmp_dir"
 ddt "output_dir = $output_dir"
 mkdir -p $tmp_dir
@@ -182,11 +175,11 @@ echo "Generating test data, writing output to $output_dir"
 javac $JAVA_SRC_PATH/$JAVA_SRC_FILE
 
 # ensure that the java program exited properly
-JAVAC_RETVAL=$?
+javac_retval=$?
 
-if [ 0 -ne $JAVAC_RETVAL ];
+if [ 0 -ne $javac_retval ];
 then
-   echo "Unable to compile java program, javac exited with $JAVAC_RETVAL"
+   echo "Unable to compile java program, javac exited with $javac_retval"
    exit
 fi
 
@@ -194,75 +187,75 @@ fi
 java $JAVA_PKG.$JAVA_CLASS_NAME $tmp_dir
 
 # ensure that the java program exited properly
-JAVA_RETVAL=$?
+java_retval=$?
 
-if [ 0 -ne $JAVA_RETVAL ];
+if [ 0 -ne $java_retval ];
 then
-   echo "Java program $JAVA_CLASS_NAME exited with $JAVA_RETVAL"
+   echo "Java program $JAVA_CLASS_NAME exited with $java_retval"
    echo "Check for failures and re-run"
    exit
 fi
 
 # Counter for each HashTestData instance
-INSTANCE_COUNTER=0
+instance_counter=0
 
-for FILE in `ls $tmp_dir/*${BIN_FILE_EXT}`
+for in_file in `ls $tmp_dir/*${BIN_FILE_EXT}`
 do
-   for HASH_ALGO in $HASH_ALGOS
+   for hash_algo in $HASH_ALGOS
    do
       echo -n "."
       ddt "-------------------------------------------"
-      ddt "Hashing file '$FILE' with '$HASH_ALGO' algo"
+      ddt "Hashing file '$in_file' with '$hash_algo' algo"
 
       # The output of this command will be similar to:
       # f1d3ff8443297732862df21dc4e57262 */var/tmp/gen_hashes_output_2018-17-01_044821_503953361/tmp/double_5.bin
-      HASH_OUTPUT=`$HASH_ALGO -b $FILE`
+      hash_output=`$hash_algo -b $in_file`
 
-      ddt "HASH_OUTPUT = $HASH_OUTPUT"
+      ddt "hash_output = $hash_output"
 
       # Split the output with the default IFS as the delimiter into the hashed
       # value and the class name with the identifier for the data
-      read -r HASH TYPE_VAR_TYPE_ID <<< "$HASH_OUTPUT"
+      read -r hash ctype_var_type_id <<< "$hash_output"
 
       # Trim the path from the front and the '.bin' from the end of the TYPE_VALUE String
-      TYPE_VAR_TYPE_ID=$(echo "$TYPE_VAR_TYPE_ID" | awk -F\/ '{print $NF}' | sed 's/....$//g')
-      ddt "HASH = $HASH, TYPE_VAR_TYPE_ID = $TYPE_VAR_TYPE_ID"
+      ctype_var_type_id=$(echo "$ctype_var_type_id" | awk -F\/ '{print $NF}' | sed 's/....$//g')
+      ddt "hash = $hash, ctype_var_type_id = $ctype_var_type_id"
 
-      # Split the TYPE_VAR_TYPE_ID with the '_' delimiter to glean the data type,
+      # Split the ctype_var_type_id with the '_' delimiter to glean the data type,
       # the var_type, and the id of the file
       OIFS="$IFS"
       IFS="_"
-      read -r TYPE VAR_TYPE ID <<< "$TYPE_VAR_TYPE_ID"
+      read -r ctype var_type id <<< "$ctype_var_type_id"
       IFS="$OIFS"
 
-      ddt "TYPE     = $TYPE"
-      ddt "VAR_TYPE = $VAR_TYPE"
-      ddt "ID       = $ID"
+      ddt "ctype     = $ctype"
+      ddt "var_type = $var_type"
+      ddt "id       = $id"
 
-      # Generate a file name and path to the output file for this TYPE/VAR_TYPE
+      # Generate a file name and path to the output file for this ctype/var_type
       # combination.
-      class_suffix=${TYPE}${VAR_TYPE}
+      class_suffix=${ctype}${var_type}
       code_output_tmp_file_name="$CODE_OUT_FILE_NAME_PREFIX${class_suffix}.tmp"
       code_output_tmp_file_path=$tmp_dir/$code_output_tmp_file_name
       code_output_file_name="$CODE_OUT_FILE_NAME_PREFIX${class_suffix}.java"
       code_output_file_path=$tmp_dir/$code_output_file_name
       code_output_import_file_path=$tmp_dir/imports_${class_suffix}
     
-      HTD_NAME="htd${TYPE}${VAR_TYPE}${INSTANCE_COUNTER}"
-      ddt "HTD_NAME = $HTD_NAME"
+      htd_name="htd${ctype}${var_type}${instance_counter}"
+      ddt "htd_name = $htd_name"
 
-      HASH_ALGO_ENUM=$(echo "$HASH_ALGO" | tr [:lower:] [:upper:])
-      ddt "HASH_ALGO_ENUM = $HASH_ALGO_ENUM"
+      hash_algo_enum=$(echo "$hash_algo" | tr [:lower:] [:upper:])
+      ddt "hash_algo_enum = $hash_algo_enum"
 
       # Extract the ASCII value of the data
-      ASCII_FILE=$tmp_dir/${TYPE_VAR_TYPE_ID}${TXT_FILE_EXT}
-      ddt "ASCII_FILE = $ASCII_FILE"
-      ASCII_VALUE=$(cat $ASCII_FILE)
-      ddt "ASCII_VALUE = $ASCII_VALUE"
+      ascii_file=$tmp_dir/${ctype_var_type_id}${TXT_FILE_EXT}
+      ddt "ascii_file = $ascii_file"
+      ascii_value=$(cat $ascii_file)
+      ddt "ascii_value = $ascii_value"
 
       ddt "outputting code to $code_output_tmp_file_path"
       # Generate the Java code to instantiate this test data object
-      case $VAR_TYPE in
+      case $var_type in
 
       "Scalar")
         htd_type="HashTestData"
@@ -275,11 +268,11 @@ EOF
 
         cat <<EOF >> $code_output_tmp_file_path
 
-      $htd_type<? extends Object> $HTD_NAME = new $htd_type<$TYPE>(
-         new ${TYPE}(${ASCII_VALUE}),
-         "$HASH",
-         HashAlgorithm.${HASH_ALGO_ENUM});
-      list.add($HTD_NAME);
+      $htd_type<? extends Object> $htd_name = new $htd_type<$ctype>(
+         new ${ctype}(${ascii_value}),
+         "$hash",
+         HashAlgorithm.${hash_algo_enum});
+      list.add($htd_name);
 EOF
          ;;
 
@@ -295,11 +288,11 @@ EOF
 
         cat <<EOF >> $code_output_tmp_file_path
 
-      $htd_type<? extends Object> $HTD_NAME = new $htd_type<$TYPE>(
-         ${ASCII_VALUE},
-         "$HASH",
-         HashAlgorithm.${HASH_ALGO_ENUM});
-      list.add($HTD_NAME);
+      $htd_type<? extends Object> $htd_name = new $htd_type<$ctype>(
+         ${ascii_value},
+         "$hash",
+         HashAlgorithm.${hash_algo_enum});
+      list.add($htd_name);
 EOF
          ;;
 
@@ -315,35 +308,8 @@ EOF
         code_output_files[$class_suffix]="$code_output_tmp_file_path|$htd_type|$code_output_import_file_path"
       fi
 
-#       #
-#       # Write out the Java code to instantiate this test data object
-#       #
-#       case $VAR_TYPE in
-# 
-#       "Scalar")
-#          cat <<EOF >> $code_output_file_scalar
-# 
-# HashTestData<? extends Object> $HTD_NAME = new HashTestData<$TYPE>(
-#    new ${TYPE}(${ASCII_VALUE}),
-#    "$HASH",
-#    HashAlgorithm.${HASH_ALGO_ENUM});
-# ${LIST_NAME}.add($HTD_NAME);
-# EOF
-#          ;;
-# 
-#       "Array")
-#          cat <<EOF >> $code_output_file_array
-# 
-# HashTestDataList<? extends Object> $HTD_NAME = new HashTestDataList<$TYPE>(
-#    "$HASH",
-#    HashAlgorithm.${HASH_ALGO_ENUM});
-# ${LIST_NAME}.add($HTD_NAME);
-# EOF
-#          ;;
-#       esac
-
       # Increment the counter
-      INSTANCE_COUNTER=$(($INSTANCE_COUNTER+1))
+      instance_counter=$(($instance_counter+1))
 
    done
 
@@ -356,22 +322,22 @@ done
 ddt "code_output_files = ${!code_output_files[@]}"
 for test_data_type in "${!code_output_files[@]}";
 do
-  val="${code_output_files[$test_data_type]}"
-  tmp_file_path=$(echo "$val" | awk -F\| '{print $1}')
-  htd_type=$(echo "$val" | awk -F\| '{print $2}')
-  imports=$(echo "$val" | awk -F\| '{print $3}')
-  code_output_file_name="$CODE_OUT_FILE_NAME_PREFIX${test_data_type}.java"
-  code_output_file_path=$output_dir/$code_output_file_name
-  ddt "test_data_type = $test_data_type, tmp_file_path = $tmp_file_path"
-  ddt "code_output_file_path = $code_output_file_path"
-  ddt "htd_type = $htd_type"
-  ddt "imports = $imports"
-
-  code=$(cat $tmp_file_path)
-  
-  echo "package com.ryanchapin.util;" >> $code_output_file_path
-  cat $imports >> $code_output_file_path
-  cat <<EOF >> $code_output_file_path
+   val="${code_output_files[$test_data_type]}"
+   tmp_file_path=$(echo "$val" | awk -F\| '{print $1}')
+   htd_type=$(echo "$val" | awk -F\| '{print $2}')
+   imports=$(echo "$val" | awk -F\| '{print $3}')
+   code_output_file_name="$CODE_OUT_FILE_NAME_PREFIX${test_data_type}.java"
+   code_output_file_path=$output_dir/$code_output_file_name
+   ddt "test_data_type = $test_data_type, tmp_file_path = $tmp_file_path"
+   ddt "code_output_file_path = $code_output_file_path"
+   ddt "htd_type = $htd_type"
+   ddt "imports = $imports"
+ 
+   code=$(cat $tmp_file_path)
+   
+   echo "package com.ryanchapin.util;" >> $code_output_file_path
+   cat $imports >> $code_output_file_path
+   cat <<EOF >> $code_output_file_path
 
 import com.ryanchapin.util.HashGenerator.HashAlgorithm;
 import com.ryanchapin.util.HashGeneratorTest.$htd_type;
@@ -391,11 +357,8 @@ EOF
 }
 EOF
 
-
 done
-
 
 echo "."
 echo " ========================================================================"
 echo " Finished generating test data to $code_output_file"
-
