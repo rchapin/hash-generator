@@ -45,6 +45,8 @@ JAVA_CLASS_NAME=TestDataGenerator
 CODE_OUTFILE_SCALAR=generated_test_data_scalar.java
 CODE_OUTFILE_ARRAY=generated_test_data_array.java
 
+CODE_OUT_FILE_NAME_PREFIX="TestData"
+
 ################################################################################
 #
 ME=`basename "$0"`
@@ -172,6 +174,8 @@ ddt "tmp_dir = $tmp_dir"
 ddt "output_dir = $output_dir"
 mkdir -p $tmp_dir
 
+declare -A code_output_files
+
 echo "Generating test data, writing output to $output_dir"
 
 # compile the java class
@@ -198,12 +202,6 @@ then
    echo "Check for failures and re-run"
    exit
 fi
-
-# Now generate hashes for each of the bin files
-# if [ -e "$code_output_file" ];
-# then
-#    rm $code_output_file
-# fi
 
 # Counter for each HashTestData instance
 INSTANCE_COUNTER=0
@@ -241,15 +239,19 @@ do
       ddt "VAR_TYPE = $VAR_TYPE"
       ddt "ID       = $ID"
 
-      TYPE_LC=$(echo "$TYPE" | tr [:upper:] [:lower:] )
-
-      LIST_NAME="${TYPE_LC}${VAR_TYPE}List"
-      ddt "LIST_NAME = $LIST_NAME"
-
+      # Generate a file name and path to the output file for this TYPE/VAR_TYPE
+      # combination.
+      class_suffix=${TYPE}${VAR_TYPE}
+      code_output_tmp_file_name="$CODE_OUT_FILE_NAME_PREFIX${class_suffix}.tmp"
+      code_output_tmp_file_path=$tmp_dir/$code_output_tmp_file_name
+      code_output_file_name="$CODE_OUT_FILE_NAME_PREFIX${class_suffix}.java"
+      code_output_file_path=$tmp_dir/$code_output_file_name
+      code_output_import_file_path=$tmp_dir/imports_${class_suffix}
+    
       HTD_NAME="htd${TYPE}${VAR_TYPE}${INSTANCE_COUNTER}"
       ddt "HTD_NAME = $HTD_NAME"
 
-      HASH_ALGO_ENUM=$(ddt "$HASH_ALGO" | tr [:lower:] [:upper:])
+      HASH_ALGO_ENUM=$(echo "$HASH_ALGO" | tr [:lower:] [:upper:])
       ddt "HASH_ALGO_ENUM = $HASH_ALGO_ENUM"
 
       # Extract the ASCII value of the data
@@ -258,33 +260,87 @@ do
       ASCII_VALUE=$(cat $ASCII_FILE)
       ddt "ASCII_VALUE = $ASCII_VALUE"
 
-      #
-      # Write out the Java code to instantiate this test data object
-      #
+      ddt "outputting code to $code_output_tmp_file_path"
+      # Generate the Java code to instantiate this test data object
       case $VAR_TYPE in
 
       "Scalar")
-         cat <<EOF >> $code_output_file_scalar
+        htd_type="HashTestData"
 
-HashTestData<? extends Object> $HTD_NAME = new HashTestData<$TYPE>(
-   new ${TYPE}(${ASCII_VALUE}),
-   "$HASH",
-   HashAlgorithm.${HASH_ALGO_ENUM});
-${LIST_NAME}.add($HTD_NAME);
+        cat <<EOF > $code_output_import_file_path
+
+import java.util.ArrayList;
+import java.util.List;
+EOF
+
+        cat <<EOF >> $code_output_tmp_file_path
+
+      $htd_type<? extends Object> $HTD_NAME = new $htd_type<$TYPE>(
+         new ${TYPE}(${ASCII_VALUE}),
+         "$HASH",
+         HashAlgorithm.${HASH_ALGO_ENUM});
+      list.add($HTD_NAME);
 EOF
          ;;
 
       "Array")
-         cat <<EOF >> $code_output_file_array
+        htd_type="HashTestDataList"
 
-HashTestDataList<? extends Object> $HTD_NAME = new HashTestDataList<$TYPE>(
-   ${ASCII_VALUE},
-   "$HASH",
-   HashAlgorithm.${HASH_ALGO_ENUM});
-${LIST_NAME}.add($HTD_NAME);
+        cat <<EOF > $code_output_import_file_path
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+EOF
+
+        cat <<EOF >> $code_output_tmp_file_path
+
+      $htd_type<? extends Object> $HTD_NAME = new $htd_type<$TYPE>(
+         ${ASCII_VALUE},
+         "$HASH",
+         HashAlgorithm.${HASH_ALGO_ENUM});
+      list.add($HTD_NAME);
 EOF
          ;;
+
       esac
+
+      # If we have not already started code of this type create the entry in
+      # the associative array.
+      ddt "class_suffix = $class_suffix"
+      if [ ! ${code_output_files[$class_suffix]+_} ];
+      then
+        ddt "We have not yet started outputting code for $class_suffix"
+        # We will split tuple on the '|' when outputting the java code
+        code_output_files[$class_suffix]="$code_output_tmp_file_path|$htd_type|$code_output_import_file_path"
+      fi
+
+#       #
+#       # Write out the Java code to instantiate this test data object
+#       #
+#       case $VAR_TYPE in
+# 
+#       "Scalar")
+#          cat <<EOF >> $code_output_file_scalar
+# 
+# HashTestData<? extends Object> $HTD_NAME = new HashTestData<$TYPE>(
+#    new ${TYPE}(${ASCII_VALUE}),
+#    "$HASH",
+#    HashAlgorithm.${HASH_ALGO_ENUM});
+# ${LIST_NAME}.add($HTD_NAME);
+# EOF
+#          ;;
+# 
+#       "Array")
+#          cat <<EOF >> $code_output_file_array
+# 
+# HashTestDataList<? extends Object> $HTD_NAME = new HashTestDataList<$TYPE>(
+#    "$HASH",
+#    HashAlgorithm.${HASH_ALGO_ENUM});
+# ${LIST_NAME}.add($HTD_NAME);
+# EOF
+#          ;;
+#       esac
 
       # Increment the counter
       INSTANCE_COUNTER=$(($INSTANCE_COUNTER+1))
@@ -292,6 +348,52 @@ EOF
    done
 
 done
+
+#
+# For each of the types of code, we have written, compose that into the
+# Java class.
+#
+ddt "code_output_files = ${!code_output_files[@]}"
+for test_data_type in "${!code_output_files[@]}";
+do
+  val="${code_output_files[$test_data_type]}"
+  tmp_file_path=$(echo "$val" | awk -F\| '{print $1}')
+  htd_type=$(echo "$val" | awk -F\| '{print $2}')
+  imports=$(echo "$val" | awk -F\| '{print $3}')
+  code_output_file_name="$CODE_OUT_FILE_NAME_PREFIX${test_data_type}.java"
+  code_output_file_path=$output_dir/$code_output_file_name
+  ddt "test_data_type = $test_data_type, tmp_file_path = $tmp_file_path"
+  ddt "code_output_file_path = $code_output_file_path"
+  ddt "htd_type = $htd_type"
+  ddt "imports = $imports"
+
+  code=$(cat $tmp_file_path)
+  
+  echo "package com.ryanchapin.util;" >> $code_output_file_path
+  cat $imports >> $code_output_file_path
+  cat <<EOF >> $code_output_file_path
+
+import com.ryanchapin.util.HashGenerator.HashAlgorithm;
+import com.ryanchapin.util.HashGeneratorTest.$htd_type;
+
+public class TestData${test_data_type} { 
+
+   public static List<$htd_type<? extends Object>> list =
+      new ArrayList<$htd_type<? extends Object>>();
+
+   static {
+EOF
+
+  cat $tmp_file_path >> $code_output_file_path
+
+  cat <<EOF >> $code_output_file_path
+   }
+}
+EOF
+
+
+done
+
 
 echo "."
 echo " ========================================================================"

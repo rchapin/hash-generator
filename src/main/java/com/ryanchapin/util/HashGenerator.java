@@ -305,11 +305,12 @@ public class HashGenerator {
       }
    }
 
-
-
-
-
-
+   /**
+    *
+    * @param type
+    * @param size
+    * @return
+    */
    private Function<ByteBuffer, byte[]> createByteArrayFunction(DataType type, int size) {
      Function<ByteBuffer, byte[]> retVal = (buffer) -> {
        // We have to determine if the DataType for which we are hashing is an
@@ -329,6 +330,11 @@ public class HashGenerator {
      return retVal;
    }
 
+   /**
+    *
+    * @param size
+    * @return
+    */
    private static Function<ByteBuffer, byte[]> createByteArrayFunction(int size) {
      Function<ByteBuffer, byte[]> retVal = (buffer) -> {
        // TODO: Determine if we need to do type checking if the input is an array
@@ -340,9 +346,15 @@ public class HashGenerator {
      return retVal;
    }
 
-
-
-
+   /**
+    *
+    * @param buffSupplier
+    * @param byteArrFunction
+    * @param hashAlgorithm
+    * @return
+    * @throws NoSuchAlgorithmException
+    * @throws IllegalStateException
+    */
    private static String createHash(Supplier<ByteBuffer> buffSupplier,
                                    Function<ByteBuffer, byte[]> byteArrFunction,
                                    HashAlgorithm hashAlgorithm)
@@ -359,6 +371,15 @@ public class HashGenerator {
      return retVal;
    }
 
+   /**
+    *
+    * @param buffSupplier
+    * @param byteArrFunction
+    * @param type
+    * @return
+    * @throws NoSuchAlgorithmException
+    * @throws IllegalStateException
+    */
    private String createHash(Supplier<ByteBuffer> buffSupplier,
                              Function<ByteBuffer, byte[]> byteArrFunction,
                              DataType type)
@@ -378,17 +399,6 @@ public class HashGenerator {
 
      return retVal;
    }
-
-
-
-
-
-
-
-
-
-
-
 
    /** -- Bytes ------------------------------------------------------------ */
 
