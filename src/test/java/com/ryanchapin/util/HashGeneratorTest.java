@@ -697,8 +697,6 @@ public class HashGeneratorTest {
       HashTestDataList<? extends Object> htdl =
             getSingleHashTestDataListObject(type);
 
-      // TODO: implement the rest of the type array tests
-
       @SuppressWarnings("unchecked")
       List<Character> charList = (List<Character>) htdl.getData();
       char[] charArray = convertListToArray(charList, new char[0]);
@@ -710,6 +708,22 @@ public class HashGeneratorTest {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
+
+      type = DataType.LONG_ARRAY;
+      HashTestDataList<? extends Object> htdl =
+            getSingleHashTestDataListObject(type);
+
+//      @SuppressWarnings("unchecked")
+//      List<Character> longList = (List<Long>) htdl.getData();
+//      long[] longArray = convertListToArray(longList, new long[0]);
+//
+//      hg   = new HashGenerator(null);
+//      try {
+//         hash = hg.createHash(charArray);
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      }
 
       String errMsg = "createHash method did NOT throw a " +
             "IllegalStateException when the method was invoked on an " +
