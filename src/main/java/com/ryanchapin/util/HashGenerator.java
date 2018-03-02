@@ -43,7 +43,9 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -149,7 +151,6 @@ public class HashGenerator {
     */
    private MessageDigest md;
 
-   // TODO:  Change these to n.BYTES
    private static final int CHAR_BYTES_SIZE    = Character.BYTES;
    private static final int SHORT_BYTES_SIZE   = Short.BYTES;
    private static final int INTEGER_BYTES_SIZE = Integer.BYTES;
@@ -847,7 +848,6 @@ public class HashGenerator {
    public String createHash(long[] input)
       throws NoSuchAlgorithmException, IllegalStateException
    {
-
       Supplier<ByteBuffer> bufferSupplier = getBuffSupplier(input);
 
       return createHash(
@@ -1042,27 +1042,39 @@ public class HashGenerator {
 
    /** -- Strings ---------------------------------------------------------- */
 
+//   public static int getNumBytes(String[] input) {
+//     int retVal = 0;
+//      for (String s : input) {
+//         retVal += s.length() * CHAR_BYTES_SIZE;
+//      }
+//     return retVal;
+//   }
+
    public static Supplier<ByteBuffer> getBuffSupplier(
       String[] input,
+      final int numBytes,
       String encoding)
    {
-      int numBytes = 0;
-      for (String s : input) {
-         numBytes += s.length() * CHAR_BYTES_SIZE;
-      }
-      final int capacity = numBytes;
       Supplier<ByteBuffer> bufferSupplier = () -> {
-         ByteBuffer byteBuffer = ByteBuffer.allocate(capacity);
+         ByteBuffer byteBuffer = ByteBuffer.allocate(numBytes);
          for (String s : input) {
             try {
                byteBuffer.put(s.getBytes(encoding));
             } catch (UnsupportedEncodingException e) {
-               throw new IllegalArgumentException(e.getMessage());
+               e.printStackTrace();
+               throw new IllegalArgumentException(e.getCause());
             }
          }
          return byteBuffer;
       };
       return bufferSupplier;
+   }
+
+   public static byte[] getByteArray(String input, String encoding)
+      throws UnsupportedEncodingException
+   {
+      byte[] byteArr = input.getBytes(encoding);
+      return byteArr;
    }
 
    /**
@@ -1085,33 +1097,24 @@ public class HashGenerator {
     * @throws NoSuchAlgorithmException
     *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
     */
-   public static String createHash(String input,
-         String encoding, HashAlgorithm hashAlgorithm)
+   public static String createHash(
+      String input,
+      String encoding,
+      HashAlgorithm hashAlgorithm)
          throws UnsupportedEncodingException, IllegalArgumentException,
          NoSuchAlgorithmException
    {
-      final int numBytes = CHAR_BYTES_SIZE * input.length();
+      final byte[] byteArr = getByteArray(input, encoding);
       Supplier<ByteBuffer> bufferSupplier = () -> {
-         ByteBuffer byteBuffer = ByteBuffer.allocate(numBytes);
-         try {
-            byteBuffer.put(input.getBytes(encoding));
-         } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException(e.getMessage());
-         }
+         ByteBuffer byteBuffer = ByteBuffer.allocate(byteArr.length);
+         byteBuffer.put(byteArr);
          return byteBuffer;
       };
 
-      return createHash(bufferSupplier,
-         createByteArrayFunction(numBytes), hashAlgorithm);
-
-//      checkHashAlgoInput(hashAlgorithm);
-//
-//      // Generate a byte array from the input String.
-//      byte[] byteArray = input.getBytes(encoding);
-//
-//      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
-//      clearByteArray(byteArray);
-//      return retVal;
+      return createHash(
+         bufferSupplier,
+         createByteArrayFunction(byteArr.length),
+         hashAlgorithm);
    }
 
    /**
@@ -1139,16 +1142,45 @@ public class HashGenerator {
          NoSuchAlgorithmException
    {
       checkHashAlgoField();
-      if (null == encoding || encoding.isEmpty()) {
-         throw new IllegalArgumentException(EMPTY_OR_NULL_ENCODING_ERR);
+      return createHash(input, encoding, hashAlgo);
+   }
+
+   public static String createHash(
+      String[] input,
+      String encoding,
+      HashAlgorithm hashAlgorithm)
+         throws IllegalArgumentException, NoSuchAlgorithmException,
+         UnsupportedEncodingException
+   {
+      int numBytes = 0;
+      final List<byte[]> bytes = new ArrayList<>();
+      for (String s : input) {
+         byte[] byteArr = s.getBytes(encoding);
+         numBytes += byteArr.length;
+         bytes.add(byteArr);
       }
+      final int capacity = numBytes;
 
-      // Generate a byte array from the input String.
-      byte[] byteArray = input.getBytes(encoding);
+      Supplier<ByteBuffer> bufferSupplier = () -> {
+         ByteBuffer byteBuffer = ByteBuffer.allocate(capacity);
+         for (byte[] b : bytes) {
+            byteBuffer.put(b);
+         }
+         return byteBuffer;
+      };
 
-      String retVal = bytesToHex(computeHashBytes(byteArray));
-      clearByteArray(byteArray);
-      return retVal;
+      return createHash(
+         bufferSupplier,
+         createByteArrayFunction(numBytes),
+         hashAlgorithm);
+   }
+
+   public String createHash(String[] input, String encoding)
+      throws UnsupportedEncodingException, IllegalStateException,
+      NoSuchAlgorithmException
+   {
+      checkHashAlgoField();
+      return createHash(input, encoding, hashAlgo);
    }
 
    /** -- Character Arrays ------------------------------------------------- */
@@ -1387,9 +1419,7 @@ public class HashGenerator {
     */
    private void clearByteArray(DataType type) {
       byte[] arr = byteArrayMap.get(type);
-      for (int i = 0; i < arr.length; i++) {
-         arr[i] = 0x00;
-      }
+      clearByteArray(arr);
    }
 
    /**

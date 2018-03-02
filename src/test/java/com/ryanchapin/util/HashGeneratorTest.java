@@ -460,6 +460,19 @@ public class HashGeneratorTest {
       hashArrayReusingInternalInstances(DataType.CHARACTER_ARRAY);
    }
 
+
+
+   @Test
+   public void shouldCorrectlyHashStringArrayStatic()
+         throws NoSuchAlgorithmException, IllegalStateException,
+         UnsupportedEncodingException
+   {
+      LOGGER.info("Running test: {}", testName.getMethodName());
+      hashArrayUsingStaticMethod(DataType.STRING_ARRAY);
+   }
+
+
+
    /** -- Multi-threaded Tests --------------------------------------------- */
 
    @Test
@@ -602,90 +615,83 @@ public class HashGeneratorTest {
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
 
-      // Map to keep track of all of the expected types for which
-      // an Exception should be thrown.
+      /*
+       * Map to keep track of all of the expected types for which an Exception
+       * should be thrown.
+       */
       Map<DataType, Boolean> exceptionMap = buildDataTypeBooleanMap();
 
-      HashTestData<? extends Object> htd = null;
-      DataType type                      = null;
-      HashGenerator hg                   = null;
-      String hash                        = null;
+      DataType type = null;
+      HashGenerator hg = null;
+      String hash = null;
 
       type = DataType.BYTE;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator(null);
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash((Byte)htd.getData());
+         hash = hg.createHash((byte)1);
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
 
       type = DataType.CHARACTER;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator(null);
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash((Character)htd.getData());
+         hash = hg.createHash('a');
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
 
       type = DataType.SHORT;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator(null);
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash((Short)htd.getData());
+         hash = hg.createHash((short)1);
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
 
       type = DataType.INTEGER;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator(null);
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash((Integer)htd.getData());
+         hash = hg.createHash(1);
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
 
       type = DataType.LONG;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator(null);
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash((Long)htd.getData());
+         hash = hg.createHash(1L);
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
 
       type = DataType.FLOAT;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator(null);
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash((Float)htd.getData());
+         hash = hg.createHash(1F);
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
 
       type = DataType.DOUBLE;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator(null);
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash((Double)htd.getData());
+         hash = hg.createHash(1D);
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
 
       type = DataType.STRING;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator(null);
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash((String)htd.getData(), "UTF-8");
+          hash = hg.createHash("hello world", "UTF-8");
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
@@ -693,37 +699,79 @@ public class HashGeneratorTest {
          e.printStackTrace();
       }
 
-      type = DataType.CHARACTER_ARRAY;
-      HashTestDataList<? extends Object> htdl =
-            getSingleHashTestDataListObject(type);
-
-      @SuppressWarnings("unchecked")
-      List<Character> charList = (List<Character>) htdl.getData();
-      char[] charArray = convertListToArray(charList, new char[0]);
-
-      hg   = new HashGenerator(null);
+      type = DataType.BYTE_ARRAY;
+      hg = new HashGenerator(null);
       try {
-         hash = hg.createHash(charArray);
+         hash = hg.createHash(new byte[] {(byte)1, (byte)2});
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+         exceptionMap.put(type, true);
+      }
+
+      type = DataType.CHARACTER_ARRAY;
+      hg  = new HashGenerator(null);
+      try {
+         hash = hg.createHash(new char[] {'a', 'b'});
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+         exceptionMap.put(type, true);
+      }
+
+      type = DataType.SHORT_ARRAY;
+      hg = new HashGenerator(null);
+      try {
+         hash = hg.createHash(new short[] {(short)1, (short)10});
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+         exceptionMap.put(type, true);
+      }
+
+      type = DataType.INTEGER_ARRAY;
+      hg = new HashGenerator(null);
+      try {
+         hash = hg.createHash(new int[] {1, 2});
       } catch (IllegalStateException e) {
          LOGGER.info(type.toString() + " threw expected IllegalStateException");
          exceptionMap.put(type, true);
       }
 
       type = DataType.LONG_ARRAY;
-      HashTestDataList<? extends Object> htdl =
-            getSingleHashTestDataListObject(type);
+      hg = new HashGenerator(null);
+      try {
+         hash = hg.createHash(new long[] {0L, 1L});
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+         exceptionMap.put(type, true);
+      }
 
-//      @SuppressWarnings("unchecked")
-//      List<Character> longList = (List<Long>) htdl.getData();
-//      long[] longArray = convertListToArray(longList, new long[0]);
-//
-//      hg   = new HashGenerator(null);
-//      try {
-//         hash = hg.createHash(charArray);
-//      } catch (IllegalStateException e) {
-//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-//         exceptionMap.put(type, true);
-//      }
+      type = DataType.FLOAT_ARRAY;
+      hg = new HashGenerator(null);
+      try {
+         hash = hg.createHash(new float[] {0F, 1F});
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+         exceptionMap.put(type, true);
+      }
+
+      type = DataType.DOUBLE_ARRAY;
+      hg = new HashGenerator(null);
+      try {
+         hash = hg.createHash(new double[] {1D, 2D});
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+         exceptionMap.put(type, true);
+      }
+
+      type = DataType.STRING_ARRAY;
+      hg = new HashGenerator(null);
+      try {
+         hash = hg.createHash(new String[] {"hello world", "don't panic!"}, "UTF-8");
+      } catch (IllegalStateException e) {
+         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+         exceptionMap.put(type, true);
+      } catch (UnsupportedEncodingException e) {
+         e.printStackTrace();
+      }
 
       String errMsg = "createHash method did NOT throw a " +
             "IllegalStateException when the method was invoked on an " +
@@ -732,133 +780,133 @@ public class HashGeneratorTest {
       validateDataTypeBooleanMap(errMsg, exceptionMap);
    }
 
-   /**
-    * Consolidated set of tests for each of the createHash member methods that
-    * tests that the HashGenerator should throw an IllegalStateException
-    * when a <code>HashGenerator</code> instance was not instantiated passing
-    * a HashAlgorithm and the instance was not configured properly by
-    * invoking {@link HashGenerator#setHashAlgo(HashAlgorithm)} with a valid
-    * HashAlgorithm.
-    *
-    * @throws NoSuchAlgorithmException
-    */
-   @Test
-   @SuppressWarnings("unused")
-   public void shouldThrowIllegalStateExceptionHashNeverSetAlgo()
-         throws NoSuchAlgorithmException
-   {
-      LOGGER.info("Running test: {}", testName.getMethodName());
-
-      // Map to keep track of all of the expected types for which
-      // we should get an IllegalArgumentException thrown.
-      Map<DataType, Boolean> exceptionMap = buildDataTypeBooleanMap();
-
-      HashTestData<? extends Object> htd = null;
-      DataType type                      = null;
-      HashGenerator hg                   = null;
-      String hash                        = null;
-
-      type = DataType.BYTE;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator();
-      try {
-         hash = hg.createHash((Byte)htd.getData());
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.CHARACTER;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator();
-      try {
-         hash = hg.createHash((Character)htd.getData());
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.SHORT;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator();
-      try {
-         hash = hg.createHash((Short)htd.getData());
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.INTEGER;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator();
-      try {
-         hash = hg.createHash((Integer)htd.getData());
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.LONG;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator();
-      try {
-         hash = hg.createHash((Long)htd.getData());
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.FLOAT;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator();
-      try {
-         hash = hg.createHash((Float)htd.getData());
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.DOUBLE;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator();
-      try {
-         hash = hg.createHash((Double)htd.getData());
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.STRING;
-      htd  = getSingleHashTestDataObject(type);
-      hg   = new HashGenerator();
-      try {
-         hash = hg.createHash((String)htd.getData(), "UTF-8");
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalStateException");
-         exceptionMap.put(type, true);
-      } catch (UnsupportedEncodingException e) {
-         e.printStackTrace();
-      }
-
-      type = DataType.CHARACTER_ARRAY;
-      HashTestDataList<? extends Object> htdl =
-            getSingleHashTestDataListObject(type);
-
-      @SuppressWarnings("unchecked")
-      List<Character> charList = (List<Character>) htdl.getData();
-      char[] charArray = convertListToArray(charList, new char[0]);
-      try {
-         hash = hg.createHash(charArray);
-      } catch (IllegalStateException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      }
-
-      String errMsg = "createHash method did NOT throw a " +
-            "IllegalStateException when the method was invoked on an " +
-            "instance with a null HashAlgorithm";
-      validateDataTypeBooleanMap(errMsg, exceptionMap);
-   }
+//   /**
+//    * Consolidated set of tests for each of the createHash member methods that
+//    * tests that the HashGenerator should throw an IllegalStateException
+//    * when a <code>HashGenerator</code> instance was not instantiated passing
+//    * a HashAlgorithm and the instance was not configured properly by
+//    * invoking {@link HashGenerator#setHashAlgo(HashAlgorithm)} with a valid
+//    * HashAlgorithm.
+//    *
+//    * @throws NoSuchAlgorithmException
+//    */
+//   @Test
+//   @SuppressWarnings("unused")
+//   public void shouldThrowIllegalStateExceptionHashNeverSetAlgo()
+//         throws NoSuchAlgorithmException
+//   {
+//      LOGGER.info("Running test: {}", testName.getMethodName());
+//
+//      // Map to keep track of all of the expected types for which
+//      // we should get an IllegalArgumentException thrown.
+//      Map<DataType, Boolean> exceptionMap = buildDataTypeBooleanMap();
+//
+//      HashTestData<? extends Object> htd = null;
+//      DataType type                      = null;
+//      HashGenerator hg                   = null;
+//      String hash                        = null;
+//
+//      type = DataType.BYTE;
+//      htd  = getSingleHashTestDataObject(type);
+//      hg   = new HashGenerator();
+//      try {
+//         hash = hg.createHash((Byte)htd.getData());
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      }
+//
+//      type = DataType.CHARACTER;
+//      htd  = getSingleHashTestDataObject(type);
+//      hg   = new HashGenerator();
+//      try {
+//         hash = hg.createHash((Character)htd.getData());
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      }
+//
+//      type = DataType.SHORT;
+//      htd  = getSingleHashTestDataObject(type);
+//      hg   = new HashGenerator();
+//      try {
+//         hash = hg.createHash((Short)htd.getData());
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      }
+//
+//      type = DataType.INTEGER;
+//      htd  = getSingleHashTestDataObject(type);
+//      hg   = new HashGenerator();
+//      try {
+//         hash = hg.createHash((Integer)htd.getData());
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      }
+//
+//      type = DataType.LONG;
+//      htd  = getSingleHashTestDataObject(type);
+//      hg   = new HashGenerator();
+//      try {
+//         hash = hg.createHash((Long)htd.getData());
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      }
+//
+//      type = DataType.FLOAT;
+//      htd  = getSingleHashTestDataObject(type);
+//      hg   = new HashGenerator();
+//      try {
+//         hash = hg.createHash((Float)htd.getData());
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      }
+//
+//      type = DataType.DOUBLE;
+//      htd  = getSingleHashTestDataObject(type);
+//      hg   = new HashGenerator();
+//      try {
+//         hash = hg.createHash((Double)htd.getData());
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      }
+//
+//      type = DataType.STRING;
+//      htd  = getSingleHashTestDataObject(type);
+//      hg   = new HashGenerator();
+//      try {
+//         hash = hg.createHash((String)htd.getData(), "UTF-8");
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalStateException");
+//         exceptionMap.put(type, true);
+//      } catch (UnsupportedEncodingException e) {
+//         e.printStackTrace();
+//      }
+//
+//      type = DataType.CHARACTER_ARRAY;
+//      HashTestDataList<? extends Object> htdl =
+//            getSingleHashTestDataListObject(type);
+//
+//      @SuppressWarnings("unchecked")
+//      List<Character> charList = (List<Character>) htdl.getData();
+//      char[] charArray = convertListToArray(charList, new char[0]);
+//      try {
+//         hash = hg.createHash(charArray);
+//      } catch (IllegalStateException e) {
+//         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
+//         exceptionMap.put(type, true);
+//      }
+//
+//      String errMsg = "createHash method did NOT throw a " +
+//            "IllegalStateException when the method was invoked on an " +
+//            "instance with a null HashAlgorithm";
+//      validateDataTypeBooleanMap(errMsg, exceptionMap);
+//   }
 
    /**
     * Consolidated set of test for each of the static methods to test that they
@@ -1244,7 +1292,8 @@ public class HashGeneratorTest {
    }
 
    private void hashArrayUsingStaticMethod(DataType type)
-         throws IllegalArgumentException, NoSuchAlgorithmException
+         throws IllegalArgumentException, NoSuchAlgorithmException,
+         UnsupportedEncodingException
    {
       // Get list for the given DataType
       List<HashTestDataList<? extends Object>> list =
@@ -1262,6 +1311,10 @@ public class HashGeneratorTest {
                char[] charArray = convertListToArray(objList, new char[0]);
                hash = HashGenerator.createHash(charArray, algo);
                break;
+            case STRING_ARRAY:
+               objList = htdl.getData();
+               String[] stringArray = convertListToArray(objList, new String[0]);
+               hash = HashGenerator.createHash(stringArray, DEFAULT_CHAR_ENCODING, algo);
             default:
          }
          String arrayString = listToString(objList);
@@ -1327,6 +1380,14 @@ public class HashGeneratorTest {
       char[] retVal = new char[list.size()];
       for (int i = 0; i < list.size(); i++) {
          retVal[i] = ((Character) list.get(i)).charValue();
+      }
+      return retVal;
+   }
+
+   public static String[] convertListToArray(List<? extends Object> list, String[] arr) {
+      String[] retVal = new String[list.size()];
+      for (int i = 0; i < list.size(); i++) {
+         retVal[i] = ((String) list.get(i)).toString();
       }
       return retVal;
    }
