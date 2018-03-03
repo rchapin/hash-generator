@@ -1042,41 +1042,6 @@ public class HashGenerator {
 
    /** -- Strings ---------------------------------------------------------- */
 
-//   public static int getNumBytes(String[] input) {
-//     int retVal = 0;
-//      for (String s : input) {
-//         retVal += s.length() * CHAR_BYTES_SIZE;
-//      }
-//     return retVal;
-//   }
-
-   public static Supplier<ByteBuffer> getBuffSupplier(
-      String[] input,
-      final int numBytes,
-      String encoding)
-   {
-      Supplier<ByteBuffer> bufferSupplier = () -> {
-         ByteBuffer byteBuffer = ByteBuffer.allocate(numBytes);
-         for (String s : input) {
-            try {
-               byteBuffer.put(s.getBytes(encoding));
-            } catch (UnsupportedEncodingException e) {
-               e.printStackTrace();
-               throw new IllegalArgumentException(e.getCause());
-            }
-         }
-         return byteBuffer;
-      };
-      return bufferSupplier;
-   }
-
-   public static byte[] getByteArray(String input, String encoding)
-      throws UnsupportedEncodingException
-   {
-      byte[] byteArr = input.getBytes(encoding);
-      return byteArr;
-   }
-
    /**
     * Generates a hexadecimal hash of a String.
     *
@@ -1104,17 +1069,8 @@ public class HashGenerator {
          throws UnsupportedEncodingException, IllegalArgumentException,
          NoSuchAlgorithmException
    {
-      final byte[] byteArr = getByteArray(input, encoding);
-      Supplier<ByteBuffer> bufferSupplier = () -> {
-         ByteBuffer byteBuffer = ByteBuffer.allocate(byteArr.length);
-         byteBuffer.put(byteArr);
-         return byteBuffer;
-      };
-
-      return createHash(
-         bufferSupplier,
-         createByteArrayFunction(byteArr.length),
-         hashAlgorithm);
+      String[] inputArr = new String[] {input};
+      return createHash(inputArr, encoding, hashAlgorithm);
    }
 
    /**
@@ -1182,89 +1138,6 @@ public class HashGenerator {
       checkHashAlgoField();
       return createHash(input, encoding, hashAlgo);
    }
-
-   /** -- Character Arrays ------------------------------------------------- */
-
-   /**
-    * Generates a hexadecimal hash of a character array.
-    *
-    * @param  input
-    *         char[] to be hashed
-    * @param  hashAlgorithm
-    *         {@link HashAlgorithm} to be used to generate the hash.
-    * @return hexadecimal hash of the input data.
-    * @throws IllegalArgumentException
-    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
-    * @throws NoSuchAlgorithmException
-    *         if the hashAlgo argument is an invalid {@link HashAlgorithm}.
-    */
-//   public static String createHash(char[] input, HashAlgorithm hashAlgorithm)
-//      throws IllegalArgumentException, NoSuchAlgorithmException
-//   {
-//      checkHashAlgoInput(hashAlgorithm);
-//
-//      // Calculate the length of the required ByteBuffer
-//      int elementLength = input.length * CHAR_BYTES_SIZE;
-//      ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
-//
-//      // For each char in the input array, add it's bytes to the buffer
-//      for (int i = 0; i < input.length; i++) {
-//         byteBuffer.putChar(input[i]);
-//      }
-//
-//      byteBuffer.rewind();
-//
-//      byte[] byteArray = new byte[elementLength];
-//      byteBuffer.get(byteArray);
-//
-//      String retVal = bytesToHex(computeHashBytes(byteArray, hashAlgorithm));
-//      clearByteArray(byteArray);
-//      return retVal;
-//   }
-
-   /**
-    * Generates a hexadecimal hash of a character array.
-    *
-    * @param  input
-    *         char[] to be hashed
-    * @return hexadecimal hash of the input data.
-    * @throws IllegalStateException
-    *         if the <code>HashGenerator</code> instance has not yet been
-    *         configured with a valid {@link HashAlgorithm} enum.
-    * @throws NoSuchAlgorithmException
-    *         if the <code>HashGenerator</code> instance has not yet been
-    *         configured with a valid {@link HashAlgorithm} enum.
-    */
-//   public String createHash(char[] input)
-//         throws IllegalStateException, NoSuchAlgorithmException
-//   {
-//      checkHashAlgoField();
-//
-//      // Calculate the length of the required ByteBuffer
-//      int elementLength = input.length * CHAR_BYTES_SIZE;
-//
-//      // We cannot reuse any existing array as each call to this
-//      // method can pass in a different sized array.  We could always
-//      // extend the class and add a method that takes a size argument
-//      // but that can wait for future development as needed.
-//      ByteBuffer byteBuffer = ByteBuffer.allocate(elementLength);
-//
-//      // For each char in the input array, add it's bytes to the buffer
-//      for (int i = 0; i < input.length; i++) {
-//         byteBuffer.putChar(input[i]);
-//      }
-//
-//      byteBuffer.rewind();
-//
-//      // We will not be re-using the byte[] for the same reason that we are not
-//      // re-using the ByteBuffer instance above.
-//      byte[] byteArray = new byte[elementLength];
-//      byteBuffer.get(byteArray);
-//
-//      String retVal = bytesToHex(computeHashBytes(byteArray));
-//      clearByteArray(byteArray);
-//      return retVal;
-//   }
 
    /** -- Utility Methods -------------------------------------------------- */
 

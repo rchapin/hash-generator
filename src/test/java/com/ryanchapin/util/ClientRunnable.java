@@ -36,7 +36,7 @@ public class ClientRunnable implements Runnable {
 
    private void hashScalarValues() {
       try {
-         List<HashTestData<? extends Object>> list = null;
+         List<HashTestData<? extends Object>> list =
             HashGeneratorTestData.testDataMap.get(type);
          String hash        = null;
          HashAlgorithm algo = null;
@@ -108,8 +108,10 @@ public class ClientRunnable implements Runnable {
             for (int j = 0; j < numIter; j++) {
                switch (type) {
                case CHARACTER_ARRAY:
-                  char[] charArray = HashGeneratorTest.convertListToArray(data,
-                        new char[0]);
+                  char[] charArray = (char[]) HashGeneratorTest.bar.get(type).apply(data);
+
+//                  char[] charArray = HashGeneratorTest.convertListToArray(data,
+//                        new char[0]);
                   hash = HashGenerator.createHash(charArray, algo);
                   break;
                default:
@@ -135,22 +137,30 @@ public class ClientRunnable implements Runnable {
 
    @Override
    public void run() {
-      switch (type) {
-         // Any array types.  If additional types are added, add them here as such:
-         // case FOO_ARRAY:
-         // case BAZ_ARRAY:
-         // etc....
-         case CHARACTER_ARRAY:
-            hashArrayValues();
-            break;
-
-         // Default is any other value which is currently all of the
-         // scalar values
-         default:
-            hashScalarValues();
+      if (type.isArray()) {
+         hashArrayValues();
+      } else {
+         hashScalarValues();
       }
-      // After hashing all of our values return the result to the ClientTest
-      // instance
+
+//      switch (type) {
+//         // Any array types.  If additional types are added, add them here as such:
+//         // case FOO_ARRAY:
+//         // case BAZ_ARRAY:
+//         // etc....
+//         case CHARACTER_ARRAY:
+//            hashArrayValues();
+//            break;
+//
+//         // Default is any other value which is currently all of the
+//         // scalar values
+//         default:
+//            hashScalarValues();
+//      }
+      /*
+       * After hashing all of our values return the result to the ClientTest
+       * instance
+       */
       parent.putResult(type, results);
    }
 }

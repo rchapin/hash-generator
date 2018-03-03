@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,7 +28,8 @@ public class HashGeneratorTest {
    private static final Logger LOGGER = LoggerFactory.getLogger(HashGeneratorTest.class);
 
    private static final String NUM_THREADS_PROP_KEY = "hashGen.multithread.test.numThreads";
-   private static final int NUM_THREADS_DEFAULT     = 8;
+//   private static final int NUM_THREADS_DEFAULT     = 8;
+   private static final int NUM_THREADS_DEFAULT     = 1;
 
    private static final String NUM_ITER_PROP_KEY    = "hashGen.multithread.test.numIter";
    private static final int NUM_ITER_DEFAULT        = 32;
@@ -388,7 +390,7 @@ public class HashGeneratorTest {
       hashScalarReusingInternalInstances(DataType.STRING);
    }
 
-   @Test(expected = IllegalArgumentException.class)
+   @Test(expected = UnsupportedEncodingException.class)
    public void shouldThrowIllegalArgExptnWhenPassedEmptyEncodingHashString()
          throws UnsupportedEncodingException, IllegalStateException,
          NoSuchAlgorithmException
@@ -398,13 +400,13 @@ public class HashGeneratorTest {
       HashTestData<? extends Object> htd = getSingleHashTestDataObject(type);
 
       String data = (String) htd.getData();
-      HashAlgorithm algo   = htd.getAlgo();
-      HashGenerator hg     = new HashGenerator(algo);
+      HashAlgorithm algo = htd.getAlgo();
+      HashGenerator hg = new HashGenerator(algo);
       @SuppressWarnings("unused")
-      String hash          = hg.createHash(data, "");
+      String hash = hg.createHash(data, "");
    }
 
-   @Test(expected = IllegalArgumentException.class)
+   @Test(expected = UnsupportedEncodingException.class)
    public void shouldThrowIllegalArgExptnWhenPassedNullEncodingHashString()
          throws UnsupportedEncodingException, IllegalStateException,
          NoSuchAlgorithmException
@@ -1391,6 +1393,39 @@ public class HashGeneratorTest {
       }
       return retVal;
    }
+
+
+
+
+
+   public static Map<DataType, Function<List<? extends Object>, ?>> bar =
+      new HashMap<>();
+   static {
+
+      Function<List<? extends Object>, char[]> charConvertor = (list) -> {
+         char[] retVal = new char[list.size()];
+         for (int i = 0; i < list.size(); i++) {
+            retVal[i] = ((Character) list.get(i)).charValue();
+         }
+         return retVal;
+      };
+
+      Function<List<? extends Object>, String[]> stringConvertor = (list) -> {
+         String[] retVal = new String[list.size()];
+         for (int i = 0; i < list.size(); i++) {
+            retVal[i] = ((String) list.get(i));
+         }
+         return retVal;
+      };
+
+      bar.put(DataType.CHARACTER_ARRAY, charConvertor);
+      bar.put(DataType.STRING_ARRAY, stringConvertor);
+   }
+
+
+
+
+
 
    public static String listToString(List<? extends Object> list) {
       StringBuilder retVal = new StringBuilder();
