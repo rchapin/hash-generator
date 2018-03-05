@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,8 +27,7 @@ public class HashGeneratorTest {
    private static final Logger LOGGER = LoggerFactory.getLogger(HashGeneratorTest.class);
 
    private static final String NUM_THREADS_PROP_KEY = "hashGen.multithread.test.numThreads";
-//   private static final int NUM_THREADS_DEFAULT     = 8;
-   private static final int NUM_THREADS_DEFAULT     = 1;
+   private static final int NUM_THREADS_DEFAULT     = 8;
 
    private static final String NUM_ITER_PROP_KEY    = "hashGen.multithread.test.numIter";
    private static final int NUM_ITER_DEFAULT        = 32;
@@ -42,6 +40,23 @@ public class HashGeneratorTest {
     * TestDataGenerator class and then re-generate the test data.
     */
    public static final String DEFAULT_CHAR_ENCODING = "US-ASCII";
+
+   public static final byte DEFAULT_BYTE = (byte)1;
+   public static final char DEFAULT_CHARACTER = 'a';
+   public static final short DEFAULT_SHORT = (short)1;
+   public static final int DEFAULT_INTEGER = 1;
+   public static final long DEFAULT_LONG = 1L;
+   public static final float DEFAULT_FLOAT = 1F;
+   public static final double DEFAULT_DOUBLE = 1D;
+   public static final String DEFAULT_STRING = "hello world";
+   public static final byte[] DEFAULT_BYTE_ARRAY = new byte[] {(byte)1};
+   public static final char[] DEFAULT_CHARACTER_ARRAY = new char[] {'a'};
+   public static final short[] DEFAULT_SHORT_ARRAY = new short[] {(short)1};
+   public static final int[] DEFAULT_INTEGER_ARRAY = new int[] {1};
+   public static final long[] DEFAULT_LONG_ARRAY = new long[] {1L};
+   public static final float[] DEFAULT_FLOAT_ARRAY = new float[] {1F};
+   public static final double[] DEFAULT_DOUBLE_ARRAY = new double[] {1D};
+   public static final String[] DEFAULT_STRING_ARRAY = new String[] {"hello world"};
 
    @Rule
    public TestName testName = new TestName();
@@ -914,13 +929,13 @@ public class HashGeneratorTest {
     * Consolidated set of test for each of the static methods to test that they
     * each should throw and IllegalArgumentException when passed a null
     * HashAlgorithm argument.
+    * @throws Exception
     *
     * @throws IllegalStateException
-    * @throws NoSuchAlgorithmException
     */
    @Test
    public void shouldThrowIllegalArgumentExceptionStaticNullAlgo()
-         throws NoSuchAlgorithmException
+         throws Exception
    {
       LOGGER.info("Running test: {}", testName.getMethodName());
 
@@ -928,97 +943,32 @@ public class HashGeneratorTest {
       // we should get an IllegalArgumentException thrown.
       Map<DataType, Boolean> exceptionMap = buildDataTypeBooleanMap();
 
-      HashTestData<? extends Object> htd = null;
-      DataType type = null;
+      Map<DataType, Funct> m = new HashMap<>();
+      m.put(DataType.BYTE, () -> HashGenerator.createHash(DEFAULT_BYTE, null));
+      m.put(DataType.CHARACTER, () -> HashGenerator.createHash(DEFAULT_CHARACTER, null));
+      m.put(DataType.SHORT, () -> HashGenerator.createHash(DEFAULT_SHORT, null));
+      m.put(DataType.INTEGER, () -> HashGenerator.createHash(DEFAULT_INTEGER, null));
+      m.put(DataType.LONG, () -> HashGenerator.createHash(DEFAULT_LONG, null));
+      m.put(DataType.FLOAT, () -> HashGenerator.createHash(DEFAULT_FLOAT, null));
+      m.put(DataType.DOUBLE, () -> HashGenerator.createHash(DEFAULT_DOUBLE, null));
+      m.put(DataType.STRING, () -> HashGenerator.createHash(DEFAULT_STRING, DEFAULT_CHAR_ENCODING, null));
+      m.put(DataType.BYTE_ARRAY, () -> HashGenerator.createHash(DEFAULT_BYTE_ARRAY, null));
+      m.put(DataType.CHARACTER_ARRAY, () -> HashGenerator.createHash(DEFAULT_CHARACTER_ARRAY, null));
+      m.put(DataType.SHORT_ARRAY, () -> HashGenerator.createHash(DEFAULT_SHORT_ARRAY, null));
+      m.put(DataType.INTEGER_ARRAY, () -> HashGenerator.createHash(DEFAULT_INTEGER_ARRAY, null));
+      m.put(DataType.LONG_ARRAY, () -> HashGenerator.createHash(DEFAULT_LONG_ARRAY, null));
+      m.put(DataType.FLOAT_ARRAY, () -> HashGenerator.createHash(DEFAULT_FLOAT_ARRAY, null));
+      m.put(DataType.DOUBLE_ARRAY, () -> HashGenerator.createHash(DEFAULT_DOUBLE_ARRAY, null));
+      m.put(DataType.STRING_ARRAY, () -> HashGenerator.createHash(DEFAULT_STRING_ARRAY, DEFAULT_CHAR_ENCODING, null));
 
-
-
-      type = DataType.BYTE;
-      htd  = getSingleHashTestDataObject(type);
-      try {
-         HashGenerator.createHash((Byte)htd.getData(), null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.CHARACTER;
-      htd  = getSingleHashTestDataObject(type);
-      try {
-         HashGenerator.createHash((Character)htd.getData(), null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.SHORT;
-      htd  = getSingleHashTestDataObject(type);
-      try {
-         HashGenerator.createHash((Short)htd.getData(), null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.INTEGER;
-      htd  = getSingleHashTestDataObject(type);
-      try {
-         HashGenerator.createHash((Integer)htd.getData(), null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.LONG;
-      htd  = getSingleHashTestDataObject(type);
-      try {
-         HashGenerator.createHash((Long)htd.getData(), null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.FLOAT;
-      htd  = getSingleHashTestDataObject(type);
-      try {
-         HashGenerator.createHash((Float)htd.getData(), null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.DOUBLE;
-      htd  = getSingleHashTestDataObject(type);
-      try {
-         HashGenerator.createHash((Double)htd.getData(), null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      }
-
-      type = DataType.STRING;
-      htd  = getSingleHashTestDataObject(type);
-      try {
-         HashGenerator.createHash((String)htd.getData(), "UTF-8", null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
-      } catch (UnsupportedEncodingException e) {
-         e.printStackTrace();
-      }
-
-      type = DataType.CHARACTER_ARRAY;
-      HashTestDataList<? extends Object> htdl =
-            getSingleHashTestDataListObject(type);
-
-      @SuppressWarnings("unchecked")
-      List<Character> charList = (List<Character>) htdl.getData();
-      char[] charArray = convertListToArray(charList, new char[0]);
-      try {
-         HashGenerator.createHash(charArray, null);
-      } catch (IllegalArgumentException e) {
-         LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
-         exceptionMap.put(type, true);
+      for (Map.Entry<DataType, Funct> entry : m.entrySet()) {
+         DataType type = entry.getKey();
+         try {
+            entry.getValue().apply();
+         } catch (IllegalArgumentException e) {
+            LOGGER.info(type.toString() + " threw expected IllegalArgumentException");
+            exceptionMap.put(type, true);
+         }
       }
 
       String errMsg = "createHash method did NOT throw an " +
@@ -1235,9 +1185,9 @@ public class HashGeneratorTest {
 
             switch (type) {
                case CHARACTER_ARRAY:
-                  objList          = htdl.getData();
-                  char[] charArray = convertListToArray(objList, new char[0]);
-                  hash             = hg.createHash(charArray);
+                  objList = htdl.getData();
+                  char[] charArray = (char[]) ListConverter.get(DataType.CHARACTER_ARRAY).apply(objList);
+                  hash = hg.createHash(charArray);
                   break;
                default:
             }
@@ -1272,9 +1222,10 @@ public class HashGeneratorTest {
 
          switch (type) {
             case CHARACTER_ARRAY:
-               objList          = htdl.getData();
-               char[] charArray = convertListToArray(objList, new char[0]);
-               hash             = hg.createHash(charArray);
+               objList = htdl.getData();
+               char[] charArray = (char[]) ListConverter.get(
+                  DataType.CHARACTER_ARRAY).apply(objList);
+               hash = hg.createHash(charArray);
                break;
             default:
          }
@@ -1310,12 +1261,12 @@ public class HashGeneratorTest {
          switch (type) {
             case CHARACTER_ARRAY:
                objList          = htdl.getData();
-               char[] charArray = convertListToArray(objList, new char[0]);
+               char[] charArray = (char[]) ListConverter.get(type).apply(objList);
                hash = HashGenerator.createHash(charArray, algo);
                break;
             case STRING_ARRAY:
                objList = htdl.getData();
-               String[] stringArray = convertListToArray(objList, new String[0]);
+               String[] stringArray = (String[]) ListConverter.get(type).apply(objList);
                hash = HashGenerator.createHash(stringArray, DEFAULT_CHAR_ENCODING, algo);
             default:
          }
@@ -1370,62 +1321,29 @@ public class HashGeneratorTest {
       return list.get(0);
    }
 
-   private HashTestDataList<? extends Object>
-      getSingleHashTestDataListObject(DataType type)
-   {
-      List<HashTestDataList<? extends Object>> list =
-         HashGeneratorTestData.testDataListMap.get(type);
-      return list.get(0);
-   }
-
-   public static char[] convertListToArray(List<? extends Object> list, char[] arr) {
-      char[] retVal = new char[list.size()];
-      for (int i = 0; i < list.size(); i++) {
-         retVal[i] = ((Character) list.get(i)).charValue();
-      }
-      return retVal;
-   }
-
-   public static String[] convertListToArray(List<? extends Object> list, String[] arr) {
-      String[] retVal = new String[list.size()];
-      for (int i = 0; i < list.size(); i++) {
-         retVal[i] = ((String) list.get(i)).toString();
-      }
-      return retVal;
-   }
-
-
-
-
-
-   public static Map<DataType, Function<List<? extends Object>, ?>> bar =
-      new HashMap<>();
-   static {
-
-      Function<List<? extends Object>, char[]> charConvertor = (list) -> {
-         char[] retVal = new char[list.size()];
-         for (int i = 0; i < list.size(); i++) {
-            retVal[i] = ((Character) list.get(i)).charValue();
-         }
-         return retVal;
-      };
-
-      Function<List<? extends Object>, String[]> stringConvertor = (list) -> {
-         String[] retVal = new String[list.size()];
-         for (int i = 0; i < list.size(); i++) {
-            retVal[i] = ((String) list.get(i));
-         }
-         return retVal;
-      };
-
-      bar.put(DataType.CHARACTER_ARRAY, charConvertor);
-      bar.put(DataType.STRING_ARRAY, stringConvertor);
-   }
-
-
-
-
-
+//   private HashTestDataList<? extends Object>
+//      getSingleHashTestDataListObject(DataType type)
+//   {
+//      List<HashTestDataList<? extends Object>> list =
+//         HashGeneratorTestData.testDataListMap.get(type);
+//      return list.get(0);
+//   }
+//
+//   public static char[] convertListToArray(List<? extends Object> list, char[] arr) {
+//      char[] retVal = new char[list.size()];
+//      for (int i = 0; i < list.size(); i++) {
+//         retVal[i] = ((Character) list.get(i)).charValue();
+//      }
+//      return retVal;
+//   }
+//
+//   public static String[] convertListToArray(List<? extends Object> list, String[] arr) {
+//      String[] retVal = new String[list.size()];
+//      for (int i = 0; i < list.size(); i++) {
+//         retVal[i] = ((String) list.get(i)).toString();
+//      }
+//      return retVal;
+//   }
 
    public static String listToString(List<? extends Object> list) {
       StringBuilder retVal = new StringBuilder();

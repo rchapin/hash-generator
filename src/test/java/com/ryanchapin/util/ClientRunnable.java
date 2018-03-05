@@ -93,7 +93,7 @@ public class ClientRunnable implements Runnable {
       }
    }
 
-   private void hashArrayValues() {
+   private void hashArrayValues() throws Exception {
       try {
          List<HashTestDataList<? extends Object>> list =
             HashGeneratorTestData.testDataListMap.get(type);
@@ -105,14 +105,17 @@ public class ClientRunnable implements Runnable {
             algo = htdl.getAlgo();
             data = htdl.getData();
 
+            // FIXME:  Add the rest of the arrays
             for (int j = 0; j < numIter; j++) {
                switch (type) {
                case CHARACTER_ARRAY:
-                  char[] charArray = (char[]) HashGeneratorTest.bar.get(type).apply(data);
-
-//                  char[] charArray = HashGeneratorTest.convertListToArray(data,
-//                        new char[0]);
+                  char[] charArray = (char[]) ListConverter.get(type).apply(data);
                   hash = HashGenerator.createHash(charArray, algo);
+                  break;
+               case STRING_ARRAY:
+                  String[] strArray = (String[]) ListConverter.get(type).apply(data);
+                  hash = HashGenerator.createHash(
+                     strArray, TestDataGenerator.DEFAULT_CHAR_ENCODING, algo);
                   break;
                default:
                }
@@ -137,10 +140,14 @@ public class ClientRunnable implements Runnable {
 
    @Override
    public void run() {
-      if (type.isArray()) {
-         hashArrayValues();
-      } else {
-         hashScalarValues();
+      try {
+         if (type.isArray()) {
+            hashArrayValues();
+         } else {
+            hashScalarValues();
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
       }
 
 //      switch (type) {
