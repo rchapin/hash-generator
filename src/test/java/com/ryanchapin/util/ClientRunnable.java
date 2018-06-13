@@ -1,12 +1,12 @@
 package com.ryanchapin.util;
 
+import static com.ryanchapin.util.HashGenerator.DataType.*;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ryanchapin.util.HashGenerator;
 import com.ryanchapin.util.HashGenerator.DataType;
 import com.ryanchapin.util.HashGenerator.HashAlgorithm;
 import com.ryanchapin.util.HashGeneratorTest.HashTestData;
@@ -98,27 +98,57 @@ public class ClientRunnable implements Runnable {
          List<HashTestDataList<? extends Object>> list =
             HashGeneratorTestData.testDataListMap.get(type);
          String hash = null;
-         HashAlgorithm algo = null;
-         List<? extends Object> data = null;
+//         HashAlgorithm algo = null;
+//         List<? extends Object> data = null;
+
+//         m.put(DataType.BYTE_ARRAY, (byte[] arr) -> HashGenerator.createHash(arr, null));
 
          for (HashTestDataList<? extends Object> htdl : list) {
-            algo = htdl.getAlgo();
-            data = htdl.getData();
+            final HashAlgorithm algo = htdl.getAlgo();
+            final List<? extends Object> data = htdl.getData();
+
+            Map<DataType, SupplierThrows<String>> map = new HashMap<>();
+            map.put(BYTE_ARRAY, () -> HashGenerator.createHash(
+               (byte[]) ListConverter.get(BYTE_ARRAY).apply(data), algo));
+            map.put(CHARACTER_ARRAY, () -> HashGenerator.createHash(
+               (char[]) ListConverter.get(CHARACTER_ARRAY).apply(data), algo));
+            map.put(SHORT_ARRAY, () -> HashGenerator.createHash(
+               (short[]) ListConverter.get(SHORT_ARRAY).apply(data), algo));
+            map.put(INTEGER_ARRAY, () -> HashGenerator.createHash(
+               (int[]) ListConverter.get(INTEGER_ARRAY).apply(data), algo));
+            map.put(LONG_ARRAY, () -> HashGenerator.createHash(
+               (long[]) ListConverter.get(LONG_ARRAY).apply(data), algo));
+            map.put(DataType.FLOAT_ARRAY, () -> HashGenerator.createHash(
+               (float[]) ListConverter.get(FLOAT_ARRAY).apply(data), algo));
+            map.put(DataType.DOUBLE_ARRAY, () -> HashGenerator.createHash(
+               (double[]) ListConverter.get(DOUBLE_ARRAY).apply(data), algo));
+            map.put(DataType.STRING_ARRAY, () -> HashGenerator.createHash(
+               (String[]) ListConverter.get(STRING_ARRAY).apply(
+                  data),
+                  HashGeneratorTest.DEFAULT_CHAR_ENCODING,
+                  algo));
 
             // FIXME:  Add the rest of the arrays
             for (int j = 0; j < numIter; j++) {
-               switch (type) {
-               case CHARACTER_ARRAY:
-                  char[] charArray = (char[]) ListConverter.get(type).apply(data);
-                  hash = HashGenerator.createHash(charArray, algo);
-                  break;
-               case STRING_ARRAY:
-                  String[] strArray = (String[]) ListConverter.get(type).apply(data);
-                  hash = HashGenerator.createHash(
-                     strArray, TestDataGenerator.DEFAULT_CHAR_ENCODING, algo);
-                  break;
-               default:
-               }
+
+               hash = map.get(type).get();
+
+//               switch (type) {
+//               case BYTE_ARRAY:
+//                  byte[] arr = (byte[]) ListConverter.get(type).apply(data);
+//                  hash = HashGenerator.createHash(arr, algo);
+//                  break;
+//               case CHARACTER_ARRAY:
+//                  char[] charArray = (char[]) ListConverter.get(type).apply(data);
+//                  hash = HashGenerator.createHash(charArray, algo);
+//                  break;
+//               case STRING_ARRAY:
+//                  String[] strArray = (String[]) ListConverter.get(type).apply(data);
+//                  hash = HashGenerator.createHash(
+//                     strArray, TestDataGenerator.DEFAULT_CHAR_ENCODING, algo);
+//                  break;
+//               default:
+//               }
                // Store the hash result locally, in this instance
                addResult(type, hash);
             }

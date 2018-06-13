@@ -508,8 +508,8 @@ public class HashGeneratorTest {
       // Number of threads to instantiate for each DataType to test
       int numThreads = getSystemPropertyInt(NUM_THREADS_PROP_KEY, NUM_THREADS_DEFAULT);
 
-      // Number of times each thread will each thread will loop through the
-      // test data set, each time hashing the configured type.
+      // Number of times each thread will loop through the test data set, each
+      // time hashing the configured type.
       int numIter = getSystemPropertyInt(NUM_ITER_PROP_KEY, NUM_ITER_DEFAULT);
 
       LOGGER.info("numThreads = {}, numIter = {}", numThreads, numIter);
