@@ -35,16 +35,16 @@ The class is thread safe depending on how it is instantiated and/or called. Used
 ```
 // Calling static methods
 String sha1Hash = HashGenerator.createHash(
-                    "This is a test", "UTF-8", HashAlgorithm.SHA1SUM); 
-```  
+                    "This is a test", "UTF-8", HashAlgorithm.SHA1SUM);
+```
 
 Used in the following manner thread safety must be taken into account by the calling code:
 
 ```
 // Calling member methods on a HashGenerator Instance
 HashGenerator hashGenerator = new HashGenerator(HashAlgorithm.SHA1SUM);
-String sha1Hash = hashGenerator.createHash("This is a test", "UTF-8"); 
-```  
+String sha1Hash = hashGenerator.createHash("This is a test", "UTF-8");
+```
 
 When the createHash methods are called on a HashGenerator instance, synchronization must be handled by the calling code or their must only be a single thread making calls into the HashGenerator instance.
 
@@ -75,7 +75,25 @@ This will build the project and create the jar in the target/ directory as expec
 # mvn -P\!release clean package
 ```
 
-### Failures running test ```shouldCorrectlyHashScalarStaticMultiThreaded```
+### Running Tests
+
+#### Dependency Check
+
+The `org.owasp:depedency-check-maven` plugin is included in the pom.  To run the dependency check, execute the following
+```
+mvn dependency-check:check
+```
+
+#### Running Tests
+```
+mvn test
+```
+If you want to see the log output from the test
+```
+mvn -Dlog4j2.configurationFile=log4j.xml test
+```
+
+#### Failures running test ```shouldCorrectlyHashScalarStaticMultiThreaded```
 
 If you encounter problems with resource starvation while running the aforementioned test you can add the following JVM properties to your ```mvn test|compile|package``` invocation to reduce the number of threads instantiated for the test, and/or the number of iterations that each thread runs for the test:
 
@@ -85,7 +103,7 @@ For more details about this test, check the source for the ```shouldCorrectlyHas
 
 ## To Include In Your Project
 
-Either execute a ```maven build install``` if you do not have access to the Internet, or [version 1.0.0 is available via The Central Repository](http://search.maven.org/#artifactdetails%7Ccom.ryanchapin.util%7Chashgenerator%7C1.0.0%7Cjar).
+Either execute a ```maven build install``` if you do not have access to the Internet, or [version 1.1.1 is available via The Central Repository](http://search.maven.org/#artifactdetails%7Ccom.ryanchapin.util%7Chashgenerator%7C1.0.0%7Cjar).
 
 ## Development Environment Set-up
 
